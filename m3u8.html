@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Copy M3U8 Links</title>
+
+  <!-- Google Fonts for clean styling -->
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
+
+  <!-- Simple CSS for layout and design -->
+  <style>
+    body {
+      font-family: 'Roboto', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      overflow: auto;
+    }
+
+    /* Telegram Box at the top */
+    .telegram-box {
+      width: 100%;
+      background-color: #0088cc;
+      color: white;
+      text-align: center;
+      padding: 10px;
+      font-size: 18px;
+      border-radius: 5px;
+      margin-bottom: 20px;
+    }
+
+    .telegram-box a {
+      color: #ffffff;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 600px; /* Limit the max-width for large screens */
+      padding: 20px;
+      background-color: white;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      overflow-y: auto; /* Enable scrolling when the content overflows */
+      max-height: 80vh; /* Limit height for scrolling */
+    }
+
+    .box {
+      background-color: #f9f9f9;
+      padding: 20px;
+      margin-bottom: 20px; /* Space between the boxes */
+      border-radius: 10px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .box h3 {
+      margin: 10px 0;
+      color: #333;
+    }
+
+    .box p {
+      color: #555;
+      word-wrap: break-word;
+      margin: 15px 0;
+    }
+
+    .copy-btn {
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      cursor: pointer;
+      border-radius: 5px;
+      font-size: 16px;
+      transition: background-color 0.3s;
+    }
+
+    .copy-btn:hover {
+      background-color: #45a049;
+    }
+
+    .copy-btn:focus {
+      outline: none;
+    }
+
+    /* Responsive Design: Stack vertically on smaller screens */
+    @media (max-width: 768px) {
+      .container {
+        padding: 15px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .box {
+        padding: 15px;
+      }
+
+      .copy-btn {
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Telegram Join Box -->
+  <div class="telegram-box">
+    <span>Join Our Telegram Channel: </span><a href="https://telegram.me/criccoder" target="_blank">criccoder</a>
+  </div>
+
+  <div class="container">
+    <!-- Box 1 -->
+    <div class="box">
+      <h3>Star Sports Hindi</h3>
+      <p id="stream1">https://bcovlive-a.akamaihd.net/f5fec2a70fa64f86a1bc3ee42e94e355/ap-southeast-2/5833133821001/playlist.m3u8</p>
+      <button class="copy-btn" onclick="copyToClipboard('stream1')">Copy URL</button>
+    </div>
+
+    <!-- Box 2 -->
+    <div class="box">
+      <h3>Fox 501 HD</h3>
+      <p id="stream2">http://port.denver1769.in/oplx7.php?tv=167593</p>
+      <button class="copy-btn" onclick="copyToClipboard('stream2')">Copy URL</button>
+    </div>
+
+    <!-- Box 3 -->
+    <div class="box">
+      <h3>Sky NZ HD</h3>
+      <p id="stream3">http://194.120.171.188/live/M85C65D15T97T3/ASLWSUZFRIP2N08Z/244361.m3u8?token=Q0ddWUMJQVgVUgcABQRXVgxXVwhQV1xaXlxRAVIEVQ9eBFYICVBWBgRATkESEUcAVFk7UQFDXlFSDVEPVRlATUsAR2dZBUFYFVNaWlFcBFQCAlQKUFRdVkQVQE0NWAcaAlUZGkAIB0ANQFBbUVAEUgYWSBoAGRAGFFcDVTtRB05RBlAaCg8WDltOQAwPOlEAWFUKXEdbRlNEFUBQF0VAAlYQWVQcQwELQxADFwRHD0cEAVAKR01GAAlMDE0WTEACGix7GhxDBhpDBwwQCApbRw8WCQsQWUZPRFARZhZQEUxKAFRVVRNBWBVSQE9DCFQdalcLVgsEBxcPVgxKRg9ACRpJF1VfDwoWWBA9EwgBF18XBVAAUlJGHg==</p>
+      <button class="copy-btn" onclick="copyToClipboard('stream3')">Copy URL</button>
+    </div>
+  </div>
+  <script>
+
+function _0x42cb(_0x33cded,_0x55a260){var _0x4d01b5=_0x24c4();return _0x42cb=function(_0x43137a,_0x30dc30){_0x43137a=_0x43137a-(0x1e43+0x56*-0x64+-0x469*-0x1);var _0x10a3ea=_0x4d01b5[_0x43137a];return _0x10a3ea;},_0x42cb(_0x33cded,_0x55a260);}function _0x24c4(){var _0x9fab45=['href','18pBqHDr','9265487QEVWRq','2408730DjVSUh','innerText','M3U8\x20URL\x20c','882824sVYvov','1268WegpGF','Join\x20Our\x20T','getElement','anges','UBQlh','https://te','createRang','605450clqkxM','split','selectNode','iSBSf','getSelecti','7pgoRXs','AYQIu','annel\x20@cri','addRange','10djefsr','ORMBI','execComman','5410mNeViJ','location','Failed\x20to\x20','2|1','elegram\x20Ch','pbcrL','criccoder','IxmEa','removeAllR','legram.me/','ById','bqtAu','ccoder','173130jPdkab','copy','opied:\x20','3253554xvZgAk','copy\x20text','5|4|0|3|6|'];_0x24c4=function(){return _0x9fab45;};return _0x24c4();}var _0x20dffd=_0x42cb;(function(_0x42e9ca,_0x2cf422){var _0x5d1539=_0x42cb,_0x416e0f=_0x42e9ca();while(!![]){try{var _0xae8f1e=-parseInt(_0x5d1539(0x115))/(0x7*-0x581+0x60*-0x6+-0x91*-0x48)+parseInt(_0x5d1539(0x12e))/(-0x21b0+0x2*0xcb3+-0x24*-0x3b)+parseInt(_0x5d1539(0x137))/(0x3b7*-0x7+0x1d65+-0x361)+-parseInt(_0x5d1539(0x13b))/(0x10*-0x1de+0x256a+-0x786)*(parseInt(_0x5d1539(0x121))/(-0xe6b*-0x1+0x768+-0x15ce*0x1))+-parseInt(_0x5d1539(0x131))/(-0x1124*0x1+0x6*-0xd7+0x31*0x74)*(parseInt(_0x5d1539(0x11a))/(0xa76+0x1585+-0x1ff4))+parseInt(_0x5d1539(0x13a))/(-0x1076+-0x1709*-0x1+0x19*-0x43)*(parseInt(_0x5d1539(0x135))/(-0xa9d+0x1*0x1b8+0x8ee))+-parseInt(_0x5d1539(0x11e))/(0x81c*0x2+0xbee+-0x1c1c)*(-parseInt(_0x5d1539(0x136))/(-0x9e6+0x795*0x5+-0x1bf8));if(_0xae8f1e===_0x2cf422)break;else _0x416e0f['push'](_0x416e0f['shift']());}catch(_0x3e7940){_0x416e0f['push'](_0x416e0f['shift']());}}}(_0x24c4,-0x1807*0xb+0xc01*-0x109+0x148139));function copyToClipboard(_0x1faa40){var _0x406644=_0x42cb,_0x3abf5a={'bqtAu':_0x406644(0x133)+_0x406644(0x124),'UBQlh':_0x406644(0x12f),'iSBSf':function(_0x69086e,_0x5dd333){return _0x69086e(_0x5dd333);},'AYQIu':function(_0x15fea5,_0x463c5d){return _0x15fea5+_0x463c5d;},'IxmEa':_0x406644(0x139)+_0x406644(0x130),'pbcrL':function(_0xbc94e2,_0xeb9c81){return _0xbc94e2(_0xeb9c81);},'ORMBI':_0x406644(0x123)+_0x406644(0x132)},_0x5eb8e2=_0x3abf5a[_0x406644(0x12c)][_0x406644(0x116)]('|'),_0x5628d4=0x173f+0x1fd5+0x1b8a*-0x2;while(!![]){switch(_0x5eb8e2[_0x5628d4++]){case'0':_0xde3f4a[_0x406644(0x117)](_0x18afb4);continue;case'1':window[_0x406644(0x119)+'on']()[_0x406644(0x129)+_0x406644(0x13e)]();continue;case'2':try{document[_0x406644(0x120)+'d'](_0x3abf5a[_0x406644(0x13f)]),_0x3abf5a[_0x406644(0x118)](alert,_0x3abf5a[_0x406644(0x11b)](_0x3abf5a[_0x406644(0x128)],_0x18afb4[_0x406644(0x138)]));}catch(_0x28e647){_0x3abf5a[_0x406644(0x126)](alert,_0x3abf5a[_0x406644(0x11f)]);}continue;case'3':window[_0x406644(0x119)+'on']()[_0x406644(0x129)+_0x406644(0x13e)]();continue;case'4':var _0xde3f4a=document[_0x406644(0x114)+'e']();continue;case'5':var _0x18afb4=document[_0x406644(0x13d)+_0x406644(0x12b)](_0x1faa40);continue;case'6':window[_0x406644(0x119)+'on']()[_0x406644(0x11d)](_0xde3f4a);continue;}break;}}confirm(_0x20dffd(0x13c)+_0x20dffd(0x125)+_0x20dffd(0x11c)+_0x20dffd(0x12d))&&(window[_0x20dffd(0x122)][_0x20dffd(0x134)]=_0x20dffd(0x140)+_0x20dffd(0x12a)+_0x20dffd(0x127));
+//-->
+
+ </script>
+
+</body>
+</html>

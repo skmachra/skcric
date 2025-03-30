@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TG - @criccoder</title>
+  <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
+  <style>
+    #poster {
+      width: 100%;
+      max-width: 640px; /* Adjust width to match player size */
+      margin: 0 auto;
+      display: block;
+    }
+    #player-container {
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div id="video"></div>
+
+  <!-- Poster Image with Link -->
+  <a href="https://wa.link/j2bd23" target="_blank">
+    <img id="poster" src="https://criccoder264.pages.dev/2.png" alt="Poster Image">
+  </a>
+
+  <!-- Player -->
+  <div id="player-container">
+    <div id="player"></div>
+  </div>
+
+  <script>
+    const playerInstance = jwplayer("player").setup({
+      controls: true,
+      displaytitle: true,
+      autoplay: true,    
+      displaydescription: true,
+      abouttext: "",
+      aboutlink: "https://telegram.me/Criccoder",
+      skin: {
+        name: "netflix"
+      },
+      logo: {
+        file: "",
+        link: "https://telegram.me/Criccoder"
+      },
+      captions: {
+        color: "#FFF",
+        fontSize: 14,
+        backgroundOpacity: 0,
+        edgeStyle: "raised"
+      },
+      playlist: [
+        {
+          image: "",
+          sources: [
+            {
+              file: "https://foxhindi.pages.dev/playlist.m3u8",
+              label: "1080p",
+              default: true
+            }
+          ],
+        }
+      ],
+      advertising: {
+        client: "vast",
+        schedule: [
+          {
+            offset: "pre",
+            tag: ""
+          }
+        ]
+      }
+    });
+
+    // Confirmation popup for joining Telegram channel
+    var a = confirm("Join For More Links!!");
+    if (a == true) {
+      window.location.href = "https://telegram.me/Criccoder";
+    }
+  </script>
+
+  <div style="background-color: #0074d9; text-align: center; padding: 10px;">
+    <a href="https://telegram.me/criccoder" target="_blank">
+      <button id="joinTelegramButton" style="background-color: #fff; color: #0074d9; border: 2px solid #0074d9; padding: 5px 10px;">Join Telegram</button>
+    </a>
+  </div>
+</body>
+</html>

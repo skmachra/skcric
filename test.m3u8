@@ -1,0 +1,17 @@
+#EXTM3U
+#EXT-X-TARGETDURATION:8
+#EXT-X-VERSION:3
+#EXT-X-MEDIA-SEQUENCE:21457
+#EXT-X-ALLOW-CACHE:YES
+#EXT-X-PROGRAM-DATE-TIME:2023-06-07T03:56:28Z
+
+#EXTINF:7.920,
+http://new.ivue.co:25461/play/live.php?mac=00:1A:79:AA:EA:F2&stream=1898&extension=ts
+#EXTINF:8.000,
+http://new.ivue.co:25461/play/live.php?mac=00:1A:79:AA:EA:F2&stream=1898&extension=ts
+#EXTINF:8.000,
+http://new.ivue.co:25461/play/live.php?mac=00:1A:79:AA:EA:F2&stream=1898&extension=ts
+#EXTINF:8.000,
+http://new.ivue.co:25461/play/live.php?mac=00:1A:79:AA:EA:F2&stream=1898&extension=ts
+
+#EXT-X-ENDLIST

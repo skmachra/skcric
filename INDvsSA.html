@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IND vs SA</title> 
+    <link rel="stylesheet" href="styles.css">
+    <style>
+      body {
+          font-family: Arial, sans-serif;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          background-color: #f4f4f4;
+      }
+
+      .header {
+          background: linear-gradient(135deg, #1a1a1a, #4d4d4d);
+          color: white;
+          padding: 20px;
+          text-align: center;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+          border-radius: 8px;
+          margin-bottom: 20px;
+          width: 100%;
+      }
+
+      .header-title {
+          font-size: 36px;
+          margin: 0;
+      }
+
+      .header-subtitle {
+          font-size: 18px;
+          margin: 5px 0 15px 0;
+      }
+
+      #player {
+          width: 100%;
+          height: 400px;
+          border-radius: 8px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+          margin: 20px 0;
+      }
+
+      .button-container {
+          display: flex;
+          flex-wrap: wrap;
+          justify-content: center;
+          max-width: 800px; /* Limit the width */
+      }
+
+      .channel-button {
+          background: linear-gradient(135deg, #1a1a1a, #4d4d4d);
+          border: none;
+          color: white;
+          padding: 15px 25px;
+          margin: 10px;
+          font-size: 18px;
+          border-radius: 5px;
+          box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+          cursor: pointer;
+          transition: all 0.3s ease;
+          flex: 0 1 calc(50% - 20px); /* 2 buttons on mobile */
+      }
+
+      .channel-button:hover {
+          background: linear-gradient(135deg, #4d4d4d, #1a1a1a);
+          transform: translateY(-2px);
+          box-shadow: 0 6px 15px rgba(0, 0, 0, 0.5);
+      }
+
+      .channel-button:active {
+          transform: translateY(0);
+          box-shadow: 0 2px 5px rgba(0, 0, 0, 0.4);
+      }
+
+      @media (min-width: 600px) {
+          .channel-button {
+              flex: 0 1 calc(33.33% - 20px); /* 3 buttons on tablets */
+          }
+      }
+
+      @media (min-width: 900px) {
+          .channel-button {
+              flex: 0 1 calc(16.66% - 20px); /* 6 buttons on PC */
+          }
+      }
+  </style>
+    <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
+    <script>jwplayer.key = "MOYE-MOYE";</script>
+</head>
+
+<body>
+    <header class="header">
+        <h1 class="header-title">IND vs SA</h1> 
+        <h2 class="header-subtitle"></h2>
+        <h3 class="header-subtitle">@criccoder</h3>
+    </header>
+
+    <div id="player"></div>
+    <h1>Select Your Stream Language From Below</h1>
+    <div class="button-container">
+        <button class="channel-button" onclick="changeChannel(hindi)">Hindi</button>
+        <button class="channel-button" onclick="changeChannel(english)">English</button>
+        <button class="channel-button" onclick="changeChannel(tamil)">Tamil</button>
+        <button class="channel-button" onclick="changeChannel(telugu)">Telugu</button>
+        <button class="channel-button" onclick="changeChannel(bhojpuri)">Bhojpuri</button>
+        <button class="channel-button" onclick="changeChannel(kannada)">Kannada</button>
+        <button class="channel-button" onclick="changeChannel(bengali)">Bengali</button>
+        <button class="channel-button" onclick="changeChannel(odia)">Odia</button>
+    </div>
+
+<script>
+
+function _0x425d(_0x49c537,_0x506098){var _0x2ba638=_0x553a();return _0x425d=function(_0x1e19a0,_0x3cf30f){_0x1e19a0=_0x1e19a0-(-0x966*0x1+0x4*-0x601+0x21d8);var _0x501dc5=_0x2ba638[_0x1e19a0];return _0x501dc5;},_0x425d(_0x49c537,_0x506098);}var _0x35612f=_0x425d;(function(_0x55067d,_0x44be6e){var _0x424077=_0x425d,_0x157d0e=_0x55067d();while(!![]){try{var _0xbe2edf=parseInt(_0x424077(0x89))/(0x3d*0x19+0x19e6+0x3*-0xa9e)*(parseInt(_0x424077(0x7a))/(-0x143c+-0x3*-0x3c1+0x8fb*0x1))+parseInt(_0x424077(0x8f))/(-0x1*-0x2653+-0x1178+-0x74*0x2e)*(parseInt(_0x424077(0xba))/(-0x1*0x55f+0x2*0xe9d+-0x17d7))+parseInt(_0x424077(0x98))/(-0x1c4+-0x3*-0x185+0xa*-0x47)+parseInt(_0x424077(0xa5))/(0x1987*0x1+0x153*-0x1+-0x182e)+parseInt(_0x424077(0x86))/(0x1db6+-0x1ab5*0x1+0x17d*-0x2)+parseInt(_0x424077(0xb4))/(0xd97*0x1+-0x1*-0x1777+0x2a5*-0xe)+-parseInt(_0x424077(0x70))/(0xf*0x25b+-0x1*-0x18d7+-0x5*0xc07);if(_0xbe2edf===_0x44be6e)break;else _0x157d0e['push'](_0x157d0e['shift']());}catch(_0x4094cf){_0x157d0e['push'](_0x157d0e['shift']());}}}(_0x553a,-0x3*-0xd22c+-0x8d2a1*-0x1+-0x69001));var hindi=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xb8)+_0x35612f(0x85)+_0x35612f(0x76)+_0x35612f(0x9c)+_0x35612f(0x9f)+_0x35612f(0x78)+_0x35612f(0x91)+_0x35612f(0x81)+_0x35612f(0x9d)+_0x35612f(0xa8)+_0x35612f(0xa7)+_0x35612f(0xb7)+_0x35612f(0xbb)+_0x35612f(0x8b)+_0x35612f(0x6e),english=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xb3)+_0x35612f(0x85)+_0x35612f(0x76)+_0x35612f(0x96)+_0x35612f(0x9f)+_0x35612f(0x78)+_0x35612f(0x91)+_0x35612f(0x81)+_0x35612f(0xaa)+_0x35612f(0xa8)+_0x35612f(0xa7)+_0x35612f(0xb7)+_0x35612f(0xbb)+_0x35612f(0x8b)+_0x35612f(0x6e),tamil=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xa9)+_0x35612f(0x7c)+_0x35612f(0xac)+_0x35612f(0x7f)+_0x35612f(0x93)+_0x35612f(0x8e)+_0x35612f(0x73)+_0x35612f(0x9a)+_0x35612f(0x88)+_0x35612f(0xa0)+_0x35612f(0x75)+_0x35612f(0xb2)+_0x35612f(0xb6)+_0x35612f(0x95)+_0x35612f(0x84),telugu=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xa9)+_0x35612f(0x7c)+_0x35612f(0xac)+_0x35612f(0xae)+_0x35612f(0x93)+_0x35612f(0x8e)+_0x35612f(0x73)+_0x35612f(0x9a)+_0x35612f(0x7d)+_0x35612f(0xa0)+_0x35612f(0x75)+_0x35612f(0xb2)+_0x35612f(0xb6)+_0x35612f(0x95)+_0x35612f(0x84),bhojpuri=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xa4)+_0x35612f(0x7c)+_0x35612f(0xac)+_0x35612f(0x77)+_0x35612f(0x93)+_0x35612f(0x8e)+_0x35612f(0x73)+_0x35612f(0x9a)+_0x35612f(0x82)+_0x35612f(0xb0)+_0x35612f(0x79)+_0x35612f(0xb5)+_0x35612f(0xad)+_0x35612f(0x8c)+_0x35612f(0x94),kannada=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0x83)+_0x35612f(0x7c)+_0x35612f(0xac)+_0x35612f(0xa6)+_0x35612f(0x93)+_0x35612f(0x8e)+_0x35612f(0x73)+_0x35612f(0x9a)+_0x35612f(0x74)+_0x35612f(0xa0)+_0x35612f(0x75)+_0x35612f(0xb2)+_0x35612f(0xb6)+_0x35612f(0x95)+_0x35612f(0x84),odia=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xa9)+_0x35612f(0x7c)+_0x35612f(0xac)+_0x35612f(0x99)+_0x35612f(0x93)+_0x35612f(0x8e)+_0x35612f(0x73)+_0x35612f(0x9a)+_0x35612f(0x7b)+_0x35612f(0xb0)+_0x35612f(0x79)+_0x35612f(0xb5)+_0x35612f(0xad)+_0x35612f(0x8c)+_0x35612f(0x94),bengali=_0x35612f(0x8a)+_0x35612f(0xab)+_0x35612f(0xa2)+_0x35612f(0x7c)+_0x35612f(0xac)+_0x35612f(0x87)+_0x35612f(0x93)+_0x35612f(0x8e)+_0x35612f(0x73)+_0x35612f(0x9a)+_0x35612f(0x9b)+_0x35612f(0xa0)+_0x35612f(0x75)+_0x35612f(0xb2)+_0x35612f(0xb6)+_0x35612f(0x95)+_0x35612f(0x84),player=jwplayer(_0x35612f(0xb1));player[_0x35612f(0x92)]({'file':english,'width':_0x35612f(0x72),'height':_0x35612f(0x6f),'playbackRateControls':!![],'autostart':!![]});function _0x553a(){var _0x3c4fe3=['eng-cf.jio','4239240VAwXZi','b9a-47bc-b','25-e567677','-47bc-b525','hin-cf.jio','https://te','82924LhgYUy','-e56767798','.m3u8','400px','13132746urNgCa','href','100%','c__ssaispo','__kan__m1_','8e9cc1b-eb','/hls/live/','e/2109729/','_ctv__avc_','c8e9cc1b-e','278IXmLHF','__odia__m1','iocinema.c','__tel__m1_','load','e/2109679/','Join\x20Our\x20T','_indvssa__','__bhoj__m1','south-gm.j','er.m3u8','cinema.com','2550016XQOILX','e/2109741/','__tam__m1_','1831SOUxsv','https://pr','c21/master','798c21/mas','annel\x20@cri','i__ctv__av','9wcPOIo','legram.me/','_ssaispot_','setup','uhd__akama','ter.m3u8','98c21/mast','2112598/uh','ccoder','355720CPAEsm','e/2109514/','t__indvssa','__ben__m1_','2100324/uh','hin__m1__1','elegram\x20Ch','d__akamai_','_151124__c','criccoder','north-cf.j','location','north-gm.j','2920170jJkYrb','e/2109691/','9cc1b-eb9a','51124__c8e','south-cf.j','eng__m1__1','od-sports-','om/hls/liv','525-e56767','e/2109685/','play','__151124__','player','9a-47bc-b5'];_0x553a=function(){return _0x3c4fe3;};return _0x553a();}function changeChannel(_0x4fbdd5){var _0x2b83c7=_0x35612f;player[_0x2b83c7(0x7e)]({'file':_0x4fbdd5}),player[_0x2b83c7(0xaf)]();}confirm(_0x35612f(0x80)+_0x35612f(0x9e)+_0x35612f(0x8d)+_0x35612f(0x97))&&(window[_0x35612f(0xa3)][_0x35612f(0x71)]=_0x35612f(0xb9)+_0x35612f(0x90)+_0x35612f(0xa1));
+//-->
+
+</script>
+</body>
+
+</html>

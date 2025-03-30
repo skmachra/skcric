@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@criccoder</title>
+    <style>
+        /* General reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body styling */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Header Styling */
+        header {
+            background-color: #4CAF50;
+            color: white;
+            text-align: center;
+            padding: 20px;
+        }
+
+        header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-size: 1.2em;
+        }
+
+        /* Content Section Styling */
+        .content {
+            padding: 20px;
+            margin: 0 auto;
+            max-width: 1200px; /* Max width to prevent stretching on large screens */
+        }
+
+        h2 {
+            color: #4CAF50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        /* Colored boxes for each issue */
+        .box {
+            padding: 15px;
+            margin-bottom: 35px; /* 2.5 cm gap between boxes (94.5px) */
+            border-radius: 8px;
+            font-size: 16px;
+        }
+
+        /* Specific colors for each issue */
+        .issue-1 {
+            background-color: #d4edda; /* Green background for Chrome issue */
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .issue-2 {
+            background-color: #fff3cd; /* Yellow background for Pop-up Blocker issue */
+            border: 1px solid #ffeeba;
+            color: #856404;
+        }
+
+        .issue-3 {
+            background-color: #f8d7da; /* Red background for Cache/Cookies issue */
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+
+        .instructions h3 {
+            margin-top: 20px;
+            color: #007BFF;
+        }
+
+        .instructions p {
+            margin-bottom: 10px;
+        }
+
+        /* Add space between heading and text */
+        .box h3 {
+            margin-bottom: 15px; /* Space between heading and content */
+        }
+
+        /* Add space between English and Hindi text */
+        .box p {
+            margin-bottom: 10px; /* Adds a gap between each paragraph */
+        }
+
+        /* Video Container Styling */
+        .video-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        iframe {
+            border: none;
+            width: 100%; /* Ensure iframe takes up full container width */
+            height: 300px; /* Fixed height for consistency */
+            max-width: 600px; /* Max width to ensure it doesn't stretch too much on large screens */
+            margin: 0 auto; /* Center iframe */
+        }
+
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .image-container img {
+            width: 100%; /* Makes sure the image takes the full width of the container */
+            max-width: 600px; /* Keeps the image size consistent */
+            height: auto; /* Keeps the image's aspect ratio */
+        }
+
+        /* Footer Styling */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: white;
+            margin-top: 30px;
+        }
+
+        footer p {
+            font-size: 14px;
+        }
+
+        /* Media Queries for Responsiveness */
+        /* Tablet (portrait) */
+        @media screen and (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            header p {
+                font-size: 1em;
+            }
+
+            h2 {
+                font-size: 1.2em;
+            }
+
+            .box {
+                padding: 10px;
+            }
+
+            iframe {
+                height: 250px; /* Adjust iframe height on smaller devices */
+            }
+        }
+
+        /* Mobile devices */
+        @media screen and (max-width: 480px) {
+            header h1 {
+                font-size: 1.6em;
+            }
+
+            header p {
+                font-size: 0.9em;
+            }
+
+            h2 {
+                font-size: 1.1em;
+            }
+
+            .box {
+                padding: 8px;
+            }
+
+            iframe {
+                height: 200px; /* Adjust iframe height for smaller screens */
+            }
+
+            footer p {
+                font-size: 12px;
+            }
+        }
+
+    </style>
+</head>
+<body>
+    <header>
+        <h1>How to Open Streaming Links Correctly - @criccoder </h1>
+        <p>Make sure to follow these steps to avoid any issues when watching your match streams.</p>
+    </header>
+
+    <section class="content">
+        <h2>Common Issues</h2>
+
+        <!-- Issue 1: Open Link in Chrome -->
+        <div class="box issue-1">
+            <h3>Showing Black Screen & Error</h3>
+            <p>Always use <strong>Google Chrome</strong> for the best streaming experience. Links may not work in other browsers.</p>
+            <p><strong>Hindi:</strong> हमेशा <strong>गूगल क्रोम</strong> का उपयोग करें, क्योंकि अन्य ब्राउज़र में लिंक काम नहीं करेंगे।</p>
+            
+            <!-- JW Player for Issue 1 (adjusted size) -->
+        </div>
+
+        <!-- Issue 2: Disable Pop-Up Blockers -->
+        <div class="box issue-2">
+            <h3>Again & Again Opening Channel</h3>
+            <p>After joining both of our channels, click on <strong>Cancel</strong> when a pop-up appears.</p>
+            <p><strong>Hindi:</strong> हमारे दोनों चैनल में शामिल होने के बाद, पॉप-अप दिखाई देने पर <strong>रद्द करें</strong> पर क्लिक करें।</p>
+            
+            <!-- Display Image using <a> and <img> tag -->
+            <div class="image-container">
+                <a href="https://postimg.cc/9zdL4xJ1" target="_blank">
+                    <img src="https://i.postimg.cc/9zdL4xJ1/photo-6203825018211779583-y.jpg" alt="photo-6203825018211779583-y" />
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        Join Telegram - @criccoder
+    </footer>
+</body>
+</html>

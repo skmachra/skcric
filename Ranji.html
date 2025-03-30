@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>@criccoder</title>
+  <link rel="stylesheet" href="https://cxh.pages.dev/style.css">
+</head>
+<body>
+<!-- Fullscreen Video CSS -->
+<style>
+  #player {
+    position: absolute;
+    width: 100% !important;
+    height: 100% !important;
+  }
+</style>
+
+<!-- Player -->
+<div id="player"></div>
+<script src='https://content.jwplatform.com/libraries/KB5zFt7A.js'></script>
+<script>
+// Video stream configurations (without token)
+const videoConfigs = {
+  "1": {
+    url: "https://prod-sports-eng-cf.jiocinema.com/hls/live/2100307/hd_akamai_merged_avc_eng_cricket_m4_010225/master.m3u8"
+  },
+  "2": {
+    url: "https://prod-sports-eng-cf.jiocinema.com/hls/live/2100306/hd_akamai_merged_avc_eng_cricket_m3_010225/master.m3u8"
+  },
+  "3": {
+    url: "https://prod-sports-eng-cf.jiocinema.com/hls/live/2100306/hd_akamai_merged_avc_eng_cricket_m1_010225/master.m3u8"
+  },
+  "4": {
+    url: "https://prod-sports-eng-cf.jiocinema.com/hls/live/2100306/hd_akamai_merged_avc_eng_cricket_m2_010225/master.m3u8"
+  },
+  "5": {
+    url: "https://prod-sports-eng-cf.jiocinema.com/hls/live/2100307/hd_akamai_merged_avc_eng_cricket_m4_010225/master.m3u8"
+  },
+  "6": {
+    url: "https://prod-sports-eng-cf.jiocinema.com/hls/live/2100307/hd_akamai_merged_avc_eng_cricket_m4_010225/master.m3u8"
+  },
+  "7": {
+    url: "https://criccoder264.pages.dev/foxh.m3u8"
+  },
+  "8": {
+    url: "https://m118753.protect-cdn.net/live/m4-480p.m3u8"
+  }
+
+};
+  // Get the query parameter 'id' from the URL
+  const urlParams = new URLSearchParams(window.location.search);
+  const streamId = urlParams.get('id');  // Extract 'id' parameter from URL
+
+  // Check if the 'id' parameter exists and is valid
+  const videoConfig = videoConfigs[streamId];
+
+  // Initialize JW Player with the selected stream or default to stream 1
+  const playerInstance = jwplayer("player").setup({
+    file: videoConfig ? videoConfig.url : videoConfigs["1"].url,  // Use the selected or default stream URL
+    controls: true,
+    displaytitle: true,
+    autoplay: true,    
+    displaydescription: true,
+    abouttext: "",
+    aboutlink: "https://telegram.me/Criccoder",  // Updated Telegram channel link
+    skin: {
+      name: "netflix"
+    },
+    logo: {
+      file: "",
+      link: "https://telegram.me/Criccoder"  // Updated Telegram channel link
+    },
+    captions: {
+      color: "#FFF",
+      fontSize: 14,
+      backgroundOpacity: 0,
+      edgeStyle: "raised"
+    },
+    playlist: [
+      {
+        image: "",
+        sources: [
+          {
+            file: videoConfig ? videoConfig.url : videoConfigs["1"].url,  // Use the selected or default stream URL
+            label: "1080p",
+            default: true
+          }
+        ],
+      }
+    ],
+    advertising: {
+      client: "vast",
+      schedule: [
+        {
+          offset: "pre",
+          tag: ""
+        }
+      ]
+    }
+  });
+
+  playerInstance.on("ready", function () {
+    const playerContainer = playerInstance.getContainer();
+    const buttonContainer = playerContainer.querySelector(".jw-button-container");
+
+    // Rewind button functionality
+    const rewindContainer = playerContainer.querySelector(".jw-display-icon-rewind");
+    const rewindButton = rewindContainer.cloneNode(true);
+    const rewindIcon = rewindButton.querySelector(".jw-icon-rewind");
+    rewindIcon.style.transform = "scaleX(1)";
+    rewindIcon.ariaLabel = "Rewind 5 Seconds";
+
+    const nextContainer = playerContainer.querySelector(".jw-display-icon-next");
+    nextContainer.parentNode.insertBefore(rewindButton, nextContainer);
+
+    // Rewind functionality for the control bar
+    const rewindControlBarButton = buttonContainer.querySelector(".jw-icon-rewind");
+    const rewindControlBarClone = rewindControlBarButton.cloneNode(true);
+    rewindControlBarClone.style.transform = "scaleX(1)";
+    rewindControlBarClone.ariaLabel = "Rewind 5 Seconds";
+    buttonContainer.insertBefore(rewindControlBarClone, buttonContainer.firstChild);
+// On click of rewind button, seek backward by 5 seconds
+    [rewindButton, rewindControlBarClone].forEach((button) => {
+      button.onclick = () => {
+        const currentPosition = playerInstance.getPosition();
+        const newPosition = Math.max(currentPosition - 5, 0); // Prevent going below 0
+        playerInstance.seek(newPosition);
+      };
+    });
+
+    // Detect adblock
+    playerInstance.on("adBlock", () => {
+      const modal = document.querySelector("div.modal");
+      modal.style.display = "flex";
+      document
+        .getElementById("close")
+        .addEventListener("click", () => location.reload());
+    });
+  });
+
+  // Confirmation message for joining Telegram channel
+  var a = confirm("Join For More Links!!");
+  if (a == true) {
+    window.location.href = "https://telegram.me/Criccoder";  // Updated Telegram channel link
+  }
+
+  function welcome() {
+    window.open("https://telegram.me/Criccoder");  // Updated Telegram channel link
+  }
+
+  if (window.top !== window.self) {
+    window.addEventListener('DOMContentLoaded', function() {
+      document.body.innerHTML = '<div id="message">Copy Karna Buri Baar hai</div>';
+    });
+  }                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     
+
+</script>
+
+<script disable-devtool-auto='true' src='https://cdn.jsdelivr.net/npm/disable-devtool' clear-log='true' disable-select='true' disable-copy='true' disable-cut='true' disable-paste='true'></script>
+</body>
+</html>
+
+
+IDFC FIRST Bank Ranji Trophy 2024-25 - League Phase
+
+Railways vs Delhi - Day 1
+

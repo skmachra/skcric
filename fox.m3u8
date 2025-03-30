@@ -1,0 +1,8 @@
+#EXTM3U
+#EXT-X-VERSION:3
+#EXT-X-STREAM-INF:BANDWIDTH=1200000,RESOLUTION=640x360
+https://1a-1791.com/live/t5qc33px/slot-11/y5l8-0bnw_360p/chunklist.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=2800000,RESOLUTION=1280x720
+https://1a-1791.com/live/t5qc33px/slot-11/y5l8-0bnw_720p/chunklist.m3u8
+#EXT-X-STREAM-INF:BANDWIDTH=4500000,RESOLUTION=1920x1080
+https://1a-1791.com/live/t5qc33px/slot-11/y5l8-0bnw_1080p/chunklist.m3u8
