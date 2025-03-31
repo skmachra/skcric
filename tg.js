@@ -3,7 +3,9 @@
 // Domain Lock (restrict to specific domains)
 const allowedDomains = [
   'https://criccoder264.pages.dev/test',
-  'https://criccoder264.pages.dev'
+  'https://criccoder264.pages.dev',
+  'https://powerplaylive.pages.dev/',
+  'https://powerplaylive.pages.dev/test',
 ];
 
 // Get the current URL
@@ -12,7 +14,7 @@ const currentUrl = window.location.href;
 // Check if the current URL starts with any allowed domains
 if (!allowedDomains.some(url => currentUrl.startsWith(url))) {
   alert('This content is not available on your domain.');
-  window.location.href = "https://telegram.me/criccoder"; // Redirect to Telegram or show a message
+  window.location.href = "https://telegram.me/PowerPlayLive"; // Redirect to Telegram or show a message
   throw new Error("Domain lock triggered.");
 }
 
@@ -47,13 +49,13 @@ if (videoConfig && videoConfig.url) {
     autoplay: true,
     displaydescription: true,
     abouttext: "",
-    aboutlink: "https://telegram.me/Criccoder",  // Updated Telegram channel link
+    aboutlink: "https://telegram.me/PowerPlayLive",  // Updated Telegram channel link
     skin: {
       name: "netflix"
     },
     logo: {
       file: "",
-      link: "https://telegram.me/Criccoder"  // Updated Telegram channel link
+      link: "https://telegram.me/PowerPlayLive"  // Updated Telegram channel link
     },
     captions: {
       color: "#FFF",
