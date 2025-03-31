@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+    <!-- Gradient Background -->
+    <defs>
+        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stop-color="#ff6b00"/>
+            <stop offset="100%" stop-color="#ff00a0"/>
+        </linearGradient>
+        <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stop-color="#ff6b00"/>
+            <stop offset="100%" stop-color="#ff00a0"/>
+        </linearGradient>
+    </defs>
+
+    <!-- Circle Background -->
+    <circle cx="256" cy="256" r="256" fill="url(#gradient)"/>
+
+    <!-- Lightning Bolt -->
+    <path d="M256 100L156 256H206L156 406L356 256H306L406 100Z" fill="white"/>
+
+    <!-- Play Triangle -->
+    <path d="M306 256L206 331V181Z" fill="#1e0033" fill-opacity="0.8"/>
+
+</svg>
