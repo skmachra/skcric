@@ -1,8 +1,5 @@
 {
   "rewrites": [
     { "source": "/:path", "destination": "/:path.html", "check": true }
-  ],
-  "redirects": [
-    { "source": "/:path", "destination": "/index.html", "status": 308 }
   ]
 }
