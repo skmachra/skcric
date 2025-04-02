@@ -1,342 +1,409 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
     <title>PowerPlayLive - Live Streaming & More</title>
     <style>
-      /* Modern CSS with Flexbox */
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-      }
+        /* Modern CSS with Flexbox */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
 
-      body {
-        background: linear-gradient(135deg, #1e0033, #3a0068);
-        color: white;
-        min-height: 100vh;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        padding: 20px;
-      }
+        body {
+            background: linear-gradient(135deg, #1e0033, #3a0068);
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
 
-      .container {
-        max-width: 1200px;
-        width: 100%;
-      }
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
 
-      header {
-        margin-bottom: 30px;
-      }
+        header {
+            margin-bottom: 30px;
+        }
 
-      h1 {
-        font-size: 2.5rem;
-        margin-bottom: 10px;
-        background: linear-gradient(90deg, #ff6b00, #ff00a0);
-        -webkit-background-clip: text;
-        background-clip: text;
-        color: transparent;
-      }
-
-      .tagline {
-        font-size: 1.2rem;
-        margin-bottom: 20px;
-        color: #ccc;
-      }
-
-      .logo {
-        width: 120px;
-        height: 120px;
-        margin-bottom: 20px;
-        border-radius: 50%;
-        object-fit: cover;
-      }
-
-      /* Navigation */
-      nav {
-        margin: 20px 0;
-        background: rgba(0, 0, 0, 0.3);
-        padding: 15px;
-        border-radius: 10px;
-      }
-
-      .nav-links {
-        display: flex;
-        justify-content: center;
-        flex-wrap: wrap;
-        gap: 15px;
-      }
-
-      .nav-links a {
-        color: white;
-        text-decoration: none;
-        padding: 10px 20px;
-        border-radius: 50px;
-        font-weight: bold;
-        background: linear-gradient(90deg, #ff6b00, #ff00a0);
-        transition: all 0.3s ease;
-      }
-
-      .nav-links a:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 5px 15px rgba(255, 0, 160, 0.5);
-      }
-      .nav-links a.active {
-        background: linear-gradient(90deg, #ff00a0, #ff6b00);
-        box-shadow: 0 5px 15px rgba(255, 0, 160, 0.7);
-        transform: translateY(-3px);
-        border: 2px solid white;
-      }
-
-      /* Video Section */
-      .video-container {
-        margin: 30px 0;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        border-radius: 10px;
-      }
-
-      .main-player {
-        width: 100%;
-        height: 500px;
-        border: none;
-        border-radius: 10px;
-        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
-      }
-
-      /* Content Sections */
-      .content-section {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        margin: 30px 0;
-        gap: 20px;
-      }
-
-      .card {
-        flex: 1 1 300px;
-        background: rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        border-radius: 10px;
-        text-align: left;
-      }
-
-      .card h3 {
-        color: #ff6b00;
-        margin-bottom: 15px;
-        font-size: 1.3rem;
-      }
-
-      .card p {
-        line-height: 1.6;
-        margin-bottom: 15px;
-      }
-
-      /* Ad Sections */
-      .ad-container {
-        background: rgba(255, 255, 255, 0.1);
-        padding: 20px;
-        border-radius: 10px;
-        margin: 20px 0;
-        min-height: 100px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-
-      .ad-text {
-        color: #ccc;
-        font-style: italic;
-      }
-
-      /* Telegram Button */
-      .telegram-btn {
-        display: inline-block;
-        background: #0088cc;
-        color: white;
-        text-decoration: none;
-        padding: 15px 30px;
-        border-radius: 50px;
-        font-weight: bold;
-        font-size: 1.2rem;
-        margin: 20px 0;
-        transition: all 0.3s ease;
-        box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-      }
-
-      .telegram-btn:hover {
-        background: #0077b5;
-        transform: translateY(-3px);
-        box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
-      }
-
-      .telegram-btn i {
-        margin-right: 10px;
-      }
-
-      /* Footer */
-      footer {
-        margin-top: 40px;
-        padding: 20px;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
-        width: 100%;
-      }
-
-      /* Responsive Design */
-      @media (max-width: 768px) {
         h1 {
-          font-size: 2rem;
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff6b00, #ff00a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
         }
 
         .tagline {
-          font-size: 1rem;
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ccc;
         }
 
-        .main-player {
-          height: 300px;
+        .logo {
+            width: 120px;
+            height: 120px;
+            margin-bottom: 20px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Navigation */
+        nav {
+            margin: 20px 0;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 15px;
+            border-radius: 10px;
         }
 
         .nav-links {
-          flex-direction: column;
-          align-items: center;
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 15px;
         }
 
         .nav-links a {
-          width: 100%;
-          text-align: center;
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff6b00, #ff00a0);
+            transition: all 0.3s ease;
         }
-      }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 160, 0.5);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #ff00a0, #ff6b00);
+            box-shadow: 0 5px 15px rgba(255, 0, 160, 0.7);
+            transform: translateY(-3px);
+            border: 2px solid white;
+        }
+
+        /* Video Section */
+        .video-container {
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .main-player {
+            width: 100%;
+            height: 500px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Content Sections */
+        .content-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .card {
+            flex: 1 1 300px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .card h3 {
+            color: #ff6b00;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Ad Sections */
+        .ad-container {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-text {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        /* Telegram Button */
+        .telegram-btn {
+            display: inline-block;
+            background: #0088cc;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+        }
+
+        .telegram-btn:hover {
+            background: #0077b5;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+        }
+
+        .telegram-btn i {
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .social-share-container {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .social-share-container h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .telegram {
+            background: #0088cc;
+        }
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        @media (max-width: 600px) {
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .share-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .main-player {
+                height: 300px;
+            }
+
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+        }
     </style>
     <!-- Font Awesome for icons -->
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
-    />
-  </head>
-  <body>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<body>
     <div class="container">
-      <header>
-        <img src="logo.png" alt="Logo" class="logo" />
-        <h1>PowerPlayLive</h1>
-        <p class="tagline">
-          Your ultimate destination for live streaming and entertainment
-        </p>
-      </header>
+        <header>
+            <img src="logo.png" alt="Logo" class="logo" />
+            <h1>PowerPlayLive</h1>
+            <p class="tagline">
+                Your ultimate destination for live streaming and entertainment
+            </p>
+        </header>
 
-      <!-- Navigation Links -->
-      <nav>
-        <div class="nav-links">
-          <a href="/Hindi" class="active">Hindi</a>
-          <a href="/English">English</a>
-          <a href="#">Live Sports</a>
-          <a href="https://telegram.me/">Movies</a>
-          <a href="https://telegram.me/PowerPlayLive">Telegram Channels</a>
-        </div>
-      </nav>
+        <!-- Navigation Links -->
+        <nav>
+            <div class="nav-links">
+                <a href="/Hindi" class="active">Hindi</a>
+                <a href="/English">English</a>
+                <a href="#">Live Sports</a>
+                <a href="https://telegram.me/">Movies</a>
+                <a href="https://telegram.me/PowerPlayLive">Telegram Channels</a>
+            </div>
+        </nav>
 
-      <!-- Ad Space -->
-      <div class="ad-container">
-        <p class="ad-text">
-          <a
-            href="https://telegram.me/PowerPlayLive"
-            target="_blank"
-            class="telegram-btn"
-            >Join Our Telegram for Updates</a
-          >
-        </p>
-      </div>
-
-      <!-- Main Video Content -->
-      <div class="video-container">
-        <h2>Live Streaming Now</h2>
-        <iframe
-          src="https://iframv2.embedxt.site/iframe/frame.php"
-          class="main-player"
-          allow="autoplay; fullscreen"
-          allowfullscreen
-        >
-        </iframe>
-      </div>
-
-      <!-- Ad Space -->
-      <div class="ad-container">
-        <p class="ad-text">
-          <a
-            href="https://telegram.me/PowerPlayLive"
-            target="_blank"
-            class="telegram-btn"
-            >Join Our Telegram for Updates</a
-          >
-        </p>
-      </div>
-
-      <!-- Content Sections -->
-      <div class="content-section">
-        <div class="card">
-          <h3>Premium Content</h3>
-          <p>
-            Access exclusive premium content including live sports, movies, and
-            TV shows from around the world in multiple languages.
-          </p>
-          <p>
-            Our library is updated daily with the latest content to keep you
-            entertained.
-          </p>
+        <!-- Ad Space -->
+        <div class="ad-container">
+            <p class="ad-text">
+                <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">Join Our Telegram for
+                    Updates</a>
+            </p>
         </div>
 
-        <div class="card">
-          <h3>Multi-Language Support</h3>
-          <p>
-            Enjoy content in Hindi, English, and several regional languages. We
-            provide subtitles and dubbing options for many programs.
-          </p>
-          <p>Switch between languages with our easy-to-use interface.</p>
+        <!-- Main Video Content -->
+        <div class="video-container">
+            <h2>Live Streaming Now</h2>
+            <iframe src="https://iframv2.embedxt.site/iframe/frame.php" class="main-player" allow="autoplay; fullscreen"
+                allowfullscreen>
+            </iframe>
         </div>
 
-        <div class="card">
-          <h3>24/7 Live TV</h3>
-          <p>
-            Never miss your favorite shows with our 24/7 live TV channels from
-            around the globe.
-          </p>
-          <p>
-            We offer news, entertainment, sports, and specialty channels for all
-            interests.
-          </p>
+        <!-- Ad Space -->
+        <div class="ad-container">
+            <p class="ad-text">
+            <div class="social-share-container">
+                <h3>Share with friends:</h3>
+                <div class="share-buttons">
+                    <a href="https://wa.me/?text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content%20-%20https://powerplaylive.pages.dev/"
+                        class="share-btn whatsapp" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+
+                    <a href="https://t.me/share/url?url=https://powerplaylive.pages.dev/&text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content"
+                        class="share-btn telegram" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://powerplaylive.pages.dev/"
+                        class="share-btn facebook" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                </div>
+            </div>
+
+            </p>
         </div>
-      </div>
 
-      <!-- Call to Action -->
-      <a
-        href="https://telegram.me/PowerPlayLive"
-        target="_blank"
-        class="telegram-btn"
-      >
-        <i class="fab fa-telegram"></i> Join Our Telegram for Updates
-      </a>
+        <!-- Content Sections -->
+        <div class="content-section">
+            <div class="card">
+                <h3>Premium Content</h3>
+                <p>
+                    Access exclusive premium content including live sports, movies, and
+                    TV shows from around the world in multiple languages.
+                </p>
+                <p>
+                    Our library is updated daily with the latest content to keep you
+                    entertained.
+                </p>
+            </div>
 
-      <!-- Footer -->
-      <footer>
-        <p>&copy; 2023 PowerPlayLive. All rights reserved.</p>
-        <p>Contact us: support@powerplaylive.com</p>
-      </footer>
+            <div class="card">
+                <h3>Multi-Language Support</h3>
+                <p>
+                    Enjoy content in Hindi, English, and several regional languages. We
+                    provide subtitles and dubbing options for many programs.
+                </p>
+                <p>Switch between languages with our easy-to-use interface.</p>
+            </div>
+
+            <div class="card">
+                <h3>24/7 Live TV</h3>
+                <p>
+                    Never miss your favorite shows with our 24/7 live TV channels from
+                    around the globe.
+                </p>
+                <p>
+                    We offer news, entertainment, sports, and specialty channels for all
+                    interests.
+                </p>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">
+            <i class="fab fa-telegram"></i> Join Our Telegram for Updates
+        </a>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2023 PowerPlayLive. All rights reserved.</p>
+            <p>Contact us: support@powerplaylive.com</p>
+        </footer>
     </div>
     <script>
         window.onload = function () {
-        var a = confirm("Join Our Telegram Channel For More Links!!");
-        if (a == true) {            
-          window.open("https://telegram.me/PowerPlayLive", "_blank");
-        }
-      };
+            var a = confirm("Join Our Telegram Channel For More Links!!");
+            if (a == true) {
+                window.open("https://telegram.me/PowerPlayLive", "_blank");
+            }
+        };
 
-      function welcome() {
-        window.open("https://telegram.me/PowerPlayLive", "_blank");
-      }
+        function welcome() {
+            window.open("https://telegram.me/PowerPlayLive", "_blank");
+        }
     </script>
-  </body>
+</body>
+
 </html>
