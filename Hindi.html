@@ -401,7 +401,11 @@
   <!-- JWPlayer Script -->
   <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
   <script>
-    const playerInstance = jwplayer("player").setup({
+    let playerInstance;
+    fetch('https://powerplaylive.pages.dev/config.json') // adjust path
+    .then(res => res.json())
+    .then(data => {
+    playerInstance = jwplayer("player").setup({
       controls: true,
       displaytitle: true,
       autoplay: true,
@@ -430,7 +434,7 @@
           image: "",
           sources: [
             {
-              file: "https://v18tataplaysyndication.akamaized.net/bpk-tv/Sports18_1_HD_voot_MOB/output03/index.m3u8?hdnea=exp=1743952677~acl=/*~hmac=446dc4d40a3def3fa808c43ab86b77eee00d0c0c5ddc49bf02a46ea7e4352c09",
+              file: data.hindiurl,
               label: "1080p",
               default: true,
             },
@@ -447,7 +451,7 @@
         ],
       },
     });
-
+  })
     playerInstance.on("ready", function () {
       const playerContainer = playerInstance.getContainer();
       const buttonContainer = playerContainer.querySelector(
