@@ -1,5 +1,5 @@
 {
-  "hindiurl": "https://v18tataplaysyndication.akamaized.net/bpk-tv/Sports18_1_HD_voot_MOB/output03/index.m3u8?hdnea=exp=1744120677~acl=/*~hmac=f8562ded4835a5fd2f158a925923dab1f2f3d76cdef75e0dfae693051dd5bcab",
-  "englishurl": "https://live-test.tsports.com/live-02/index.m3u8?hdnts=URLPrefix=aHR0cHM6Ly9saXZlLXRlc3QudHNwb3J0cy5jb20v~Expires=17433570233600~hmac=036dd412f9ce63d9d20a342564fe9f43ccea62116268d86c1bf89a5bbaca80bb",
-  "indexurl": "https://v18tataplaysyndication.akamaized.net/bpk-tv/Sports18_1_HD_voot_MOB/output03/index.m3u8?hdnea=exp=1744120677~acl=/*~hmac=f8562ded4835a5fd2f158a925923dab1f2f3d76cdef75e0dfae693051dd5bcab"
+  "hindiurl": "https://prod-sports-hin-fa.jiocinema.com/hls/live/2117033/inallow-ipl-2025/hin/1540040243/15mindvrm01f15d6223ccd742da93085a408526bb9c09april2025/master_apm.m3u8",
+  "englishurl": "https://prod-sports-eng-fa.jiocinema.com/hls/live/2117030/inallow-ipl-2025/eng/1540040243/15mindvrm01f15d6223ccd742da93085a408526bb9c09april2025/master.m3u8",
+  "indexurl": "https://prod-sports-hin-fa.jiocinema.com/hls/live/2117033/inallow-ipl-2025/hin/1540040243/15mindvrm01f15d6223ccd742da93085a408526bb9c09april2025/master_apm.m3u8"
 }
