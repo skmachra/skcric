@@ -1,5 +1,5 @@
 {
-  "hindiurl": "https://prod-sports-hin-cf.jiocinema.com/hls/live/2117033/inallow-ipl-2025/hin/1540040252/15mindvrm016d7951527bc246d29d8e02c2dd34e1c812april2025/master.m3u8",
+  "hindiurl": "https://ee4ee8c03a26.eu-central-1.playback.live-video.net/api/video/v1/eu-central-1.755921704393.channel.LOohfipmCQDP.m3u8",
   "englishurl": "https://live-test.tsports.com/live-02/index.m3u8?hdnts=URLPrefix=aHR0cHM6Ly9saXZlLXRlc3QudHNwb3J0cy5jb20v~Expires=17436002443600~hmac=1fdfe8ddcbf56e3eefcb254f9facdca9e6fce112f92dcf335b77a9a930116421",
-  "indexurl": "https://ee4ee8c03a26.eu-central-1.playback.live-video.net/api/video/v1/eu-central-1.755921704393.channel.LOohfipmCQDP.m3u8"
+  "indexurl": "https://iplislive.pages.dev/w.m3u8"
 }
