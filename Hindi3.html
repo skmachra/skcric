@@ -239,7 +239,7 @@
     }
 
     .whatsapp {
-      background: #25d366;
+      background: #25D366;
     }
 
     .telegram {
@@ -302,8 +302,8 @@
     <!-- Navigation Links -->
     <nav>
       <div class="nav-links">
-        <a href="/Hindi">Hindi</a>
-        <a href="/English">English</a>
+        <a href="Hindi" class="active">Hindi</a>
+        <a href="#" class="">English</a>
         <a href="/">Live Sports</a>
         <a href="https://telegram.me/SK_Movies1">Movies</a>
         <a href="https://telegram.me/PowerPlayLive">Telegram Channels</a>
@@ -395,130 +395,52 @@
 
     <!-- Footer -->
     <footer>
-      <p>&copy; 2025 PowerPlayLive. All rights reserved.</p>
+      <p>&copy; 2023 PowerPlayLive. All rights reserved.</p>
       <p>Contact us: support@powerplaylive.com</p>
     </footer>
   </div>
 
   <!-- JWPlayer Script -->
   <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
-  <script>
-    let playerInstance;
-    fetch('https://powerplaylive.pages.dev/config.json') // adjust path
-    .then(res => res.json())
-    .then(data => {
-    playerInstance = jwplayer("player").setup({
-      controls: true,
-      displaytitle: true,
-      autoplay: true,
-      displaydescription: true,
-      abouttext: "",
-      aboutlink: "https://telegram.me/PowerPlayLive",
-
-      skin: {
-        name: "netflix",
-      },
-
-      logo: {
-        file: "",
-        link: "https://telegram.me/PowerPlayLive",
-      },
-
-      captions: {
-        color: "#FFF",
-        fontSize: 14,
-        backgroundOpacity: 0,
-        edgeStyle: "raised",
-      },
-
-      playlist: [
-        {
-          image: "",
-          sources: [
-            {
-              file: data.fancode,
-              label: "1080p",
-              default: true,
+  <script src="https://ssl.p.jwpcdn.com/player/v/8.32.1/jwplayer.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+        jwplayer("player").setup({
+            file: "https://sshindidash-i.akamaihd.net/dash/live/2002466-b/sshindiwv/master.mpd?|Cookie=hdntl=exp=1744723510~acl=sshindi~id=6ac95b40f278d6a7a738616cbed8774d~data=hdntl~hmac=3976f95003260727f88803b776c9ed27161d69a81d3e20464ec41327f016f94d&User-Agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)&User-agent=Hotstar;in.startv.hotstar/25.02.24.8.11169%20(Android/15)&drmScheme=clearkey&drmLicense=fe7718fbb3fb4ba78c07cc0f578744e6:624e24b1843b459fab0a949609416f0d",
+            aspectratio: '16:9',
+            width: '100%',
+            autostart: true,
+            image: 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook',
+            mute: false,
+            preload: 'auto',
+            captions: { color: 'white', fontSize: '16px', backgroundOpacity: 0 },
+            sharing: {
+                sites: ['facebook', 'twitter']
             },
-          ],
-        },
-      ],
-      advertising: {
-        client: "vast",
-        schedule: [
-          {
-            offset: "pre",
-            tag: "",
-          },
-        ],
-      },
-    });
-  })
-    playerInstance.on("ready", function () {
-      const playerContainer = playerInstance.getContainer();
-      const buttonContainer = playerContainer.querySelector(
-        ".jw-button-container"
-      );
+            drm: {
+                "clearkey": {
+                    "keyId": "fe7718fbb3fb4ba78c07cc0f578744e6",
+                    "key": "624e24b1843b459fab0a949609416f0d"
+                }
+            }
+        });
 
-      // Rewind button functionality
-      const rewindContainer = playerContainer.querySelector(
-        ".jw-display-icon-rewind"
-      );
-      const rewindButton = rewindContainer.cloneNode(true);
-      const rewindIcon = rewindButton.querySelector(".jw-icon-rewind");
-      rewindIcon.style.transform = "scaleX(1)";
-      rewindIcon.ariaLabel = "Rewind 10 Seconds";
+        // Ensure playback compatibility for mobile devices
+        jwplayer().on('ready', function () {
+            const player = document.querySelector('#player-container');
+            if (player) {
+                player.style.height = window.innerHeight + 'px';
+            }
+        });
 
-      const nextContainer = playerContainer.querySelector(
-        ".jw-display-icon-next"
-      );
-      nextContainer.parentNode.insertBefore(rewindButton, nextContainer);
+        jwplayer().on('play', function () {
+            document.body.style.backgroundColor = "#000";
+        });
 
-      // Rewind functionality for the control bar
-      const rewindControlBarButton =
-        buttonContainer.querySelector(".jw-icon-rewind");
-      const rewindControlBarClone = rewindControlBarButton.cloneNode(true);
-      rewindControlBarClone.style.transform = "scaleX(1)";
-      rewindControlBarClone.ariaLabel = "Rewind 10 Seconds";
-      buttonContainer.insertBefore(
-        rewindControlBarClone,
-        buttonContainer.firstChild
-      );
-
-      // On click of rewind button, seek backward by 10 seconds
-      [rewindButton, rewindControlBarClone].forEach((button) => {
-        button.onclick = () => {
-          const currentPosition = playerInstance.getPosition();
-          const newPosition = Math.max(currentPosition - 10, 0);
-          playerInstance.seek(newPosition);
-        };
-      });
-
-      // Detect adblock
-      playerInstance.on("adBlock", () => {
-        const modal = document.querySelector("div.modal");
-        if (modal) {
-          modal.style.display = "flex";
-          document
-            .getElementById("close")
-            .addEventListener("click", () => location.reload());
-        }
-      });
-    });
-
-    // Confirmation message for joining Telegram channel
-    window.onload = function () {
-      var a = confirm("Join Our Telegram Channel For More Links!!");
-      if (a == true) {
-        window.location.href = "https://telegram.me/PowerPlayLive";
-      }
-    };
-
-    function welcome() {
-      window.open("https://telegram.me/PowerPlayLive", "_blank");
-    }
-  </script>
-
+        jwplayer().on('error', function (e) {
+            console.error("Playback error:", e.message);
+        });
+    </script>
   <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
     disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
 </body>
