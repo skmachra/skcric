@@ -1,6 +1,6 @@
 {
-  "hindiurl": "https://001.fclplayer.net/live/csstream2/playlist.m3u8?id=1002&pk=69908e7e61f4b6348706325e4656e3d40dc3028e6198ed0a98917843c2ca41d1",
-  "englishurl": "https://vkvsd78.okcdn.ru/cmaf/8218076252726/sig/reqdaBoJtVQ/srcIp/172.69.203.192/urls/185.226.53.69/expires/1745179653381/clientType/13/srcAg/CHROME/fromCache/1/mid/9433085258550/id/8218076252726/get/hls_9433085258550.MY6uTHtvbIA.m3u8",
-  "indexurl": "https://live.aoneroom.com/moviebox/wefeed05.m3u8?auth_key=1744615696-0-0-e15b10662e3a00ed562396542d1c89ef",
-  "fancode": "https://xenolive.com/fancode/global/primary/123021_english_hls_4912ta-no/index.m3u8"
+  "hindiurl": "https://iplislive.pages.dev/sky.m3u8",
+  "englishurl": "https://news.bajimath.com/Candy_Live/vstream.m3u8?id=e666b0d2a3ec&e=.m3u8",
+  "indexurl": "https://iplislive.pages.dev/sky.m3u8",
+  "fancode": "https://xenolive.com/fancode/global/primary/123022_english_hls_5588ta-no/index.m3u8"
 }
