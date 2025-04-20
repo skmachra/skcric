@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Shaka Player - ClearKey DRM</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.3.5/shaka-player.compiled.js"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    video {
+      width: 90%;
+      max-width: 800px;
+      aspect-ratio: 16/9;
+    }
+  </style>
+</head>
+<body>
+
+<video id="video" autoplay controls></video>
+
+<script>
+  async function initPlayer() {
+    // Check if browser supports Shaka
+    if (!shaka.Player.isBrowserSupported()) {
+      alert('Shaka Player is not supported!');
+      return;
+    }
+
+    const video = document.getElementById('video');
+    const player = new shaka.Player(video);
+
+    // Optional: log errors
+    player.addEventListener('error', e => console.error('Error code', e.detail.code, e));
+
+    // DRM Config
+    player.configure({
+      drm: {
+        clearKeys: {
+          // Format: 'keyId': 'key'
+          'f912fa528f10ba46e035c5fb6f988744': '8080b1f738fd62d6d692c7db101c4fbf'
+        }
+      }
+    });
+
+    // Load the DASH manifest
+    try {
+      await player.load("https://a125aivottepl-a.akamaihd.net/pdx-nitro/live/clients/dash/enc/fg5nk2nauv/out/v1/37fe96ef48a74ac78bc598fa12caa8bd/cenc.mpd");
+      console.log("The video has loaded!");
+    } catch (e) {
+      console.error("Error loading video:", e);
+    }
+  }
+
+  // Initialize when DOM is ready
+  document.addEventListener('DOMContentLoaded', initPlayer);
+</script>
+
+</body>
+</html>
