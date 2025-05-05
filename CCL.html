@@ -318,7 +318,8 @@
         <!-- Main Video Content -->
         <div class="video-container">
             <h2>Live Streaming Now</h2>
-            <iframe src="" id="player" class="main-player" allow="autoplay" webkitAllowFullScreen mozallowfullscreen allowfullscreen>
+            <iframe src="" id="player" class="main-player" allow="autoplay" webkitAllowFullScreen mozallowfullscreen
+                allowfullscreen>
             </iframe>
             <div id="message" style="color:white;text-align:center;margin-top:20px;"></div>
         </div>
@@ -400,37 +401,15 @@
         const urlParams = new URLSearchParams(window.location.search);
         const targetId = urlParams.get('id');
 
-        if (!targetId) {
-            document.body.innerHTML = "<h2 style='color:white;text-align:center;'>No video ID provided</h2>";
-        } else {
-            fetch("https://raw.githubusercontent.com/abusaeeidx/CricHd-playlists-Auto-Update-permanent/main/api.json")
-                .then(response => {
-                    if (!response.ok) throw new Error("Network response was not ok");
-                    return response.json();
-                })
-                .then(data => {
-                    const channel = data.find(item => item.id === targetId);
-                    const messageDiv = document.getElementById('message');
+        const messageDiv = document.getElementById('message');
 
-                    if (!channel) {
-                        messageDiv.innerHTML = "Stream not found for the provided ID";
-                        return;
-                    }
+        const streamUrl = encodeURIComponent(targetId);
+        const playerUrl = `https://anym3u8player.com/tv/video-player.php?url=${streamUrl}`;
 
-                    const streamUrl = encodeURIComponent(channel.link);
-                    const playerUrl = `https://anym3u8player.com/tv/video-player.php?url=${streamUrl}`;
+        const iframe = document.getElementById('player');
+        iframe.src = playerUrl;
 
-                    const iframe = document.getElementById('player');
-                    iframe.src = playerUrl;
-
-                    messageDiv.innerHTML = ""; // Clear any previous error
-                })
-                .catch(error => {
-                    const messageDiv = document.getElementById('message');
-                    messageDiv.innerHTML = `Error: ${error.message}`;
-                });
-
-        }
+        messageDiv.innerHTML = ""; // Clear any previous error
     </script>
 </body>
 
