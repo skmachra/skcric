@@ -403,8 +403,8 @@
 
         const messageDiv = document.getElementById('message');
 
-        const streamUrl = encodeURIComponent(targetId);
-        const playerUrl = `https://anym3u8player.com/tv/video-player.php?url=${streamUrl}`;
+        const streamUrl = targetId;
+        const playerUrl = streamUrl;
 
         const iframe = document.getElementById('player');
         iframe.src = playerUrl;
