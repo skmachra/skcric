@@ -403,48 +403,57 @@
     </footer>
   </div>
 
-  <!-- JWPlayer Script -->
-  <!-- <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script> -->
-  <script src="https://ssl.p.jwpcdn.com/player/v/8.32.1/jwplayer.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-        jwplayer("player").setup({
-            file: "https://otte.live.fly.ww.aiv-cdn.net/bom-nitro/live/clients/dash/enc/uugw0qkwob/out/v1/acfdcf2dabd24075bb615c6c19ba9bd4/cenc.mpd",
-            aspectratio: '16:9',
-            width: '100%',
-            autostart: true,
-            image: 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook',
-            mute: false,
-            preload: 'auto',
-            captions: { color: 'white', fontSize: '16px', backgroundOpacity: 0 },
-            sharing: {
-                sites: ['facebook', 'twitter']
-            },
-            drm: {
-                "clearkey": {
-                    "keyId": "ec2147a4b9b1b87ee3d8dc6915bc7928",
-                    "key": "c84fcd82767a9cd9e2e0c0d1b47a72c5"
-                }
-            }
-        });
-
-        // Ensure playback compatibility for mobile devices
-        jwplayer().on('ready', function () {
-            const player = document.querySelector('#player-container');
-            if (player) {
-                player.style.height = window.innerHeight + 'px';
-            }
-        });
-
-        jwplayer().on('play', function () {
-            document.body.style.backgroundColor = "#000";
-        });
-
-        jwplayer().on('error', function (e) {
-            console.error("Playback error:", e.message);
-        });
-    </script>
-  <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
-    disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
+  <!-- Shaka Player Script -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize Shaka Player
+      const video = document.createElement('video');
+      video.id = 'videoElement';
+      video.autoplay = true;
+      video.controls = true;
+      video.style.width = '100%';
+      video.style.height = '100%';
+      video.poster = 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook';
+      
+      const playerContainer = document.getElementById('player');
+      playerContainer.appendChild(video);
+      
+      const player = new shaka.Player(video);
+      const ui = new shaka.ui.Overlay(player, playerContainer, video);
+      
+      // Configure player
+      player.configure({
+        streaming: {
+          bufferingGoal: 60,
+          rebufferingGoal: 2,
+          bufferBehind: 30
+        },
+        drm: {
+          clearKeys: {
+            'ec2147a4b9b1b87ee3d8dc6915bc7928': 'c84fcd82767a9cd9e2e0c0d1b47a72c5'
+          }
+        }
+      });
+      
+      // Load the manifest
+      const manifestUri = 'https://otte.live.fly.ww.aiv-cdn.net/bom-nitro/live/clients/dash/enc/uugw0qkwob/out/v1/acfdcf2dabd24075bb615c6c19ba9bd4/cenc.mpd';
+      
+      player.load(manifestUri).then(() => {
+        console.log('The video has now been loaded!');
+      }).catch((error) => {
+        console.error('Error code', error.code, 'object', error);
+      });
+      
+      // Handle errors
+      player.addEventListener('error', (event) => {
+        console.error('Error code', event.detail.code, 'object', event.detail);
+      });
+      
+      // Handle fullscreen changes for mobile
+      video.addEventListener('playing', () => {
+        document.body.style.backgroundColor = "#000";
+      });
+    });
+  </script>
 </body>
 </html>
