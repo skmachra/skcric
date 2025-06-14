@@ -6,8 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
   <title>PowerPlayLive - Live Streaming & More</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/shaka-player.ui.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/controls.min.css" crossorigin="anonymous">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.6/shaka-player.ui.min.js"
+    crossorigin="anonymous"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.6/controls.min.css"
+    crossorigin="anonymous">
   <style>
     /* Modern CSS with Flexbox */
     * {
@@ -289,9 +291,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <!-- <script type='text/javascript' src='//pl26482254.profitableratecpm.com/a2/eb/1d/a2eb1d5e3ed5232869f14e2021a33ee6.js'></script> -->
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
-<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9204347,document.createElement('script'))</script>
+<script>(function (d, z, s) { s.src = 'https://' + d + '/401/' + z; try { (document.body || document.documentElement).appendChild(s); } catch (e) { } })('groleegni.net', 9187666, document.createElement('script'))</script>
+<script>(function (s, u, z, p) { s.src = u, s.setAttribute('data-zone', z), p.appendChild(s); })(document.createElement('script'), 'https://shebudriftaiter.net/tag.min.js', 9187662, document.body || document.documentElement)</script>
+<script>(function (d, z, s) { s.src = 'https://' + d + '/401/' + z; try { (document.body || document.documentElement).appendChild(s); } catch (e) { } })('gizokraijaw.net', 9204347, document.createElement('script'))</script>
+
 <body>
   <div class="container">
     <header>
@@ -325,7 +328,9 @@
     <div class="video-container">
       <h2>Live Streaming Now</h2>
       <div class="player-container">
-        <div id="player"></div>
+        <div data-shaka-player-container id="player" class="shaka-video-container">
+          <video autoplay data-shaka-player id="video" poster="https://cdn.prod.website-files.com/65cafeae0d62d9e4163d1545/66bcc9f2d13bf9c814bf6bef_AD_4nXdruts2IwmnCUAKMcW4n8KcbSq0ytkBGoH4eiHsioB5XsiO3sya9FYhrKhXmiuLs_AvXuBWhSS0YDmGL07nao2EhKveZ7ItlQ4tjllRIsjvzVqPoF_FRMO4QtgGBDhFvjFL_kAopsMpwxKzW96F4_ifm3g.png"></video>
+        </div>
       </div>
     </div>
 
@@ -405,55 +410,57 @@
 
   <!-- Shaka Player Script -->
   <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      // Initialize Shaka Player
-      const video = document.createElement('video');
-      video.id = 'videoElement';
-      video.autoplay = true;
-      video.controls = true;
-      video.style.width = '100%';
-      video.style.height = '100%';
-      video.poster = 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook';
-      
-      const playerContainer = document.getElementById('player');
-      playerContainer.appendChild(video);
-      
-      const player = new shaka.Player(video);
-      const ui = new shaka.ui.Overlay(player, playerContainer, video);
-      
-      // Configure player
+
+    const manifestUri = "https://otte.live.fly.ww.aiv-cdn.net/bom-nitro/live/clients/dash/enc/uugw0qkwob/out/v1/acfdcf2dabd24075bb615c6c19ba9bd4/cenc.mpd";
+
+    async function init() {
+      const video = document.getElementById('video');
+      const ui = video['ui'];
+      const controls = ui.getControls();
+      const player = controls.getPlayer();
+
+      window.player = player;
+      window.ui = ui;
+
       player.configure({
-        streaming: {
-          bufferingGoal: 60,
-          rebufferingGoal: 2,
-          bufferBehind: 30
-        },
         drm: {
-          clearKeys: {
-            'ec2147a4b9b1b87ee3d8dc6915bc7928': 'c84fcd82767a9cd9e2e0c0d1b47a72c5'
+          "clearKeys": {
+            "ec2147a4b9b1b87ee3d8dc6915bc7928": "c84fcd82767a9cd9e2e0c0d1b47a72c5"
           }
         }
       });
-      
-      // Load the manifest
-      const manifestUri = 'https://otte.live.fly.ww.aiv-cdn.net/bom-nitro/live/clients/dash/enc/uugw0qkwob/out/v1/acfdcf2dabd24075bb615c6c19ba9bd4/cenc.mpd';
-      
-      player.load(manifestUri).then(() => {
+
+      player.addEventListener('error', onPlayerErrorEvent);
+      controls.addEventListener('error', onUIErrorEvent);
+
+      try {
+        await player.load(manifestUri);
         console.log('The video has now been loaded!');
-      }).catch((error) => {
-        console.error('Error code', error.code, 'object', error);
-      });
-      
-      // Handle errors
-      player.addEventListener('error', (event) => {
-        console.error('Error code', event.detail.code, 'object', event.detail);
-      });
-      
-      // Handle fullscreen changes for mobile
-      video.addEventListener('playing', () => {
-        document.body.style.backgroundColor = "#000";
-      });
-    });
+      } catch (error) {
+        onPlayerError(error);
+      }
+    }
+
+    function onPlayerErrorEvent(errorEvent) {
+      onPlayerError(errorEvent.detail);
+    }
+
+    function onPlayerError(error) {
+      console.error('Error code', error.code, 'object', error);
+    }
+
+    function onUIErrorEvent(errorEvent) {
+      onPlayerError(errorEvent.detail);
+    }
+
+    function initFailed(errorEvent) {
+      console.error('Unable to load the UI library!');
+    }
+
+    document.addEventListener('shaka-ui-loaded', init);
+    document.addEventListener('shaka-ui-load-failed', initFailed);
+
   </script>
 </body>
+
 </html>
