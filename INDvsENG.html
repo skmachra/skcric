@@ -4,8 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <meta name="referrer" content="no-referrer" />
-  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
   <title>IND vs ENG Test Live</title>
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
   <style>
     body {
       background: #101820;
@@ -14,20 +14,29 @@
       font-family: Arial, sans-serif;
       padding: 20px;
     }
+    h1 {
+      font-size: 24px;
+      margin-bottom: 10px;
+    }
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
     select {
       font-size: 16px;
       padding: 10px;
-      margin-bottom: 20px;
     }
     iframe {
       width: 100%;
-      max-width: 800px;
-      height: 450px;
+      max-width: 1000px;
+      aspect-ratio: 16 / 9;
       border: 2px solid #ccc;
       border-radius: 10px;
     }
   </style>
-
 </head>
 <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
 <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
@@ -35,41 +44,59 @@
 
 <body>
   <h1>IND vs ENG Test - Live Stream</h1>
-  <label for="quality">Select Quality:</label>
-  <select id="quality">
-    <option value="240">240p</option>
-    <option value="360">360p</option>
-    <option value="540">540p</option>
-    <option value="720" selected>720p</option>
-    <option value="1080">1080p</option>
-  </select>
 
-  <br><br>
+  <div class="controls">
+    <label>
+      Language:
+      <select id="language">
+        <option value="hindi">Hindi</option>
+        <option value="english" selected>English</option>
+      </select>
+    </label>
+
+    <label>
+      Quality:
+      <select id="quality">
+        <option value="108">144p</option>
+        <option value="224">240p</option>
+        <option value="412">280p</option>
+        <option value="664">360p</option>
+        <option value="900">540p</option>
+        <option value="1300" selected>720p</option>
+        <option value="3500">1080p</option>
+      </select>
+    </label>
+  </div>
+
   <iframe id="playerFrame" src="" allowfullscreen></iframe>
 
   <script>
+    const languageSelect = document.getElementById("language");
     const qualitySelect = document.getElementById("quality");
     const iframe = document.getElementById("playerFrame");
 
-    const sources = {
-      "240": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_224.m3u8",
-      "360": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_664.m3u8",
-      "540": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_900.m3u8",
-      "720": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_2000.m3u8",
-      "1080": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_664.m3u8"
+    const baseLinks = {
+      hindi: "https://tataplay.slivcdn.com/hls/live/2020591-b/TEN3HD",
+      english: "https://tataplay.slivcdn.com/hls/live/2011747-b/TEN1HD"
     };
 
-    function loadIframe(quality) {
-      const src = sources[quality]
-      iframe.src = src;
+    const token = "hdntl=exp=1750487345~acl=%2f*~id=5fc1dba3-e83d-4482-98af-d4d5546cc265~data=hdntl~hmac=258501a0d8e6e75f402d2c3fcf3e7e341a15d2e1146a872d37aef0c7047eb4cd";
+
+    function updateIframe() {
+      const lang = languageSelect.value;
+      const quality = qualitySelect.value;
+      const finalUrl = `${baseLinks[lang]}/${token}/master_${quality}.m3u8`;
+
+      // Embed player.html with the stream
+      iframe.src = finalUrl;
     }
 
-    // Load initial quality
-    loadIframe(qualitySelect.value);
+    // Initial load
+    updateIframe();
 
-    qualitySelect.addEventListener("change", e => {
-      loadIframe(e.target.value);
-    });
+    // Events
+    languageSelect.addEventListener("change", updateIframe);
+    qualitySelect.addEventListener("change", updateIframe);
   </script>
 </body>
 </html>
