@@ -1,108 +1,446 @@
-<html>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="referrer" content="no-referrer">
-<title>@criccoder</title>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/shaka-player.ui.min.js" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.1/controls.min.css" crossorigin="anonymous">
-<style>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="referrer" content="no-referrer" />
+  <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+  <title>PowerPlayLive - Live Streaming & More</title>
+  <style>
+    /* Modern CSS with Flexbox */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    }
+
     body {
-        background-color: #000;
-        margin: 0;
+      background: linear-gradient(135deg, #1e0033, #3a0068);
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 20px;
     }
 
-    /* Container for video and logo */
-    .video-container {
-        position: relative;
-        width: 100%;
-        height: 100%;
-        background-color: black;
+    .container {
+      max-width: 1200px;
+      width: 100%;
     }
 
-    /* Style for the logo */
+    header {
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      background: linear-gradient(90deg, #ff6b00, #ff00a0);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .tagline {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+      color: #ccc;
+    }
+
     .logo {
-        position: absolute;
-        top: 10px; /* Adjust vertical position */
-        left: 10px; /* Adjust horizontal position */
-        z-index: 1; /* Ensure the logo appears above the video */
-        max-width: 120px; /* Set maximum width for the logo */
-        max-height: 120px; /* Set maximum height for the logo */
-        pointer-events: none; /* Prevent interference with video controls */
+      width: 120px;
+      height: 120px;
+      margin-bottom: 20px;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
-    .shaka-spinner-container {
-        display: none;
+    /* Navigation */
+    nav {
+      margin: 20px 0;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 15px;
+      border-radius: 10px;
     }
 
-    .uc {
-        pointer-events: none;
+    .nav-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 15px;
     }
-</style>
-</head>
 
-<body>
-        <!-- Video player -->
-        <div data-shaka-player-container style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
-            <video autoplay muted data-shaka-player id="video" poster="" style="width:100%; height:100%;"></video>
-        </div>
-    </div>
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      padding: 10px 20px;
+      border-radius: 50px;
+      font-weight: bold;
+      background: linear-gradient(90deg, #ff6b00, #ff00a0);
+      transition: all 0.3s ease;
+    }
 
+    .nav-links a:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(255, 0, 160, 0.5);
+    }
 
-<script>
+    .nav-links a.active {
+      background: linear-gradient(90deg, #ff00a0, #ff6b00);
+      box-shadow: 0 5px 15px rgba(255, 0, 160, 0.7);
+      transform: translateY(-3px);
+      border: 2px solid white;
+    }
 
-    const manifestUri = "https://otte.live.fly.ww.aiv-cdn.net/pdx-nitro/live/clients/dash/enc/prauteb8nh/out/v1/a234d59d66c5444dbd0f13abfdc1038a/cenc.mpd";
+    /* Video Section */
+    .video-container {
+      margin: 30px 0;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+    }
 
-async function init() {
-  const video = document.getElementById('video');
-  const ui = video['ui'];
-  const controls = ui.getControls();
-  const player = controls.getPlayer();
+    .player-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%;
+      /* 16:9 aspect ratio */
+      background: #000;
+    }
 
-  window.player = player;
-  window.ui = ui;
+    #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
 
-  player.configure({
-    drm: {
-      "clearKeys": {
-        "c5baabaaf817abc314702e6fc615571f": "35f6b737c5b2c3d657a37b2bff894916"
+    /* Content Sections */
+    .content-section {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      margin: 30px 0;
+      gap: 20px;
+    }
+
+    .card {
+      flex: 1 1 300px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      text-align: left;
+    }
+
+    .card h3 {
+      color: #ff6b00;
+      margin-bottom: 15px;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+
+    /* Ad Sections */
+    .ad-container {
+      background: rgba(255, 255, 255, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      min-height: 100px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ad-text {
+      color: #ccc;
+      font-style: italic;
+    }
+
+    /* Telegram Button */
+    .telegram-btn {
+      display: inline-block;
+      background: #0088cc;
+      color: white;
+      text-decoration: none;
+      padding: 15px 30px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 1.2rem;
+      margin: 20px 0;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+    }
+
+    .telegram-btn:hover {
+      background: #0077b5;
+      transform: translateY(-3px);
+      box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+    }
+
+    .telegram-btn i {
+      margin-right: 10px;
+    }
+
+    /* Footer */
+    footer {
+      margin-top: 40px;
+      padding: 20px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      width: 100%;
+    }
+
+    .social-share-container {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 10px;
+      margin: 20px 0;
+      text-align: center;
+      max-width: 500px;
+      width: 100%;
+    }
+
+    .social-share-container h3 {
+      color: #fff;
+      margin-bottom: 15px;
+      font-size: 1.2rem;
+    }
+
+    .share-buttons {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .share-btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      border-radius: 50px;
+      color: white;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s ease;
+    }
+
+    .share-btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    .whatsapp {
+      background: #25D366;
+    }
+
+    .telegram {
+      background: #0088cc;
+    }
+
+    .facebook {
+      background: #3b5998;
+    }
+
+    @media (max-width: 600px) {
+      .share-buttons {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      .share-btn {
+        width: 100%;
+        justify-content: center;
       }
     }
-  });
 
-  player.addEventListener('error', onPlayerErrorEvent);
-  controls.addEventListener('error', onUIErrorEvent);
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2rem;
+      }
 
-  try {
-    await player.load(manifestUri);
-    console.log('The video has now been loaded!');
-  } catch (error) {
-    onPlayerError(error);
-  }
-}
+      .tagline {
+        font-size: 1rem;
+      }
 
-function onPlayerErrorEvent(errorEvent) {
-  onPlayerError(errorEvent.detail);
-}
+      .nav-links {
+        flex-direction: column;
+        align-items: center;
+      }
 
-function onPlayerError(error) {
-  console.error('Error code', error.code, 'object', error);
-}
+      .nav-links a {
+        width: 100%;
+        text-align: center;
+      }
+    }
+  </style>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+<!-- <script type='text/javascript' src='//pl26482254.profitableratecpm.com/a2/eb/1d/a2eb1d5e3ed5232869f14e2021a33ee6.js'></script> -->
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9204347,document.createElement('script'))</script>
+<body>
+  <div class="container">
+    <header>
+      <img src="logo.png" alt="Logo" class="logo" />
+      <h1>PowerPlayLive</h1>
+      <p class="tagline">
+        Your ultimate destination for live streaming and entertainment
+      </p>
+    </header>
 
-function onUIErrorEvent(errorEvent) {
-  onPlayerError(errorEvent.detail);
-}
+    <!-- Navigation Links -->
+    <nav>
+      <div class="nav-links">
+        <a href="Hindi">Hindi</a>
+        <a href="#" class="active">English</a>
+        <a href="/">Live Sports</a>
+        <a href="https://telegram.me/SK_Movies1">Movies</a>
+        <a href="https://telegram.me/PowerPlayLive">Telegram Channels</a>
+      </div>
+    </nav>
 
-function initFailed(errorEvent) {
-  console.error('Unable to load the UI library!');
-}
+    <!-- Ad Space -->
+    <div class="ad-container">
+      <p class="ad-text">
+        <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">Join Our Telegram for
+          Updates</a>
+      </p>
+    </div>
 
-document.addEventListener('shaka-ui-loaded', init);
-document.addEventListener('shaka-ui-load-failed', initFailed);
+    <!-- Main Video Content -->
+    <div class="video-container">
+      <h2>Live Streaming Now</h2>
+      <div class="player-container">
+        <div id="player"></div>
+      </div>
+    </div>
 
-var userConfirmed = confirm("Join For More Links!!");
-if (userConfirmed) {
-  window.location.href = "https://telegram.me/Criccoder";
-}
+    <!-- Ad Space -->
+    <div class="ad-container">
+      <p class="ad-text">
+      <div class="social-share-container">
+        <h3>Share with friends:</h3>
+        <div class="share-buttons">
+          <a href="https://wa.me/?text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content%20-%20https://powerplaylive.pages.dev/"
+            class="share-btn whatsapp" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-whatsapp"></i> WhatsApp
+          </a>
 
-</script></body>
+          <a href="https://t.me/share/url?url=https://powerplaylive.pages.dev/&text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content"
+            class="share-btn telegram" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-telegram"></i> Telegram
+          </a>
+
+          <a href="https://www.facebook.com/sharer/sharer.php?u=https://powerplaylive.pages.dev/"
+            class="share-btn facebook" target="_blank" rel="noopener noreferrer">
+            <i class="fab fa-facebook"></i> Facebook
+          </a>
+        </div>
+      </div>
+
+      </p>
+    </div>
+
+    <!-- Content Sections -->
+    <div class="content-section">
+      <div class="card">
+        <h3>Premium Content</h3>
+        <p>
+          Access exclusive premium content including live sports, movies, and
+          TV shows from around the world in multiple languages.
+        </p>
+        <p>
+          Our library is updated daily with the latest content to keep you
+          entertained.
+        </p>
+      </div>
+
+      <div class="card">
+        <h3>Multi-Language Support</h3>
+        <p>
+          Enjoy content in Hindi, English, and several regional languages. We
+          provide subtitles and dubbing options for many programs.
+        </p>
+        <p>Switch between languages with our easy-to-use interface.</p>
+      </div>
+
+      <div class="card">
+        <h3>24/7 Live TV</h3>
+        <p>
+          Never miss your favorite shows with our 24/7 live TV channels from
+          around the globe.
+        </p>
+        <p>
+          We offer news, entertainment, sports, and specialty channels for all
+          interests.
+        </p>
+      </div>
+    </div>
+
+    <!-- Call to Action -->
+    <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">
+      <i class="fab fa-telegram"></i> Join Our Telegram for Updates
+    </a>
+
+    <!-- Footer -->
+    <footer>
+      <p>&copy; 2023 PowerPlayLive. All rights reserved.</p>
+      <p>Contact us: support@powerplaylive.com</p>
+    </footer>
+  </div>
+
+  <!-- JWPlayer Script -->
+  <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
+  <script src="https://ssl.p.jwpcdn.com/player/v/8.32.1/jwplayer.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+        jwplayer("player").setup({
+            file: "https://abmyxykaaaaaaaamkyvb65fuqebyg.7a77200bf98444ac997a89ed83775793.emt.cf.ww.aiv-cdn.net/iad-nitro/live/clients/dash/enc/f60kqesunw/out/v1/a435ed7a00f947deb4369b46d8f2fb70/cenc.mpd",
+            aspectratio: '16:9',
+            width: '100%',
+            autostart: true,
+            image: 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook',
+            mute: false,
+            preload: 'auto',
+            captions: { color: 'white', fontSize: '16px', backgroundOpacity: 0 },
+            drm: {
+                "clearkey": {
+                    "keyId": "1779c27b9d077a3ba0c9cc1bb9a94b9f",
+                    "key": "cc5cf3b7928fb9e0a1ee6a8b566f0a8e"
+                }
+            }
+        });
+
+        // Ensure playback compatibility for mobile devices
+        jwplayer().on('ready', function () {
+            const player = document.querySelector('#player-container');
+            if (player) {
+                player.style.height = window.innerHeight + 'px';
+            }
+        });
+
+        jwplayer().on('play', function () {
+            document.body.style.backgroundColor = "#000";
+        });
+
+        jwplayer().on('error', function (e) {
+            console.error("Playback error:", e.message);
+        });
+    </script>
+  <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+    disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
+</body>
 </html>
