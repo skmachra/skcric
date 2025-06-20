@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>IND vs ENG Test Live</title>
+  <style>
+    body {
+      background: #101820;
+      color: white;
+      text-align: center;
+      font-family: Arial, sans-serif;
+      padding: 20px;
+    }
+    select {
+      font-size: 16px;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+    iframe {
+      width: 100%;
+      max-width: 800px;
+      height: 450px;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+    }
+  </style>
+
+</head>
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9204347,document.createElement('script'))</script>
+
+<body>
+  <h1>IND vs ENG Test - Live Stream</h1>
+  <label for="quality">Select Quality:</label>
+  <select id="quality">
+    <option value="240">240p</option>
+    <option value="360">360p</option>
+    <option value="540">540p</option>
+    <option value="720" selected>720p</option>
+    <option value="1080">1080p</option>
+  </select>
+
+  <br><br>
+  <iframe id="playerFrame" src="" allowfullscreen></iframe>
+
+  <script>
+    const qualitySelect = document.getElementById("quality");
+    const iframe = document.getElementById("playerFrame");
+
+    const sources = {
+      "240": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_224.m3u8",
+      "360": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_664.m3u8",
+      "540": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_900.m3u8",
+      "720": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_2000.m3u8",
+      "1080": "https://tataplay.slivcdn.com/hls/live/2020591/TEN3HD/master_664.m3u8"
+    };
+
+    function loadIframe(quality) {
+      const src = sources[quality]
+      iframe.src = src;
+    }
+
+    // Load initial quality
+    loadIframe(qualitySelect.value);
+
+    qualitySelect.addEventListener("change", e => {
+      loadIframe(e.target.value);
+    });
+  </script>
+</body>
+</html>
