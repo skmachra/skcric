@@ -29,12 +29,43 @@
       font-size: 16px;
       padding: 10px;
     }
-    iframe {
+    .player-container {
+      position: relative;
       width: 100%;
       max-width: 1000px;
+      margin: 0 auto;
+    }
+    iframe {
+      width: 100%;
       aspect-ratio: 16 / 9;
       border: 2px solid #ccc;
       border-radius: 10px;
+    }
+    .loading-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.7);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 8px;
+      z-index: 10;
+      display: none;
+    }
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #f3f3f3;
+      border-top: 5px solid #3498db;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -68,12 +99,18 @@
     </label>
   </div>
 
-  <iframe id="playerFrame" src="" allowfullscreen></iframe>
+  <div class="player-container">
+    <div class="loading-overlay" id="loadingOverlay">
+      <div class="spinner"></div>
+    </div>
+    <iframe id="playerFrame" src="" allowfullscreen></iframe>
+  </div>
 
   <script>
     const languageSelect = document.getElementById("language");
     const qualitySelect = document.getElementById("quality");
     const iframe = document.getElementById("playerFrame");
+    const loadingOverlay = document.getElementById("loadingOverlay");
 
     const baseLinks = {
       hindi: "https://tataplay.slivcdn.com/hls/live/2020591-b/TEN3HD",
@@ -86,6 +123,20 @@
       const lang = languageSelect.value;
       const quality = qualitySelect.value;
       const finalUrl = `${baseLinks[lang]}/${token}/master_${quality}.m3u8`;
+
+      // Show loading indicator
+      loadingOverlay.style.display = 'flex';
+      
+      // Set a timeout to hide the loading indicator (in case iframe fails to load)
+      const loadingTimeout = setTimeout(() => {
+        loadingOverlay.style.display = 'none';
+      }, 10000); // Hide after 10 seconds even if not loaded
+
+      // When iframe loads, hide the loading indicator
+      iframe.onload = function() {
+        clearTimeout(loadingTimeout);
+        loadingOverlay.style.display = 'none';
+      };
 
       // Embed player.html with the stream
       iframe.src = finalUrl;
