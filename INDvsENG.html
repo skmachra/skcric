@@ -269,9 +269,16 @@
     .btn-secondary:hover {
       background: rgba(255, 255, 255, 0.2);
     }
-    button:focus, a:focus {
-  outline: none;
-  box-shadow: 0 0 0 3px rgba(255, 107, 0, 0.5); /* Using your theme color */
+    /* Remove tap highlight on mobile */
+button, a, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+  highlight-color: transparent;
+}
+
+/* Better alternative - subtle custom highlight */
+button, a {
+  -webkit-tap-highlight-color: rgba(255, 107, 0, 0.3); /* Your theme color */
+  tap-highlight-color: rgba(255, 107, 0, 0.3);
 }
 
     /* Responsive adjustments */
