@@ -2,45 +2,126 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
   <meta name="referrer" content="no-referrer" />
   <title>IND vs ENG Test Live</title>
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
   <style>
+    :root {
+      --primary-color: #ff6b00;
+      --secondary-color: #ff00a0;
+      --theme-gradient: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+    }
+    
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
       background: #101820;
       color: white;
       text-align: center;
       font-family: Arial, sans-serif;
-      padding: 20px;
+      padding: 15px;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
+    
     h1 {
-      font-size: 24px;
-      margin-bottom: 10px;
+      font-size: clamp(20px, 5vw, 24px);
+      margin: 10px 0 20px;
+      background: linear-gradient(90deg, #ff6b00, #ff00a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 0 0 10px rgba(255, 107, 0, 0.3);
+      line-height: 1.3;
     }
+    
     .controls {
       display: flex;
       flex-wrap: wrap;
       gap: 15px;
       justify-content: center;
       margin-bottom: 20px;
+      width: 100%;
     }
-    select {
-      font-size: 16px;
-      padding: 10px;
+    
+    .button-group {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 0 5px;
+      width: 100%;
+      max-width: 400px;
     }
+    
+    .button-group label {
+      margin-bottom: 8px;
+      font-weight: bold;
+      color: #ddd;
+      font-size: clamp(14px, 3vw, 16px);
+    }
+    
+    .button-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      background: rgba(255,255,255,0.1);
+      border-radius: 30px;
+      padding: 4px;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.2);
+      width: 100%;
+    }
+    
+    .option-btn {
+      padding: 8px 12px;
+      border: none;
+      background: transparent;
+      color: white;
+      cursor: pointer;
+      font-size: clamp(12px, 3vw, 14px);
+      transition: all 0.3s ease;
+      border-radius: 26px;
+      margin: 2px;
+      flex: 1 0 auto;
+      min-width: 60px;
+      white-space: nowrap;
+    }
+    
+    .option-btn.active {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      box-shadow: 0 4px 10px rgba(255, 107, 0, 0.4);
+    }
+    
+    .option-btn:not(.active):hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
     .player-container {
       position: relative;
       width: 100%;
       max-width: 1000px;
-      margin: 0 auto;
+      margin: 0 auto 15px;
+      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.2);
+      border-radius: 15px;
+      overflow: hidden;
+      border: 2px solid transparent;
+      background: linear-gradient(#101820, #101820) padding-box,
+                  linear-gradient(90deg, var(--primary-color), var(--secondary-color)) border-box;
+      aspect-ratio: 16/9;
     }
+    
     iframe {
       width: 100%;
-      aspect-ratio: 16 / 9;
-      border: 2px solid #ccc;
-      border-radius: 10px;
+      height: 100%;
+      border: none;
+      display: block;
     }
+    
     .loading-overlay {
       position: absolute;
       top: 0;
@@ -51,23 +132,184 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      border-radius: 8px;
       z-index: 10;
       display: none;
     }
+    
     .spinner {
-      width: 50px;
-      height: 50px;
-      border: 5px solid #f3f3f3;
-      border-top: 5px solid #3498db;
+      width: 40px;
+      height: 40px;
+      border: 4px solid rgba(255,255,255,0.1);
+      border-top: 4px solid var(--secondary-color);
       border-radius: 50%;
       animation: spin 1s linear infinite;
     }
+    
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+    
+    /* Telegram Button */
+    .telegram-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 20px;
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+      margin: 15px auto;
+      text-decoration: none;
+      font-size: clamp(14px, 3.5vw, 16px);
+      max-width: 300px;
+      width: 100%;
+    }
+    
+    .telegram-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+    }
+    
+    .telegram-btn i {
+      margin-right: 8px;
+      font-size: clamp(16px, 4vw, 18px);
+    }
+    
+    /* Popup Styles */
+    .popup-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.9);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 100;
+      padding: 15px;
+    }
+    
+    .popup-content {
+      background: #1a2230;
+      padding: 20px;
+      border-radius: 15px;
+      max-width: 400px;
+      width: 100%;
+      text-align: center;
+      border: 2px solid transparent;
+      background: linear-gradient(#1a2230, #1a2230) padding-box,
+                  linear-gradient(90deg, var(--primary-color), var(--secondary-color)) border-box;
+      box-shadow: 0 10px 30px rgba(255, 107, 0, 0.3);
+    }
+    
+    .popup-title {
+      font-size: clamp(18px, 5vw, 22px);
+      margin-bottom: 15px;
+      background: linear-gradient(90deg, #ff6b00, #ff00a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.3;
+    }
+    
+    .popup-content p {
+      font-size: clamp(14px, 3.5vw, 16px);
+      margin-bottom: 15px;
+      line-height: 1.4;
+    }
+    
+    .popup-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 20px;
+    }
+    
+    .popup-btn {
+      padding: 12px 20px;
+      border: none;
+      border-radius: 30px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-size: clamp(14px, 3.5vw, 16px);
+      flex: 1 0 auto;
+      min-width: 120px;
+    }
+    
+    .btn-primary {
+      background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+      color: white;
+      box-shadow: 0 4px 15px rgba(255, 107, 0, 0.4);
+    }
+    
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #ccc;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(255, 107, 0, 0.6);
+    }
+    
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.2);
+    }
+    
+    /* Responsive adjustments */
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+      
+      .button-group {
+        margin: 0 0 10px 0;
+      }
+      
+      .button-container {
+        border-radius: 20px;
+      }
+      
+      .option-btn {
+        padding: 6px 10px;
+        border-radius: 20px;
+        font-size: 12px;
+      }
+      
+      .player-container {
+        border-radius: 10px;
+      }
+      
+      .popup-content {
+        padding: 15px;
+      }
+      
+      .popup-btn {
+        padding: 10px 15px;
+      }
+    }
+    
+    @media (min-width: 768px) {
+      .controls {
+        flex-direction: row;
+        align-items: flex-start;
+      }
+      
+      .button-group {
+        width: auto;
+        min-width: 200px;
+      }
+    }
   </style>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
 <script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
@@ -77,26 +319,26 @@
   <h1>IND vs ENG Test - Live Stream</h1>
 
   <div class="controls">
-    <label>
-      Language:
-      <select id="language">
-        <option value="hindi" selected>Hindi</option>
-        <option value="english">English</option>
-      </select>
-    </label>
+    <div class="button-group">
+      <label>Language:</label>
+      <div class="button-container" id="languageContainer">
+        <button class="option-btn active" data-value="hindi">Hindi</button>
+        <button class="option-btn" data-value="english">English</button>
+      </div>
+    </div>
 
-    <label>
-      Quality:
-      <select id="quality">
-        <option value="108">144p</option>
-        <option value="224">240p</option>
-        <option value="412">280p</option>
-        <option value="664" selected>360p</option>
-        <option value="900">540p</option>
-        <option value="1300">720p</option>
-        <option value="3500">1080p</option>
-      </select>
-    </label>
+    <div class="button-group">
+      <label>Quality:</label>
+      <div class="button-container" id="qualityContainer">
+        <button class="option-btn" data-value="108">144p</button>
+        <button class="option-btn" data-value="224">240p</button>
+        <button class="option-btn" data-value="412">280p</button>
+        <button class="option-btn active" data-value="664">360p</button>
+        <button class="option-btn" data-value="900">540p</button>
+        <button class="option-btn" data-value="1300">720p</button>
+        <button class="option-btn" data-value="3500">1080p</button>
+      </div>
+    </div>
   </div>
 
   <div class="player-container">
@@ -106,11 +348,30 @@
     <iframe id="playerFrame" src="" allowfullscreen></iframe>
   </div>
 
+  <a href="https://t.me/yourchannel" target="_blank" class="telegram-btn">
+    <i class="fab fa-telegram"></i> Join Telegram Channel
+  </a>
+
+  <!-- Popup HTML -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-content">
+      <h2 class="popup-title">Join Our Telegram Channel</h2>
+      <p>For uninterrupted streaming and latest updates, join our Telegram channel!</p>
+      <div class="popup-buttons">
+        <button class="popup-btn btn-primary" id="joinTelegram">Join Telegram</button>
+        <button class="popup-btn btn-secondary" id="alreadyJoined">Already Joined</button>
+      </div>
+    </div>
+  </div>
+
   <script>
-    const languageSelect = document.getElementById("language");
-    const qualitySelect = document.getElementById("quality");
     const iframe = document.getElementById("playerFrame");
     const loadingOverlay = document.getElementById("loadingOverlay");
+    const popupOverlay = document.getElementById("popupOverlay");
+    const joinTelegramBtn = document.getElementById("joinTelegram");
+    const alreadyJoinedBtn = document.getElementById("alreadyJoined");
+    const languageContainer = document.getElementById("languageContainer");
+    const qualityContainer = document.getElementById("qualityContainer");
 
     const baseLinks = {
       hindi: "https://tataplay.slivcdn.com/hls/live/2020591-b/TEN3HD",
@@ -119,18 +380,19 @@
 
     const token = "hdntl=exp=1750487345~acl=%2f*~id=5fc1dba3-e83d-4482-98af-d4d5546cc265~data=hdntl~hmac=258501a0d8e6e75f402d2c3fcf3e7e341a15d2e1146a872d37aef0c7047eb4cd";
 
+    let currentLanguage = "hindi";
+    let currentQuality = "664";
+
     function updateIframe() {
-      const lang = languageSelect.value;
-      const quality = qualitySelect.value;
-      const finalUrl = `${baseLinks[lang]}/${token}/master_${quality}.m3u8`;
+      const finalUrl = `${baseLinks[currentLanguage]}/${token}/master_${currentQuality}.m3u8`;
 
       // Show loading indicator
       loadingOverlay.style.display = 'flex';
       
-      // Set a timeout to hide the loading indicator (in case iframe fails to load)
+      // Set a timeout to hide the loading indicator
       const loadingTimeout = setTimeout(() => {
         loadingOverlay.style.display = 'none';
-      }, 10000); // Hide after 10 seconds even if not loaded
+      }, 10000);
 
       // When iframe loads, hide the loading indicator
       iframe.onload = function() {
@@ -142,12 +404,69 @@
       iframe.src = finalUrl;
     }
 
+    // Handle language button clicks
+    languageContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('option-btn')) {
+        // Remove active class from all buttons
+        Array.from(languageContainer.children).forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        e.target.classList.add('active');
+        
+        // Update current language
+        currentLanguage = e.target.dataset.value;
+        updateIframe();
+      }
+    });
+
+    // Handle quality button clicks
+    qualityContainer.addEventListener('click', (e) => {
+      if (e.target.classList.contains('option-btn')) {
+        // Remove active class from all buttons
+        Array.from(qualityContainer.children).forEach(btn => {
+          btn.classList.remove('active');
+        });
+        
+        // Add active class to clicked button
+        e.target.classList.add('active');
+        
+        // Update current quality
+        currentQuality = e.target.dataset.value;
+        updateIframe();
+      }
+    });
+
+    // Check if user has already dismissed the popup
+    if (!localStorage.getItem('popupDismissed')) {
+      // Show popup after 3 seconds
+      setTimeout(() => {
+        popupOverlay.style.display = 'flex';
+      }, 3000);
+    }
+
+    // Close popup when already joined is clicked
+    alreadyJoinedBtn.addEventListener('click', () => {
+      popupOverlay.style.display = 'none';
+      localStorage.setItem('popupDismissed', 'true');
+    });
+
+    // Redirect to Telegram when join is clicked
+    joinTelegramBtn.addEventListener('click', () => {
+      window.open('https://t.me/yourchannel', '_blank');
+      popupOverlay.style.display = 'none';
+      localStorage.setItem('popupDismissed', 'true');
+    });
+
     // Initial load
     updateIframe();
 
-    // Events
-    languageSelect.addEventListener("change", updateIframe);
-    qualitySelect.addEventListener("change", updateIframe);
+    // Handle orientation changes
+    window.addEventListener('orientationchange', function() {
+      // Small delay to ensure dimensions are correct
+      setTimeout(updateIframe, 300);
+    });
   </script>
 </body>
 </html>
