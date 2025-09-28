@@ -394,6 +394,10 @@ button, a {
       hindi: "https://dish.slivcdn.com/hls/live/2020591/TEN3HD/",
       english: "https://dish.slivcdn.com/hls/live/2011747/TEN1HD/"
     };
+    const newlink ={
+      hindi: "https://liveakmt-p-md.slivcdn.com/hls/live/2119925/cricacc12809/HIN/hdntl=exp=1759152698~acl=%2f*~id=073f4581d2c64953ac5040fdbe56ed6f-1716627045793-180704112661613043~data=hdntl,2119925,cricacc12809,HIN~hmac=152c6ad11f8371ba4e69ef2d30ffa82d473576131b997d05274c3e2c0e73fecf/std_mdd-600300010_480_552000.m3u8",
+      english: "https://liveakmt-m-md.slivcdn.com/v1/master/0085f7057986fc2f8467089bb19b8b7e4f1bf8d7/mediaT4ae5prod-PlaybackConfig/2119932/cricacc12809/ENG/std_lrl-800300010.m3u8?adstack=MT-SSB&ads.Idtype=uuid&ads.rdid=073f4581d2c64953ac5040fdbe56ed6f-1716627045793&ads.Is_lat=0&ads.ppid=eb1aecade6c6bbf4d2e3f7c2a9ced761&aws.sessionId=3-75aeaad2-f3bc-4e91-880d-869c948b9f4f&hdnea=exp=1759091017~acl=/*~id=073f4581d2c64953ac5040fdbe56ed6f-1716627045793-180704112661613043~hmac=bb53cab0764d9ab316460b42c1474e0430c63be68842cc122231f1b70cc86389"
+    }
 
 
     const token = "hdntl=exp=1751529563~acl=%2f*~id=8a195a9a-1ae9-4044-9d54-e2aee5c5ceee~data=hdntl~hmac=b5ddc0d538fff3545aa5e496f274cc9b06f315767fff652271b9c8eafb7382ea";
@@ -402,8 +406,8 @@ button, a {
     let currentQuality = "664";
 
     function updateIframe() {
-      const finalUrl = `${baseLinks[currentLanguage]}/${token}/master_${currentQuality}.m3u8`;
-
+      // const finalUrl = `${baseLinks[currentLanguage]}/${token}/master_${currentQuality}.m3u8`;
+      const finalUrl = `${newlink[currentLanguage]}`;
       // Show loading indicator
       loadingOverlay.style.display = 'flex';
 
@@ -419,8 +423,8 @@ button, a {
       };
 
       // Embed player.html with the stream
-      // iframe.src = finalUrl;
-      iframe.src = "https://liveakmt-p-md.slivcdn.com/hls/live/2119925/cricacc12809/HIN/hdntl=exp=1759152698~acl=%2f*~id=073f4581d2c64953ac5040fdbe56ed6f-1716627045793-180704112661613043~data=hdntl,2119925,cricacc12809,HIN~hmac=152c6ad11f8371ba4e69ef2d30ffa82d473576131b997d05274c3e2c0e73fecf/std_mdd-600300010_480_552000.m3u8"
+      iframe.src = finalUrl;
+      // iframe.src = "https://liveakmt-p-md.slivcdn.com/hls/live/2119925/cricacc12809/HIN/hdntl=exp=1759152698~acl=%2f*~id=073f4581d2c64953ac5040fdbe56ed6f-1716627045793-180704112661613043~data=hdntl,2119925,cricacc12809,HIN~hmac=152c6ad11f8371ba4e69ef2d30ffa82d473576131b997d05274c3e2c0e73fecf/std_mdd-600300010_480_552000.m3u8"
     }
 
     // Show popup every time the page loads
