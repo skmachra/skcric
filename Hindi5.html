@@ -241,6 +241,39 @@
             background: #3b5998;
         }
 
+        /* Ensure container layout is respected */
+        .video-container {
+            width: 100%;
+            text-align: center;
+            box-sizing: border-box;
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        /* Prevent Shaka Player from overflowing */
+        .shaka-video-container {
+            position: relative !important;
+            width: 100% !important;
+            height: auto !important;
+            aspect-ratio: 16 / 9;
+            /* maintain video proportion */
+            overflow: hidden;
+            border-radius: 10px;
+        }
+
+        /* Make video responsive */
+        .shaka-video-container video {
+            width: 100% !important;
+            height: 100% !important;
+            object-fit: cover;
+            /* or contain, depending on your preference */
+            display: block;
+            border-radius: inherit;
+        }
+
+
         @media (max-width: 600px) {
             .share-buttons {
                 flex-direction: column;
@@ -320,10 +353,20 @@
         </div>
 
         <!-- Main Video Content -->
-        <div class="video-container">
+        <!-- <div class="video-container">
             <h2>Live Streaming Now</h2>
             <div class="shaka-video-container" id="player-container" data-shaka-player>
                 <video id="player" autoplay playsinline preload="metadata" poster=""></video>
+            </div>
+        </div> -->
+        <div class="video-container">
+            <h2>Live Streaming Now</h2>
+            <div class="player-container">
+                <div id="player">
+                    <div class="shaka-video-container" id="player-container" data-shaka-player>
+                        <video autoplay playsinline preload="metadata" poster=""></video>
+                    </div>
+                </div>
             </div>
         </div>
 
