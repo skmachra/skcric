@@ -4,13 +4,9 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="referrer" content="no-referrer">
+  <meta name="referrer" content="no-referrer" />
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
   <title>PowerPlayLive - Live Streaming & More</title>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.6/shaka-player.ui.min.js"
-    crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.7.6/controls.min.css"
-    crossorigin="anonymous">
   <style>
     /* Modern CSS with Flexbox */
     * {
@@ -292,10 +288,9 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
 <!-- <script type='text/javascript' src='//pl26482254.profitableratecpm.com/a2/eb/1d/a2eb1d5e3ed5232869f14e2021a33ee6.js'></script> -->
-<script>(function (d, z, s) { s.src = 'https://' + d + '/401/' + z; try { (document.body || document.documentElement).appendChild(s); } catch (e) { } })('groleegni.net', 9187666, document.createElement('script'))</script>
-<script>(function (s, u, z, p) { s.src = u, s.setAttribute('data-zone', z), p.appendChild(s); })(document.createElement('script'), 'https://shebudriftaiter.net/tag.min.js', 9187662, document.body || document.documentElement)</script>
-<script>(function (d, z, s) { s.src = 'https://' + d + '/401/' + z; try { (document.body || document.documentElement).appendChild(s); } catch (e) { } })('gizokraijaw.net', 9204347, document.createElement('script'))</script>
-
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
+<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
+<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9204347,document.createElement('script'))</script>
 <body>
   <div class="container">
     <header>
@@ -329,9 +324,7 @@
     <div class="video-container">
       <h2>Live Streaming Now</h2>
       <div class="player-container">
-        <div data-shaka-player-container id="player" class="shaka-video-container">
-          <video autoplay data-shaka-player id="video" poster="https://cdn.prod.website-files.com/65cafeae0d62d9e4163d1545/66bcc9f2d13bf9c814bf6bef_AD_4nXdruts2IwmnCUAKMcW4n8KcbSq0ytkBGoH4eiHsioB5XsiO3sya9FYhrKhXmiuLs_AvXuBWhSS0YDmGL07nao2EhKveZ7ItlQ4tjllRIsjvzVqPoF_FRMO4QtgGBDhFvjFL_kAopsMpwxKzW96F4_ifm3g.png"></video>
-        </div>
+        <div id="player"></div>
       </div>
     </div>
 
@@ -409,59 +402,45 @@
     </footer>
   </div>
 
-  <!-- Shaka Player Script -->
-  <script>
+  <!-- JWPlayer Script -->
+  <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
+  <script src="https://ssl.p.jwpcdn.com/player/v/8.32.1/jwplayer.js" type="text/javascript"></script>
+    <script type="text/javascript">
+        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+        jwplayer("player").setup({
+            file: "https://otte.cache.aiv-cdn.net/bom-nitro/live/clients/dash/enc/nn1qrdjaha/out/v1/bc4fa7d9cebf47858bebf14ad589025e/cenc.mpd",
+            aspectratio: '16:9',
+            width: '100%',
+            autostart: true,
+            image: 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook',
+            mute: false,
+            preload: 'auto',
+            captions: { color: 'white', fontSize: '16px', backgroundOpacity: 0 },
+            drm: {
+                "clearkey": {
+                    "keyId": "9909e33838e1152cc512c4636f513f8f",
+                    "key": "02f67060c94bcc3307280f505ad508ab"
+                }
+            }
+        });
 
-    const manifestUri = "https://live-pv-ta.amazon.fastly-edge.com/lhr-nitro/live/clients/dash/enc/tll6uwepxa/out/v1/a7f67cbb33df46539312956427343886/cenc.mpd";
+        // Ensure playback compatibility for mobile devices
+        jwplayer().on('ready', function () {
+            const player = document.querySelector('#player-container');
+            if (player) {
+                player.style.height = window.innerHeight + 'px';
+            }
+        });
 
-    async function init() {
-      const video = document.getElementById('video');
-      const ui = video['ui'];
-      const controls = ui.getControls();
-      const player = controls.getPlayer();
+        jwplayer().on('play', function () {
+            document.body.style.backgroundColor = "#000";
+        });
 
-      window.player = player;
-      window.ui = ui;
-
-      player.configure({
-        drm: {
-          "clearKeys": {
-            "290e09c837da78d5cd961978d390515c": "b748836c71e6a4ca68ef5b5652db6247"
-          }
-        }
-      });
-
-      player.addEventListener('error', onPlayerErrorEvent);
-      controls.addEventListener('error', onUIErrorEvent);
-
-      try {
-        await player.load(manifestUri);
-        console.log('The video has now been loaded!');
-      } catch (error) {
-        onPlayerError(error);
-      }
-    }
-
-    function onPlayerErrorEvent(errorEvent) {
-      onPlayerError(errorEvent.detail);
-    }
-
-    function onPlayerError(error) {
-      console.error('Error code', error.code, 'object', error);
-    }
-
-    function onUIErrorEvent(errorEvent) {
-      onPlayerError(errorEvent.detail);
-    }
-
-    function initFailed(errorEvent) {
-      console.error('Unable to load the UI library!');
-    }
-
-    document.addEventListener('shaka-ui-loaded', init);
-    document.addEventListener('shaka-ui-load-failed', initFailed);
-
-  </script>
+        jwplayer().on('error', function (e) {
+            console.error("Playback error:", e.message);
+        });
+    </script>
+  <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+    disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
 </body>
-
 </html>
