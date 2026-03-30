@@ -45,26 +45,16 @@
       color: transparent;
     }
 
+
     .tagline {
       font-size: 1.2rem;
       margin-bottom: 20px;
       color: #ccc;
     }
 
-    .logo {
-      width: 120px;
-      height: 120px;
-      margin-bottom: 20px;
-      border-radius: 50%;
-      object-fit: cover;
-    }
-
     /* Navigation */
     nav {
-      margin: 20px 0;
-      background: rgba(0, 0, 0, 0.3);
-      padding: 15px;
-      border-radius: 10px;
+      padding: 8px;
     }
 
     .nav-links {
@@ -100,7 +90,7 @@
     .video-container {
       margin: 30px 0;
       background: rgba(0, 0, 0, 0.2);
-      padding: 20px;
+      padding: 12px;
       border-radius: 10px;
     }
 
@@ -152,7 +142,6 @@
     /* Ad Sections */
     .ad-container {
       background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
       border-radius: 10px;
       margin: 20px 0;
       min-height: 100px;
@@ -273,44 +262,196 @@
         font-size: 1rem;
       }
 
-      .nav-links {
-        flex-direction: column;
-        align-items: center;
-      }
-
       .nav-links a {
         width: 100%;
         text-align: center;
+      }
+    }
+
+    /* NAVBAR */
+    .navbar {
+      width: 100%;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: #1a002b;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 10px;
+    }
+
+    .nav-container {
+      max-width: 1200px;
+      margin: auto;
+      padding: 4px 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 10px;
+    }
+
+    /* LEFT SIDE */
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 42px;
+      height: 42px;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+    }
+
+    /* LINKS */
+    .nav-links {
+      display: flex;
+      gap: 25px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+
+    /* underline hover effect */
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      width: 0%;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background: linear-gradient(90deg, #ff6b00, #ff00a0);
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* MOBILE */
+    @media (max-width: 768px) {
+
+      .menu-toggle {
+        display: block;
+      }
+
+      .nav-links {
+        position: absolute;
+        top: 65px;
+        left: 0;
+        width: 100%;
+        background: #1a002b;
+        flex-direction: column;
+        align-items: center;
+        gap: 20px;
+        padding: 20px 0;
+        display: none;
+      }
+
+      .nav-links.show {
+        display: flex;
+      }
+    }
+
+    .menu-toggle {
+      width: 28px;
+      height: 28px;
+      /* perfect square */
+      display: none;
+      position: relative;
+      cursor: pointer;
+    }
+
+    /* All lines positioned absolutely for perfect symmetry */
+    .menu-toggle span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: white;
+      border-radius: 2px;
+      transition: 0.3s ease;
+    }
+
+    /* exact positions */
+    .menu-toggle span:nth-child(1) {
+      top: 6px;
+    }
+
+    .menu-toggle span:nth-child(2) {
+      top: 12.5px;
+      /* exact center */
+    }
+
+    .menu-toggle span:nth-child(3) {
+      top: 19px;
+    }
+
+    /* animation to X */
+    .menu-toggle.active span:nth-child(1) {
+      top: 12.5px;
+      transform: rotate(45deg);
+    }
+
+    .menu-toggle.active span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .menu-toggle.active span:nth-child(3) {
+      top: 12.5px;
+      transform: rotate(-45deg);
+    }
+
+    /* mobile only */
+    @media (max-width: 768px) {
+      .menu-toggle {
+        display: block;
       }
     }
   </style>
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<!-- <script type='text/javascript' src='//pl26482254.profitableratecpm.com/a2/eb/1d/a2eb1d5e3ed5232869f14e2021a33ee6.js'></script> -->
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('groleegni.net',9187666,document.createElement('script'))</script>
-<script>(function(s,u,z,p){s.src=u,s.setAttribute('data-zone',z),p.appendChild(s);})(document.createElement('script'),'https://shebudriftaiter.net/tag.min.js',9187662,document.body||document.documentElement)</script>
-<script>(function(d,z,s){s.src='https://'+d+'/401/'+z;try{(document.body||document.documentElement).appendChild(s)}catch(e){}})('gizokraijaw.net',9204347,document.createElement('script'))</script>
+<script>(function (d, z, s) { s.src = 'https://' + d + '/401/' + z; try { (document.body || document.documentElement).appendChild(s); } catch (e) { } })('groleegni.net', 9187666, document.createElement('script'))</script>
+<script>(function (s, u, z, p) { s.src = u, s.setAttribute('data-zone', z), p.appendChild(s); })(document.createElement('script'), 'https://shebudriftaiter.net/tag.min.js', 9187662, document.body || document.documentElement)</script>
+<script>(function (d, z, s) { s.src = 'https://' + d + '/401/' + z; try { (document.body || document.documentElement).appendChild(s); } catch (e) { } })('gizokraijaw.net', 9204347, document.createElement('script'))</script>
+
 <body>
   <div class="container">
-    <header>
-      <img src="logo.png" alt="Logo" class="logo" />
-      <h1>PowerPlayLive</h1>
-      <p class="tagline">
-        Your ultimate destination for live streaming and entertainment
-      </p>
-    </header>
+    <header class="navbar">
+      <div class="nav-container">
+        <!-- Logo -->
+        <div class="nav-left">
+          <img src="logo.png" class="logo" />
+          <span class="brand">PowerPlayLive</span>
+        </div>
 
-    <!-- Navigation Links -->
-    <nav>
-      <div class="nav-links">
-        <a href="Hindi">Hindi</a>
-        <a href="#" class="active">English</a>
-        <a href="/">Live Sports</a>
-        <a href="https://telegram.me/SK_Movies1">Movies</a>
-        <a href="https://telegram.me/PowerPlayLive">Telegram Channels</a>
+        <!-- Hamburger -->
+        <div class="menu-toggle" id="menu-toggle">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <!-- Links -->
+        <nav class="nav-links" id="nav-links">
+          <a href="Hindi" class="active">Hindi</a>
+          <a href="#">English</a>
+          <a href="/">Live Sports</a>
+          <a href="https://telegram.me/SK_Movies1">Movies</a>
+          <a href="https://telegram.me/PowerPlayLive">Telegram</a>
+        </nav>
       </div>
-    </nav>
+    </header>
 
     <!-- Ad Space -->
     <div class="ad-container">
@@ -405,42 +546,52 @@
   <!-- JWPlayer Script -->
   <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
   <script src="https://ssl.p.jwpcdn.com/player/v/8.32.1/jwplayer.js" type="text/javascript"></script>
-    <script type="text/javascript">
-        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-        jwplayer("player").setup({
-            file: "https://a201aivottlinear-a.akamaihd.net/OTTB/iad-nitro/live/clients/dash/enc/qlpqns8shq/out/v1/e36da545ab714b6a99b76c2b1fefd32f/cenc.mpd",
-            aspectratio: '16:9',
-            width: '100%',
-            autostart: true,
-            image: 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook',
-            mute: false,
-            preload: 'auto',
-            captions: { color: 'white', fontSize: '16px', backgroundOpacity: 0 },
-            drm: {
-                "clearkey": {
-                    "keyId": "24837c0b78e80b056a09495d0fd051b3",
-                    "key": "5b90f3987781ea409190739762d2005e"
-                }
-            }
-        });
+  <script type="text/javascript">
+    jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+    jwplayer("player").setup({
+      file: "https://a201aivottlinear-a.akamaihd.net/OTTB/iad-nitro/live/clients/dash/enc/qlpqns8shq/out/v1/e36da545ab714b6a99b76c2b1fefd32f/cenc.mpd",
+      aspectratio: '16:9',
+      width: '100%',
+      autostart: true,
+      image: 'https://mma.prnewswire.com/media/1919551/WillowTV_Logo.jpg?p=facebook',
+      mute: false,
+      preload: 'auto',
+      captions: { color: 'white', fontSize: '16px', backgroundOpacity: 0 },
+      drm: {
+        "clearkey": {
+          "keyId": "24837c0b78e80b056a09495d0fd051b3",
+          "key": "5b90f3987781ea409190739762d2005e"
+        }
+      }
+    });
 
-        // Ensure playback compatibility for mobile devices
-        jwplayer().on('ready', function () {
-            const player = document.querySelector('#player-container');
-            if (player) {
-                player.style.height = window.innerHeight + 'px';
-            }
-        });
+    // Ensure playback compatibility for mobile devices
+    jwplayer().on('ready', function () {
+      const player = document.querySelector('#player-container');
+      if (player) {
+        player.style.height = window.innerHeight + 'px';
+      }
+    });
 
-        jwplayer().on('play', function () {
-            document.body.style.backgroundColor = "#000";
-        });
+    jwplayer().on('play', function () {
+      document.body.style.backgroundColor = "#000";
+    });
 
-        jwplayer().on('error', function (e) {
-            console.error("Playback error:", e.message);
-        });
-    </script>
+    jwplayer().on('error', function (e) {
+      console.error("Playback error:", e.message);
+    });
+  </script>
+  <script>
+    const toggle = document.getElementById("menu-toggle");
+    const links = document.getElementById("nav-links");
+
+    toggle.onclick = () => {
+      links.classList.toggle("show");
+      toggle.classList.toggle("active"); // THIS animates icon
+    };
+  </script>
   <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
     disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
 </body>
+
 </html>
