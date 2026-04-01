@@ -547,13 +547,13 @@
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-
+        const hdneaToken = "__hdnea__=st=1775013580~exp=1775099980~acl=/*~hmac=982fa70fbb9b6151e8c924f18622900a53bcc99af458a178d3311cfceed91f55";
         // Patch XHR to inject token into segments
         (function () {
             const origOpen = XMLHttpRequest.prototype.open;
             XMLHttpRequest.prototype.open = function (method, url) {
                 if (url && !url.includes("__hdnea__")) {
-                    url += (url.includes('?') ? '&' : '?') + "__hdnea__=st=1774925368~exp=1775011768~acl=/*~hmac=9deb8c1930715c6a49b27570eff8279fa785e4350b8f515b6e62f7645066b3b7";
+                    url += (url.includes('?') ? '&' : '?') + hdneaToken;
                 }
                 return origOpen.apply(this, arguments);
             };
@@ -561,7 +561,7 @@
 
         jwplayer("player").setup({
             playlist: [{
-                file: "https://jiotvmblive.cdn.jio.com/bpk-tv//StarSports2Hin_BTS/output/index.mpd?__hdnea__=st=1774925368~exp=1775011768~acl=/*~hmac=9deb8c1930715c6a49b27570eff8279fa785e4350b8f515b6e62f7645066b3b7",
+                file: "https://jiotvmblive.cdn.jio.com/bpk-tv//StarSports2Hin_BTS/output/index.mpd?" + hdneaToken,
                 drm: {
                     clearkey: {
                         keyId: "a3ed8dc0e0cb5d238da80ee0a85bd2e1",
