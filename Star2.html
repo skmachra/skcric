@@ -545,11 +545,10 @@
 
     <!-- JWPlayer Script -->
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
-    <script type="module">
+    <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-        const hdneaToken = (await fetch("https://allrounder-live3.pages.dev/api/cookie.json")
-        .then(r => r.json()))
-        .cookie;// Patch XHR to inject token into segments
+        const hdneaToken = "__hdnea__=st=1775196803~exp=1775218403~acl=/*~hmac=0f83e72d31f67fe396584c901763e8d2f5bcd4bb74d480edd67f4aeb8c6da14a";
+        // Patch XHR to inject token into segments
         (function () {
             const origOpen = XMLHttpRequest.prototype.open;
             XMLHttpRequest.prototype.open = function (method, url) {
