@@ -548,8 +548,9 @@
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-        const hdneaToken = "__hdnea__=st=1775131200~exp=1775152800~acl=/*~hmac=2dae0b4f0f0644367ed24ab627e46c0037f02e5e5dedea781eae13781e453bec";
-        // Patch XHR to inject token into segments
+        const hdneaToken = (await fetch("https://allrounder-live3.pages.dev/api/cookie.json")
+        .then(r => r.json()))
+        .cookie;// Patch XHR to inject token into segments
         (function () {
             const origOpen = XMLHttpRequest.prototype.open;
             XMLHttpRequest.prototype.open = function (method, url) {
