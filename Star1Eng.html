@@ -546,50 +546,66 @@
     <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
-        const hdneaToken = "__hdnea__=st=1775473002~exp=1775494602~acl=/*~hmac=22220b042d6d115420befc5dade032719fe9f7703f18a0876d1cff326ec574d7";
-        // Patch XHR to inject token into segments
-        (function () {
-            const origOpen = XMLHttpRequest.prototype.open;
-            XMLHttpRequest.prototype.open = function (method, url) {
-                if (url && !url.includes("__hdnea__")) {
-                    url += (url.includes('?') ? '&' : '?') + hdneaToken;
-                }
-                return origOpen.apply(this, arguments);
-            };
-        })();
 
-        jwplayer("player").setup({
-            playlist: [{
-                file: "https://jiotvpllive.cdn.jio.com/bpk-tv//Star_Sports_HD1_BTS/output/index.mpd?" + hdneaToken,
-                drm: {
-                    clearkey: {
-                        keyId: "965dc2ddb1d85138ad787999a7f30ca5",
-                        key: "859695076e67fe961836b564db6d689c",
-                        robustness: {
-                            video: "SW_SECURE_DECODE",
-                            audio: "SW_SECURE_DECODE"
+        // Fetch token + base URL
+        fetch('/hdnea.json')
+            .then(res => res.json())
+            .then(data => {
+
+                const baseUrl = data.baseUrl;
+                const hdneaToken = data.hdneaToken;
+
+                // Patch XHR to inject token into segments
+                (function () {
+                    const origOpen = XMLHttpRequest.prototype.open;
+                    XMLHttpRequest.prototype.open = function (method, url) {
+                        if (url && !url.includes("__hdnea__")) {
+                            url += (url.includes('?') ? '&' : '?') + hdneaToken;
                         }
-                    }
-                }
-            }],
-            width: "100%",
-            height: "100%",
-            autostart: true,
-            mute: false,
-            primary: "html5",
-            hlshtml: true,
-            aspectratio: "16:9",
-            stretching: "exactfit",
-            playbackRateControls: true,
-            controls: true,
-            skin: { name: "default", active: "red", inactive: "white", background: "black" },
-        }).on("error", e => {
-            console.error("Player error:", e);
-            const msg = document.createElement('div');
-            msg.id = "message";
-            msg.innerText = "Player error: " + (e.message || "Unknown error");
-            document.body.appendChild(msg);
-        });
+                        return origOpen.apply(this, arguments);
+                    };
+                })();
+
+                // Fixed stream URL (removed double //)
+                const streamUrl = baseUrl + "/bpk-tv/Star_Sports_HD1_BTS/output/index.mpd?" + hdneaToken;
+
+                jwplayer("player").setup({
+                    playlist: [{
+                        file: streamUrl,
+                        drm: {
+                            clearkey: {
+                                keyId: "965dc2ddb1d85138ad787999a7f30ca5",
+                                key: "859695076e67fe961836b564db6d689c",
+                                robustness: {
+                                    video: "SW_SECURE_DECODE",
+                                    audio: "SW_SECURE_DECODE"
+                                }
+                            }
+                        }
+                    }],
+                    width: "100%",
+                    height: "100%",
+                    autostart: true,
+                    mute: false,
+                    primary: "html5",
+                    hlshtml: true,
+                    aspectratio: "16:9",
+                    stretching: "exactfit",
+                    playbackRateControls: true,
+                    controls: true,
+                    skin: { name: "default", active: "red", inactive: "white", background: "black" },
+                }).on("error", e => {
+                    console.error("Player error:", e);
+                    const msg = document.createElement('div');
+                    msg.id = "message";
+                    msg.innerText = "Player error: " + (e.message || "Unknown error");
+                    document.body.appendChild(msg);
+                });
+
+            })
+            .catch(err => {
+                console.error("Failed to load /hdnea.json:", err);
+            });
     </script>
     <script>
         const toggle = document.getElementById("menu-toggle");
