@@ -463,6 +463,10 @@
 
         <!-- Main Video Content -->
         <div class="video-container">
+            <h2>Star 1 Hin</h2>
+            <div class="player-container">
+                <div id="player"></div>
+            </div>
         </div>
 
         <!-- Ad Space -->
@@ -551,7 +555,7 @@
                 const streamUrl = baseUrl + "/bpk-tv/Star_Sports_HD1_Hindi_BTS/output/index.mpd?" + token;
 
                 // Inject iframe instead of jwplayer
-                const container = document.querySelector('.player-container');
+                const container = document.querySelector('#player');
 
                 container.innerHTML = `
             <iframe 
