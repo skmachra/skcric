@@ -5,13 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>PowerPlayLive Player</title>
 
-<!-- Shaka Player -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.ui.min.js"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/controls.min.css">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box;}
-html,body{background:#000;height:100vh;width:100vw;overflow:hidden;}
+html,body{background:#000;height:100vh;width:100vw;overflow:hidden;font-family:sans-serif;}
 
 .shaka-video-container{
     position:absolute;
@@ -27,49 +26,65 @@ video{
     background:#000;
 }
 
-/* Overlay */
-#overlay{
+/* Title */
+#title{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(0,0,0,0.5);
+    padding:6px 12px;
+    border-radius:6px;
+    font-size:13px;
+    z-index:20;
+}
+
+/* Loader */
+#loader{
     position:absolute;
     inset:0;
     display:flex;
     align-items:center;
     justify-content:center;
-    flex-direction:column;
-    background:rgba(0,0,0,0.6);
-    z-index:10;
-    cursor:pointer;
+    z-index:30;
+    background:#000;
 }
 
-#playBtn{
-    width:80px;height:80px;
+.spinner{
+    width:45px;
+    height:45px;
+    border:4px solid rgba(255,255,255,0.2);
+    border-top:4px solid red;
     border-radius:50%;
-    background:red;
-    display:flex;
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+    to{transform:rotate(360deg);}
+}
+
+/* Error */
+#errorBox{
+    position:absolute;
+    inset:0;
+    display:none;
     align-items:center;
     justify-content:center;
+    flex-direction:column;
+    background:#000;
+    color:#ff4d4d;
+    z-index:50;
+    text-align:center;
+    padding:20px;
 }
 
-#playBtn svg{
-    width:30px;
-    fill:#fff;
-}
-
-#title{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:rgba(0,0,0,0.6);
-    padding:5px 10px;
+#errorBox button{
+    margin-top:15px;
+    padding:8px 15px;
+    border:none;
+    background:red;
+    color:white;
     border-radius:5px;
-    font-size:14px;
-}
-
-#logo{
-    position:absolute;
-    bottom:20px;
-    left:10px;
-    width:60px;
-    opacity:0.4;
+    cursor:pointer;
 }
 </style>
 </head>
@@ -79,15 +94,16 @@ video{
 <div class="shaka-video-container" data-shaka-player>
     <video></video>
 
-    <div id="overlay">
-        <div id="playBtn">
-            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        </div>
-        <p style="color:white;margin-top:10px;">Tap to Play</p>
+    <div id="title">Loading...</div>
+
+    <div id="loader">
+        <div class="spinner"></div>
     </div>
 
-    <div id="title">PowerPlayLive</div>
-    <img id="logo" src="logo.png">
+    <div id="errorBox">
+        <div id="errorText">Stream failed</div>
+        <button onclick="location.reload()">Retry</button>
+    </div>
 </div>
 
 <script>
@@ -101,25 +117,25 @@ const name      = params.get("name") || "PowerPlayLive";
 
 document.getElementById("title").innerText = name;
 
-// Clean URL
 history.replaceState(null, "", window.location.pathname);
 
 const video = document.querySelector("video");
-const overlay = document.getElementById("overlay");
+const loader = document.getElementById("loader");
+const errorBox = document.getElementById("errorBox");
+const errorText = document.getElementById("errorText");
 
 document.addEventListener("DOMContentLoaded", async () => {
 
     shaka.polyfill.installAll();
 
     if (!shaka.Player.isBrowserSupported()) {
-        alert("Browser not supported");
+        showError("Browser not supported");
         return;
     }
 
     const player = new shaka.Player(video);
     const ui = new shaka.ui.Overlay(player, document.querySelector(".shaka-video-container"), video);
 
-    // Controls
     ui.configure({
         controlPanelElements:[
             "play_pause","time_and_duration","mute","volume","spacer",
@@ -127,7 +143,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         ]
     });
 
-    // DRM
     if (keyId && key) {
         player.configure({
             drm: {
@@ -138,7 +153,6 @@ document.addEventListener("DOMContentLoaded", async () => {
         });
     }
 
-    // Headers
     player.getNetworkingEngine().registerRequestFilter((type, request) => {
         request.headers["Referer"] = "https://www.jiotv.com/";
         request.headers["User-Agent"] = "Mozilla/5.0";
@@ -148,24 +162,35 @@ document.addEventListener("DOMContentLoaded", async () => {
         }
     });
 
+    player.addEventListener('error', e => {
+        showError("Playback error");
+        console.log(e);
+    });
+
     try {
         await player.load(streamUrl);
+
+        loader.style.display = "none";
+
+        // autoplay attempt
+        try{
+            video.muted = true;
+            await video.play();
+        }catch{
+            video.controls = true;
+        }
+
     } catch (e) {
+        showError("Stream failed to load");
         console.log(e);
     }
 });
 
-// Play click
-overlay.addEventListener("click", async () => {
-    try{
-        await video.play();
-        overlay.style.display="none";
-    }catch{
-        video.muted=true;
-        await video.play();
-        overlay.style.display="none";
-    }
-});
+function showError(msg){
+    loader.style.display = "none";
+    errorBox.style.display = "flex";
+    errorText.innerText = msg;
+}
 </script>
 
 </body>
