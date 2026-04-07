@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PowerPlayLive Player</title>
+
+<!-- Shaka Player -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.ui.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/controls.min.css">
+
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html,body{background:#000;height:100vh;width:100vw;overflow:hidden;}
+
+.shaka-video-container{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+}
+
+video{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    background:#000;
+}
+
+/* Overlay */
+#overlay{
+    position:absolute;
+    inset:0;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-direction:column;
+    background:rgba(0,0,0,0.6);
+    z-index:10;
+    cursor:pointer;
+}
+
+#playBtn{
+    width:80px;height:80px;
+    border-radius:50%;
+    background:red;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+#playBtn svg{
+    width:30px;
+    fill:#fff;
+}
+
+#title{
+    position:absolute;
+    top:10px;
+    left:10px;
+    background:rgba(0,0,0,0.6);
+    padding:5px 10px;
+    border-radius:5px;
+    font-size:14px;
+}
+
+#logo{
+    position:absolute;
+    bottom:20px;
+    left:10px;
+    width:60px;
+    opacity:0.4;
+}
+</style>
+</head>
+
+<body>
+
+<div class="shaka-video-container" data-shaka-player>
+    <video></video>
+
+    <div id="overlay">
+        <div id="playBtn">
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+        </div>
+        <p style="color:white;margin-top:10px;">Tap to Play</p>
+    </div>
+
+    <div id="title">PowerPlayLive</div>
+    <img id="logo" src="logo.png">
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+
+const streamUrl = params.get("url") || "";
+const keyId     = params.get("keyId") || "";
+const key       = params.get("key") || "";
+const cookie    = params.get("cookie") || "";
+const name      = params.get("name") || "PowerPlayLive";
+
+document.getElementById("title").innerText = name;
+
+// Clean URL
+history.replaceState(null, "", window.location.pathname);
+
+const video = document.querySelector("video");
+const overlay = document.getElementById("overlay");
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    shaka.polyfill.installAll();
+
+    if (!shaka.Player.isBrowserSupported()) {
+        alert("Browser not supported");
+        return;
+    }
+
+    const player = new shaka.Player(video);
+    const ui = new shaka.ui.Overlay(player, document.querySelector(".shaka-video-container"), video);
+
+    // Controls
+    ui.configure({
+        controlPanelElements:[
+            "play_pause","time_and_duration","mute","volume","spacer",
+            "quality","fullscreen"
+        ]
+    });
+
+    // DRM
+    if (keyId && key) {
+        player.configure({
+            drm: {
+                clearKeys: {
+                    [keyId]: key
+                }
+            }
+        });
+    }
+
+    // Headers
+    player.getNetworkingEngine().registerRequestFilter((type, request) => {
+        request.headers["Referer"] = "https://www.jiotv.com/";
+        request.headers["User-Agent"] = "Mozilla/5.0";
+
+        if(cookie){
+            request.headers["Cookie"] = cookie;
+        }
+    });
+
+    try {
+        await player.load(streamUrl);
+    } catch (e) {
+        console.log(e);
+    }
+});
+
+// Play click
+overlay.addEventListener("click", async () => {
+    try{
+        await video.play();
+        overlay.style.display="none";
+    }catch{
+        video.muted=true;
+        await video.play();
+        overlay.style.display="none";
+    }
+});
+</script>
+
+</body>
+</html>
