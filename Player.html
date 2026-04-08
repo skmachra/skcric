@@ -1,197 +1,223 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PowerPlayLive Player</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PowerPlayLive Player</title>
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.ui.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/controls.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/shaka-player.ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/shaka-player/4.6.0/controls.min.css">
 
-<style>
-*{margin:0;padding:0;box-sizing:border-box;}
-html,body{background:#000;height:100vh;width:100vw;overflow:hidden;font-family:sans-serif;}
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-.shaka-video-container{
-    position:absolute;
-    inset:0;
-    width:100%;
-    height:100%;
-}
+        html,
+        body {
+            background: #000;
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
+            font-family: sans-serif;
+        }
 
-video{
-    width:100%;
-    height:100%;
-    object-fit:contain;
-    background:#000;
-}
+        .shaka-video-container {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+        }
 
-/* Title */
-#title{
-    position:absolute;
-    top:10px;
-    left:10px;
-    background:rgba(0,0,0,0.5);
-    padding:6px 12px;
-    border-radius:6px;
-    font-size:13px;
-    z-index:20;
-}
+        video {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #000;
+        }
 
-/* Loader */
-#loader{
-    position:absolute;
-    inset:0;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    z-index:30;
-    background:#000;
-}
+        /* Title */
+        #title {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            z-index: 20;
+        }
 
-.spinner{
-    width:45px;
-    height:45px;
-    border:4px solid rgba(255,255,255,0.2);
-    border-top:4px solid red;
-    border-radius:50%;
-    animation:spin 1s linear infinite;
-}
+        /* Loader */
+        #loader {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 30;
+            background: #000;
+        }
 
-@keyframes spin{
-    to{transform:rotate(360deg);}
-}
+        .spinner {
+            width: 45px;
+            height: 45px;
+            border: 4px solid rgba(255, 255, 255, 0.2);
+            border-top: 4px solid red;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
 
-/* Error */
-#errorBox{
-    position:absolute;
-    inset:0;
-    display:none;
-    align-items:center;
-    justify-content:center;
-    flex-direction:column;
-    background:#000;
-    color:#ff4d4d;
-    z-index:50;
-    text-align:center;
-    padding:20px;
-}
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
 
-#errorBox button{
-    margin-top:15px;
-    padding:8px 15px;
-    border:none;
-    background:red;
-    color:white;
-    border-radius:5px;
-    cursor:pointer;
-}
-</style>
+        /* Error */
+        #errorBox {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            background: #000;
+            color: #ff4d4d;
+            z-index: 50;
+            text-align: center;
+            padding: 20px;
+        }
+
+        #errorBox button {
+            margin-top: 15px;
+            padding: 8px 15px;
+            border: none;
+            background: red;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
 
-<div class="shaka-video-container" data-shaka-player>
-    <video></video>
+    <div class="shaka-video-container" data-shaka-player>
+        <video></video>
 
-    <div id="title">Loading...</div>
+        <div id="title">Loading...</div>
 
-    <div id="loader">
-        <div class="spinner"></div>
+        <div id="loader">
+            <div class="spinner"></div>
+        </div>
+
+        <div id="errorBox">
+            <div id="errorText">Stream failed</div>
+            <button onclick="location.reload()">Retry</button>
+        </div>
     </div>
 
-    <div id="errorBox">
-        <div id="errorText">Stream failed</div>
-        <button onclick="location.reload()">Retry</button>
-    </div>
-</div>
+    <script>
+        const params = new URLSearchParams(window.location.search);
 
-<script>
-const params = new URLSearchParams(window.location.search);
+        const streamUrl = params.get("url") || "";
+        const keyId = params.get("keyId") || "";
+        const key = params.get("key") || "";
+        const cookie = params.get("cookie") || "";
+        const name = params.get("name") || "PowerPlayLive";
 
-const streamUrl = params.get("url") || "";
-const keyId     = params.get("keyId") || "";
-const key       = params.get("key") || "";
-const cookie    = params.get("cookie") || "";
-const name      = params.get("name") || "PowerPlayLive";
+        document.getElementById("title").innerText = name;
 
-document.getElementById("title").innerText = name;
+        history.replaceState(null, "", window.location.pathname);
 
-history.replaceState(null, "", window.location.pathname);
+        const video = document.querySelector("video");
+        const loader = document.getElementById("loader");
+        const errorBox = document.getElementById("errorBox");
+        const errorText = document.getElementById("errorText");
 
-const video = document.querySelector("video");
-const loader = document.getElementById("loader");
-const errorBox = document.getElementById("errorBox");
-const errorText = document.getElementById("errorText");
+        document.addEventListener("DOMContentLoaded", async () => {
 
-document.addEventListener("DOMContentLoaded", async () => {
+            shaka.polyfill.installAll();
 
-    shaka.polyfill.installAll();
+            if (!shaka.Player.isBrowserSupported()) {
+                showError("Browser not supported");
+                return;
+            }
 
-    if (!shaka.Player.isBrowserSupported()) {
-        showError("Browser not supported");
-        return;
-    }
+            const player = new shaka.Player(video);
+            const ui = new shaka.ui.Overlay(player, document.querySelector(".shaka-video-container"), video);
 
-    const player = new shaka.Player(video);
-    const ui = new shaka.ui.Overlay(player, document.querySelector(".shaka-video-container"), video);
+            ui.configure({
+                controlPanelElements: [
+                    "play_pause", "time_and_duration", "mute", "volume", "spacer",
+                    "quality", "fullscreen"
+                ]
+            });
 
-    ui.configure({
-        controlPanelElements:[
-            "play_pause","time_and_duration","mute","volume","spacer",
-            "quality","fullscreen"
-        ]
-    });
+            if (keyId && key) {
+                player.configure({
+                    drm: {
+                        clearKeys: {
+                            [keyId]: key
+                        }
+                    }
+                });
+            }
 
-    if (keyId && key) {
-        player.configure({
-            drm: {
-                clearKeys: {
-                    [keyId]: key
+            player.getNetworkingEngine().registerRequestFilter((type, request) => {
+
+                request.headers["Referer"] = "https://www.jiotv.com/";
+                request.headers["User-Agent"] = "Mozilla/5.0";
+
+                if (cookie) {
+                    request.headers["Cookie"] = cookie;
+
+                    // 🔥 IMPORTANT: append token to segment URLs
+                    if (
+                        (type === shaka.net.NetworkingEngine.RequestType.SEGMENT ||
+                            type === shaka.net.NetworkingEngine.RequestType.MANIFEST) &&
+                        !request.uris[0].includes("__hdnea__")
+                    ) {
+                        request.uris[0] += (request.uris[0].includes('?') ? '&' : '?') + cookie;
+                    }
                 }
+            });
+
+            player.addEventListener('error', e => {
+                showError("Playback error");
+                console.log(e);
+            });
+
+            try {
+                await player.load(streamUrl);
+
+                loader.style.display = "none";
+
+                // autoplay attempt
+                try {
+                    video.muted = true;
+                    await video.play();
+                } catch {
+                    video.controls = true;
+                }
+
+            } catch (e) {
+                showError("Stream failed to load");
+                console.log(e);
             }
         });
-    }
 
-    player.getNetworkingEngine().registerRequestFilter((type, request) => {
-        request.headers["Referer"] = "https://www.jiotv.com/";
-        request.headers["User-Agent"] = "Mozilla/5.0";
-
-        if(cookie){
-            request.headers["Cookie"] = cookie;
+        function showError(msg) {
+            loader.style.display = "none";
+            errorBox.style.display = "flex";
+            errorText.innerText = msg;
         }
-    });
-
-    player.addEventListener('error', e => {
-        showError("Playback error");
-        console.log(e);
-    });
-
-    try {
-        await player.load(streamUrl);
-
-        loader.style.display = "none";
-
-        // autoplay attempt
-        try{
-            video.muted = true;
-            await video.play();
-        }catch{
-            video.controls = true;
-        }
-
-    } catch (e) {
-        showError("Stream failed to load");
-        console.log(e);
-    }
-});
-
-function showError(msg){
-    loader.style.display = "none";
-    errorBox.style.display = "flex";
-    errorText.innerText = msg;
-}
-</script>
+    </script>
 
 </body>
+
 </html>
