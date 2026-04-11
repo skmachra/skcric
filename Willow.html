@@ -465,8 +465,8 @@
       <h2>Live Streaming Now</h2>
       <div class="player-container">
         <div id="player">
-          <iframe src="https://cineplyr.pages.dev/willow2" style="width:100%; height:100%; border:0;"
-            allow="encrypted-media; autoplay" allowfullscreen></iframe>
+          <!-- <iframe src="https://cineplyr.pages.dev/willow2" style="width:100%; height:100%; border:0;"
+            allow="encrypted-media; autoplay" allowfullscreen></iframe> -->
         </div>
       </div>
     </div>
@@ -552,13 +552,13 @@
 
     // Patch XHR to inject token into segments
 
-    jwplayer("layer").setup({
+    jwplayer("player").setup({
       playlist: [{
-        file: "https://otte.cache.aiv-cdn.net/bom-nitro/live/clients/dash/enc/hkosbvm6yg/out/v1/94f33099d3184ce4b22377e4e4e33d91/cenc.mpd",
+        file: "https://otte.cache.aiv-cdn.net/bom-nitro/live/clients/dash/enc/h0j1lnfwdz/out/v1/4843137de5e74380962b3e8d8d78e061/cenc.mpd",
         drm: {
           clearkey: {
-            keyId: "3813110878620e2085a6ce8c65154a67",
-            key: "8d7ed0389021ee3aa4e87e7aaeb3b5a0",
+            keyId: "06c474083954369b65c9b6764eeeb3a3",
+            key: "c041952cd342b4ea84bd5865423b8585",
             robustness: {
               video: "SW_SECURE_DECODE",
               audio: "SW_SECURE_DECODE"
