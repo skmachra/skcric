@@ -553,10 +553,11 @@
             .then(data => {
 
                 const baseUrl = data.baseUrl;
-                const hdneaToken = data.hdneaToken;
+                // const hdneaToken = data.hdneaToken;
+                const hdneaToken = "__hdnea__=st=1775910617~exp=1775932217~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=5de528c92849588f78260a883ca8847cdb3ee5facc96af4f8cf3423ffde57cb7"
 
                 // Patch XHR to inject token into segments
-                (function () {
+                ;(function () {
                     const origOpen = XMLHttpRequest.prototype.open;
                     XMLHttpRequest.prototype.open = function (method, url) {
                         if (url && !url.includes("__hdnea__")) {
@@ -567,7 +568,7 @@
                 })();
 
                 // Fixed stream URL (removed double //)
-                const streamUrl = baseUrl + "/bpk-tv/Star_Sports_HD1_BTS/output/index.mpd?" + hdneaToken;
+                const streamUrl = baseUrl + "/bpk-tv/Star_Sports_HD1_BTS/WDVLive/index.mpd?" + hdneaToken;
 
                 jwplayer("player").setup({
                     playlist: [{

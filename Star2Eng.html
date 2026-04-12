@@ -553,10 +553,11 @@
             .then(data => {
 
                 const baseUrl = data.baseUrl;
-                const hdneaToken = data.hdneaToken;
+                // const hdneaToken = data.hdneaToken;
+                const hdneaToken = "__hdnea__=st=1775976611~exp=1775998211~acl=/bpk-tv/Star_Sports_HD2_BTS/output/*~hmac=3a1621542643658df0187805e9d4b13cc20bd7a01494b05dc483261d0bb7ccab"
 
                 // Patch XHR to inject token into segments
-                (function () {
+                ;(function () {
                     const origOpen = XMLHttpRequest.prototype.open;
                     XMLHttpRequest.prototype.open = function (method, url) {
                         if (url && !url.includes("__hdnea__")) {
