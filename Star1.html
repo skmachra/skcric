@@ -420,6 +420,8 @@
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
 </head>
 
 <script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -464,8 +466,11 @@
         <!-- Main Video Content -->
         <div class="video-container">
             <h2>Star 1 Hin</h2>
-            <div class="player-container">
+            <!-- <div class="player-container">
                 <div id="player"></div>
+            </div> -->
+            <div id="player-container" class="shaka-video-container">
+                <video id="video" autoplay playsinline></video>
             </div>
         </div>
 
@@ -543,70 +548,253 @@
         </footer>
     </div>
 
-    <!-- JWPlayer Script -->
-    <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
-        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+            (async function () {
 
-        // Fetch token + base URL
-        fetch('/hdnea.json')
-            .then(res => res.json())
-            .then(data => {
+                // ===== Anti Sandbox =====
+                function isSandboxedEnv() {
+                    try {
+                        if (window.self === window.top) return false;
 
-                const baseUrl = data.baseUrl;
-                // const hdneaToken = data.hdneaToken;
-                const hdneaToken = data.star1;
-                // Patch XHR to inject token into segments
-                ;(function () {
-                    const origOpen = XMLHttpRequest.prototype.open;
-                    XMLHttpRequest.prototype.open = function (method, url) {
-                        if (url && !url.includes("__hdnea__")) {
-                            url += (url.includes('?') ? '&' : '?') + hdneaToken;
+                        if (window.frameElement &&
+                            window.frameElement.hasAttribute("sandbox")) {
+                            return true;
                         }
-                        return origOpen.apply(this, arguments);
-                    };
-                })();
 
-                // Fixed URL (removed extra // from both places)
-                const streamUrl = baseUrl + "/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/index.mpd?" + hdneaToken;
-
-                jwplayer("player").setup({
-                    playlist: [{
-                        file: streamUrl,
-                        drm: {
-                            clearkey: {
-                                keyId: "400131994b445d8c8817202248760fda",
-                                key: "2d56cb6f07a75b9aff165d534ae2bfc4",
-                                robustness: {
-                                    video: "SW_SECURE_DECODE",
-                                    audio: "SW_SECURE_DECODE"
-                                }
-                            }
+                        try {
+                            document.domain = document.domain;
+                        } catch (e) {
+                            return true;
                         }
-                    }],
-                    width: "100%",
-                    height: "100%",
-                    autostart: true,
-                    mute: false,
-                    primary: "html5",
-                    hlshtml: true,
-                    aspectratio: "16:9",
-                    stretching: "exactfit",
-                    playbackRateControls: true,
-                    controls: true,
-                    skin: { name: "default", active: "red", inactive: "white", background: "black" },
-                }).on("error", e => {
-                    console.error("Player error:", e);
-                    const msg = document.createElement('div');
-                    msg.id = "message";
-                    msg.innerText = "Player error: " + (e.message || "Unknown error");
-                    document.body.appendChild(msg);
+
+                        return false;
+
+                    } catch (e) {
+                        return true;
+                    }
+                }
+
+                function showBlock(title, message) {
+                    document.body.innerHTML = `
+      <div style="
+        position:fixed;
+        inset:0;
+        background:#000;
+        color:#fff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        font-family:sans-serif;
+        z-index:99999;
+        text-align:center;
+        padding:20px;
+      ">
+        <div>
+          <h2 style="color:red;margin-bottom:10px;">${title}</h2>
+          <p>${message}</p>
+        </div>
+      </div>
+    `;
+                }
+
+                if (isSandboxedEnv()) {
+                    showBlock(
+                        "Disable Sandbox",
+                        "Open in Chrome Browser & Disable Adblock"
+                    );
+                    return;
+                }
+
+                // ===== Config =====
+                const CONFIG = {
+                    streamPath: "/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/index.mpd",
+                    keyId: "400131994b445d8c8817202248760fda",
+                    key: "2d56cb6f07a75b9aff165d534ae2bfc4",
+                    tokenField: "star1"
+                };
+
+                // ===== Load Token =====
+                let baseUrl = "";
+                let hdneaToken = "";
+
+                try {
+                    const res = await fetch("/hdnea.json", { cache: "no-store" });
+                    const data = await res.json();
+
+                    baseUrl = data.baseUrl;
+                    hdneaToken = data[CONFIG.tokenField];
+
+                } catch (e) {
+                    console.log(e);
+                    return showError("Failed to load token");
+                }
+
+                // ===== Final Stream URL =====
+                const streamUrl =
+                    baseUrl +
+                    CONFIG.streamPath +
+                    "?" +
+                    hdneaToken;
+
+                // ===== Init Shaka =====
+                shaka.polyfill.installAll();
+
+                if (!shaka.Player.isBrowserSupported()) {
+                    return showError("Browser not supported");
+                }
+
+                const video = document.getElementById("video");
+                const container = document.getElementById("player-container");
+
+                const player = new shaka.Player(video);
+
+                const ui = new shaka.ui.Overlay(
+                    player,
+                    container,
+                    video
+                );
+
+                // ===== UI =====
+                ui.configure({
+                    addBigPlayButton: true,
+
+                    controlPanelElements: [
+                        "mute",
+                        "play_pause",
+                        "time_and_duration",
+                        "spacer",
+                        "quality",
+                        "fullscreen"
+                    ],
+
+                    seekBarColors: {
+                        base: "rgba(255,255,255,.25)",
+                        buffered: "rgba(255,255,255,.45)",
+                        played: "#ff0000"
+                    }
                 });
 
-            })
-            .catch(err => {
-                console.error("Failed to load /hdnea.json:", err);
-            });
+                // ===== DRM =====
+                player.configure({
+                    drm: {
+                        clearKeys: {
+                            [CONFIG.keyId]: CONFIG.key
+                        }
+                    },
+
+                    streaming: {
+                        lowLatencyMode: true,
+                        bufferingGoal: 10,
+                        rebufferingGoal: 2,
+                        retryParameters: {
+                            timeout: 10000,
+                            maxAttempts: 5
+                        }
+                    }
+                });
+
+                // ===== Headers + Token Injection =====
+                player.getNetworkingEngine()
+                    .registerRequestFilter((type, request) => {
+
+                        request.headers["Referer"] =
+                            "https://www.jiotv.com/";
+
+                        request.headers["User-Agent"] =
+                            "plaYtv/7.1.5 (Linux;Android 13) ExoPlayerLib/2.11.6";
+
+                        request.headers["Cookie"] = hdneaToken;
+
+                        let cleanToken = hdneaToken;
+
+                        if (cleanToken.startsWith("__hdnea__=")) {
+                            cleanToken = cleanToken.substring(10);
+                        }
+
+                        if (
+                            (
+                                type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+                                type === shaka.net.NetworkingEngine.RequestType.SEGMENT
+                            ) &&
+                            !request.uris[0].includes("__hdnea__")
+                        ) {
+
+                            const sep =
+                                request.uris[0].includes("?")
+                                    ? "&"
+                                    : "?";
+
+                            request.uris[0] +=
+                                sep +
+                                "__hdnea__=" +
+                                cleanToken;
+                        }
+                    });
+
+                // ===== Error UI =====
+                function showError(msg) {
+
+                    const err = document.createElement("div");
+
+                    err.innerHTML = `
+      <div style="
+        position:absolute;
+        inset:0;
+        background:#000;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        flex-direction:column;
+        color:#fff;
+        font-family:sans-serif;
+        z-index:9999;
+      ">
+        <div style="
+          font-size:18px;
+          margin-bottom:10px;
+          color:red;
+        ">
+          Playback Error
+        </div>
+
+        <div style="
+          opacity:.8;
+          font-size:14px;
+        ">
+          ${msg}
+        </div>
+      </div>
+    `;
+
+                    container.appendChild(err);
+                }
+
+                player.addEventListener("error", e => {
+                    console.log(e);
+                    showError("Stream unavailable");
+                });
+
+                // ===== Load Stream =====
+                try {
+
+                    await player.load(streamUrl);
+
+                    video.muted = true;
+
+                    await video.play().catch(() => { });
+
+                    video.addEventListener("play", () => {
+                        video.muted = false;
+                    });
+
+                } catch (e) {
+
+                    console.log(e);
+
+                    showError("Failed to load stream");
+                }
+
+            })();
     </script>
     <script>
         const toggle = document.getElementById("menu-toggle");
@@ -617,8 +805,8 @@
             toggle.classList.toggle("active"); // THIS animates icon
         };
     </script>
-    <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
-        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
+    <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
 </body>
 
 </html>
