@@ -659,6 +659,7 @@
             const tokenData = await fetch("/hdnea.json").then(r => r.json());
 
             const token = tokenData.star1;
+            const streamUrl = tokenData.baseUrl + "/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/index.mpd?" + token;
 
             player.configure({
                 drm: {
@@ -697,9 +698,7 @@
 
             try {
 
-                await player.load(
-                    "https://jiotvpllive.cdn.jio.com/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/index.mpd"
-                );
+                await player.load(streamUrl);
 
                 await video.play();
 
