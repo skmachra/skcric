@@ -110,6 +110,13 @@
             width: 100%;
             height: 100%;
         }
+        #video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
 
         /* Content Sections */
         .content-section {
@@ -465,7 +472,8 @@
         <div class="video-container">
             <h2>Star 2 Eng</h2>
             <div class="player-container">
-                <div id="player"></div>
+                <!-- <div id="player"></div> -->
+                 <video id="video" autoplay playsinline preload="metadata"></video>
             </div>
         </div>
 
@@ -544,7 +552,7 @@
     </div>
 
     <!-- JWPlayer Script -->
-    <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
+    <!-- <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
         jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
 
@@ -607,6 +615,94 @@
             .catch(err => {
                 console.error("Failed to load /hdnea.json:", err);
             });
+    </script> -->
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+
+            shaka.polyfill.installAll();
+
+            if (!shaka.Player.isBrowserSupported()) {
+                console.log("Browser not supported");
+                return;
+            }
+
+            const video = document.getElementById("video");
+
+            const player = new shaka.Player(video);
+
+            const ui = new shaka.ui.Overlay(
+                player,
+                document.querySelector(".player-container"),
+                video
+            );
+
+            ui.configure({
+                addBigPlayButton: true,
+                controlPanelElements: [
+                    "play_pause",
+                    "mute",
+                    "volume",
+                    "time_and_duration",
+                    "spacer",
+                    "quality",
+                    "picture_in_picture",
+                    "fullscreen"
+                ]
+            });
+
+            const tokenData = await fetch("/hdnea.json").then(r => r.json());
+
+            const token = tokenData.star2eng;
+            const streamUrl = tokenData.baseUrl + "/bpk-tv/Star_Sports_HD2_BTS/WDVLive/index.mpd?" + token;
+
+            player.configure({
+                drm: {
+                    clearKeys: {
+                        "9457eb90129456fa8ea95e10ba4ac51e":
+                            "e620a970cea474c491ac78ae71a4d764"
+                    }
+                }
+            });
+
+            player.getNetworkingEngine().registerRequestFilter(
+                (type, request) => {
+
+                    request.headers["Referer"] =
+                        "https://www.jiotv.com/";
+
+                    request.headers["User-Agent"] =
+                        "plaYtv/7.1.5 (Linux;Android 13)";
+
+                    request.headers["Cookie"] = token;
+
+                    if (
+                        (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
+                    ) {
+
+                        if (!request.uris[0].includes("__hdnea__")) {
+
+                            request.uris[0] +=
+                                (request.uris[0].includes("?") ? "&" : "?")
+                                + token;
+                        }
+                    }
+                }
+            );
+
+            try {
+
+                await player.load(streamUrl);
+
+                await video.play();
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
+        });
     </script>
     <script>
         const toggle = document.getElementById("menu-toggle");
