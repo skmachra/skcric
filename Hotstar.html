@@ -97,13 +97,20 @@
         .player-container {
             position: relative;
             width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
+            aspect-ratio: 16/9;
             background: #000;
+            overflow: hidden;
         }
 
         #player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #video {
             position: absolute;
             top: 0;
             left: 0;
@@ -418,6 +425,8 @@
             }
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
@@ -465,11 +474,12 @@
         <div class="video-container">
             <h2>Hotstar</h2>
             <div class="player-container">
-                <div id="player">
+                <!-- <div id="player"> -->
                     <!-- <iframe src="https://allrounder-live4.pages.dev/hotstar"
                         style="width:100%; height:100%; border:0;" allow="encrypted-media; autoplay" allowfullscreen>
                     </iframe> -->
-                </div>
+                <!-- </div> -->
+                 <video id="video" autoplay playsinline preload="metadata"></video>
             </div>
         </div>
 
@@ -548,100 +558,66 @@
     </div>
 
     <!-- JWPlayer Script -->
-    <script src='https://content.jwplatform.com/libraries/KB5zFt7A.js'></script>
     <script>
-        const playerInstance = jwplayer("player").setup({
-            controls: true,
-            displaytitle: true,
-            autoplay: true,
-            displaydescription: true,
-            abouttext: "",
-            aboutlink: "https://telegram.me/PowerPlayLive",  // Updated Telegram channel link
-            width: "100%",
-            height: "100%",
-            autostart: true,
-            mute: false,
-            primary: "html5",
-            hlshtml: true,
-            aspectratio: "16:9",
-            stretching: "exactfit",
-            playbackRateControls: true,
-            controls: true,
-            skin: { name: "default", active: "red", inactive: "white", background: "black" },
+        document.addEventListener("DOMContentLoaded", async () => {
 
-            logo: {
-                file: "https://tcfbrravdlgqrymqfcgu.supabase.co/functions/v1/stream-proxy?url=https://recorded-nearby-reaching-front.trycloudflare.com/live/369994/ipl2026/hindi/live_stream.m3u8",
-                link: "https://telegram.me/PowerPlayLive"  // Updated Telegram channel link
-            },
+            shaka.polyfill.installAll();
 
-            captions: {
-                color: "#FFF",
-                fontSize: 14,
-                backgroundOpacity: 0,
-                edgeStyle: "raised"
-            },
-
-            playlist: [
-                {
-                    image: "",
-                    sources: [
-                        {
-                            file: "https://jio-hotstar.sayanwork-studioo.workers.dev/live/abc123.m3u8",
-                            label: "1080p",
-                            default: true
-                        }
-                    ],
-                }
-            ],
-            advertising: {
-                client: "vast",
-                schedule: [
-                    {
-                        offset: "pre",
-                        tag: ""
-                    }
-                ]
+            if (!shaka.Player.isBrowserSupported()) {
+                console.log("Browser not supported");
+                return;
             }
-        });
 
-        playerInstance.on("ready", function () {
-            const playerContainer = playerInstance.getContainer();
-            const buttonContainer = playerContainer.querySelector(".jw-button-container");
+            const video = document.getElementById("video");
 
-            // Rewind button functionality
-            const rewindContainer = playerContainer.querySelector(".jw-display-icon-rewind");
-            const rewindButton = rewindContainer.cloneNode(true);
-            const rewindIcon = rewindButton.querySelector(".jw-icon-rewind");
-            rewindIcon.style.transform = "scaleX(1)";
-            rewindIcon.ariaLabel = "Rewind 10 Seconds";
+            const player = new shaka.Player(video);
 
-            const nextContainer = playerContainer.querySelector(".jw-display-icon-next");
-            nextContainer.parentNode.insertBefore(rewindButton, nextContainer);
+            const ui = new shaka.ui.Overlay(
+                player,
+                document.querySelector(".player-container"),
+                video
+            );
 
-            // Rewind functionality for the control bar
-            const rewindControlBarButton = buttonContainer.querySelector(".jw-icon-rewind");
-            const rewindControlBarClone = rewindControlBarButton.cloneNode(true);
-            rewindControlBarClone.style.transform = "scaleX(1)";
-            rewindControlBarClone.ariaLabel = "Rewind 10 Seconds";
-            buttonContainer.insertBefore(rewindControlBarClone, buttonContainer.firstChild);
-
-            // On click of rewind button, seek backward by 10 seconds
-            [rewindButton, rewindControlBarClone].forEach((button) => {
-                button.onclick = () => {
-                    const currentPosition = playerInstance.getPosition();
-                    const newPosition = Math.max(currentPosition - 10, 0); // Prevent going below 0
-                    playerInstance.seek(newPosition);
-                };
+            ui.configure({
+                addBigPlayButton: true,
+                controlPanelElements: [
+                    "play_pause",
+                    "mute",
+                    "volume",
+                    "time_and_duration",
+                    "spacer",
+                    "quality",
+                    "picture_in_picture",
+                    "fullscreen"
+                ]
             });
 
-            // Detect adblock
-            playerInstance.on("adBlock", () => {
-                const modal = document.querySelector("div.modal");
-                modal.style.display = "flex";
-                document
-                    .getElementById("close")
-                    .addEventListener("click", () => location.reload());
-            });
+            const streamUrl = "https://tcfbrravdlgqrymqfcgu.supabase.co/functions/v1/stream-proxy?url=https://recorded-nearby-reaching-front.trycloudflare.com/live/369994/ipl2026/hindi/live_stream.m3u8";
+
+            
+
+            player.getNetworkingEngine().registerRequestFilter(
+                (type, request) => {
+                    if (
+                        (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
+                    ) {
+                    }
+                }
+            );
+
+            try {
+
+                await player.load(streamUrl);
+
+                await video.play();
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
         });
     </script>
     <script>
@@ -653,8 +629,8 @@
             toggle.classList.toggle("active"); // THIS animates icon
         };
     </script>
-    <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
-        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
+    <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
 </body>
 
 </html>
