@@ -1,0 +1,38 @@
+name: Update hdnea
+
+on:
+  schedule:
+    - cron: "20 13 * * *"
+    - cron: "20 15 * * *"
+    - cron: "20 17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Run script
+        run: node fetch.js
+
+      - name: Commit changes
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add hdnea.json
+
+          git diff --cached --quiet || git commit -m "Auto update hdnea"
+
+          git push
