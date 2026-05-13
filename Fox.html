@@ -97,13 +97,20 @@
     .player-container {
       position: relative;
       width: 100%;
-      height: 0;
-      padding-bottom: 56.25%;
-      /* 16:9 aspect ratio */
+      aspect-ratio: 16/9;
       background: #000;
+      overflow: hidden;
     }
 
     #player {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    #video {
       position: absolute;
       top: 0;
       left: 0;
@@ -420,6 +427,8 @@
   </style>
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
+  <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
 </head>
 <script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <script>(function (s) { s.dataset.zone = '9204347', s.src = 'https://n6wxm.com/vignette.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -464,17 +473,14 @@
     <div class="video-container">
       <h2>Fox HD</h2>
       <div class="player-container">
-        <div id="player">
-          <!-- <iframe src="https://cineplyr.pages.dev/willow2" style="width:100%; height:100%; border:0;"
-            allow="encrypted-media; autoplay" allowfullscreen></iframe> -->
-        </div>
+        <video id="video" autoplay playsinline preload="metadata"></video>
       </div>
     </div>
     <div class="ad-container">
-            <p class="ad-text">
-                <a href="https://omg10.com/4/9296300" target="_blank" class="telegram-btn">Watch in 4k</a>
-            </p>
-        </div>
+      <p class="ad-text">
+        <a href="https://omg10.com/4/9296300" target="_blank" class="telegram-btn">Watch in 4k</a>
+      </p>
+    </div>
     <!-- Ad Space -->
     <div class="ad-container">
       <p class="ad-text">
@@ -549,44 +555,72 @@
     </footer>
   </div>
 
-  <!-- JWPlayer Script -->
-  <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
   <script>
-    jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+    document.addEventListener("DOMContentLoaded", async () => {
 
-    // Patch XHR to inject token into segments
+      shaka.polyfill.installAll();
 
-    jwplayer("player").setup({
-      playlist: [{
-        file: "https://vsd121.okcdn.ru/cmaf/16215111961343/sig/Wxs0wdkulV8/expires/1778071584830/srcIp/152.59.168.22/urls/45.136.22.62/clientType/36/srcAg/CHROME/mid/14491938473983/get/dash_14491938473983.2-0sEYVdI3w.mpd",
-        // drm: {
-        //   clearkey: {
-        //     keyId: "6a70902dcc79493f98d00064d93e8460",
-        //     key: "eb950593a82a15994676e4431113b551",
-        //     robustness: {
-        //       video: "SW_SECURE_DECODE",
-        //       audio: "SW_SECURE_DECODE"
-        //     }
-        //   }
-        // }
-      }],
-      width: "100%",
-      height: "100%",
-      autostart: true,
-      mute: false,
-      primary: "html5",
-      hlshtml: true,
-      aspectratio: "16:9",
-      stretching: "exactfit",
-      playbackRateControls: true,
-      controls: true,
-      skin: { name: "default", active: "red", inactive: "white", background: "black" },
-    }).on("error", e => {
-      console.error("Player error:", e);
-      const msg = document.createElement('div');
-      msg.id = "message";
-      msg.innerText = "Player error: " + (e.message || "Unknown error");
-      document.body.appendChild(msg);
+      if (!shaka.Player.isBrowserSupported()) {
+        console.log("Browser not supported");
+        return;
+      }
+
+      const video = document.getElementById("video");
+
+      const player = new shaka.Player(video);
+
+      const ui = new shaka.ui.Overlay(
+        player,
+        document.querySelector(".player-container"),
+        video
+      );
+
+      ui.configure({
+        addBigPlayButton: true,
+        controlPanelElements: [
+          "play_pause",
+          "mute",
+          "volume",
+          "time_and_duration",
+          "spacer",
+          "quality",
+          "picture_in_picture",
+          "fullscreen"
+        ]
+      });
+
+      const streamUrl = "https://dck1-ak-livedazn.akamaized.net/out/v1/814bffb9b389f652/d7c17f9575ba40798a8c63c738b150b3/index.mpd";
+
+      player.configure({
+        drm: {
+          clearKeys: {
+            "368d67493ff259d9823b96b89b761386": "1bd0324aa4f1473fe0612cffe46b05a2"
+          }
+        }
+      });
+
+      player.getNetworkingEngine().registerRequestFilter(
+        (type, request) => {
+          if (
+            (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+              type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
+          ) {
+          }
+        }
+      );
+
+      try {
+
+        await player.load(streamUrl);
+
+        await video.play();
+
+      } catch (err) {
+
+        console.error(err);
+
+      }
+
     });
   </script>
   <script>

@@ -1,8 +1,8 @@
 {
   "baseUrl": "https://jiotvpllive.cdn.jio.com",
   "hdneaToken": "__hdnea__=st=1776079289~exp=1776100889~acl=/*~hmac=e9cf21c353f4284156ec5915b6599cb7b4c048df520dfd9434686d29560b2ae0",
-  "star1": "__hdnea__=st=1778588031~exp=1778609631~acl=/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/*~hmac=a74bb29bcb1892ce298d75f0f9d1770fbcc6726c3d38c330ed365c831f290ce0",
-  "star1eng": "__hdnea__=st=1778588226~exp=1778609826~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=5fd911505887860eee809e046b85c393ba0d96170654649f7765ee445097ac98",
-  "star2": "__hdnea__=st=1778596938~exp=1778618538~acl=/bpk-tv/StarSportsHD2Hin_BTS/WDVLive/*~hmac=d938df930f8e163edcebf9c4930399b1fda4219fe9b2129e8155f2747c3d346c",
-  "star2eng": "__hdnea__=st=1778596938~exp=1778618538~acl=/bpk-tv/Star_Sports_HD2_BTS/WDVLive/*~hmac=29fe7846488ae625c75e1893f73e311a229929182e21a426ddc973dafd30f703"
+  "star1": "__hdnea__=st=1778676010~exp=1778697610~acl=/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/*~hmac=6c748a82af71fc92a7cafa6bc20aa286a1034aaff7c77405ed8e07e13c60b86a",
+  "star1eng": "__hdnea__=st=1778676186~exp=1778697786~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=b05ecf415e3952b5a41845bb80d2df1c3611fa1512cef4154e041ab852f6e74d",
+  "star2": "__hdnea__=st=1778672058~exp=1778693658~acl=/bpk-tv/StarSportsHD2Hin_BTS/WDVLive/*~hmac=1d4ec55ecf3451a875e1f015f8ee2c65b01dbf9f1a7d4e0fceeb331527c836da",
+  "star2eng": "__hdnea__=st=1778672058~exp=1778693658~acl=/bpk-tv/Star_Sports_HD2_BTS/WDVLive/*~hmac=9eae07b72a88a8532f85ac3b4b4ab8fe5cad39641a870b68d63400c2f744ec99"
 }
