@@ -1,0 +1,45 @@
+name: Update Kayo
+
+on:
+  workflow_dispatch:
+    inputs:
+      stream_url:
+        description: "MPD Stream URL"
+        required: true
+
+      clearkey:
+        description: "KID:KEY"
+        required: true
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Update HTML
+        env:
+          STREAM_URL: ${{ github.event.inputs.stream_url }}
+          CLEARKEY: ${{ github.event.inputs.clearkey }}
+        run: node update-kayo.js
+
+      - name: Commit
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+          git add Kayo.html
+
+          git diff --cached --quiet || git commit -m "Update Kayo"
+
+          git push
