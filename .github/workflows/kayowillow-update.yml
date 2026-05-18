@@ -1,8 +1,12 @@
-name: Update Kayo
+name: Update Stream
 
 on:
   workflow_dispatch:
     inputs:
+      file_name:
+        description: "HTML File (Kayo.html or Willow.html)"
+        required: true
+
       stream_url:
         description: "MPD Stream URL"
         required: true
@@ -29,17 +33,18 @@ jobs:
 
       - name: Update HTML
         env:
+          FILE_NAME: ${{ github.event.inputs.file_name }}
           STREAM_URL: ${{ github.event.inputs.stream_url }}
           CLEARKEY: ${{ github.event.inputs.clearkey }}
-        run: node update-kayo.js
+        run: node update-stream.js
 
       - name: Commit
         run: |
           git config user.name "github-actions"
           git config user.email "github-actions@github.com"
 
-          git add Kayo.html
+          git add .
 
-          git diff --cached --quiet || git commit -m "Update Kayo"
+          git diff --cached --quiet || git commit -m "Update stream"
 
           git push
