@@ -8,7 +8,8 @@ const mapping = {
   EN: "star1eng",
   sidhu2: "star2",
   EN2: "star2eng",
-  s1: "s1"
+  s1: "s1",
+  s2: "s2"
 };
 
 function extractHdnea(url) {
