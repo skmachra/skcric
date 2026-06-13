@@ -97,10 +97,9 @@
         .player-container {
             position: relative;
             width: 100%;
-            height: 0;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
+            aspect-ratio: 16/9;
             background: #000;
+            overflow: hidden;
         }
 
         #player {
@@ -110,6 +109,15 @@
             width: 100%;
             height: 100%;
         }
+
+        #video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
 
         /* Content Sections */
         .content-section {
@@ -420,7 +428,11 @@
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
 </head>
+
 <script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <script>(function (s) { s.dataset.zone = '9204347', s.src = 'https://n6wxm.com/vignette.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
@@ -462,16 +474,18 @@
 
         <!-- Main Video Content -->
         <div class="video-container">
-            <h2>Willow Sports</h2>
+            <h2>Willow</h2>
             <div class="player-container">
-                <div id="player"></div>
+                <video id="video" autoplay playsinline preload="metadata"></video>
             </div>
         </div>
+
         <div class="ad-container">
             <p class="ad-text">
                 <a href="https://omg10.com/4/9296300" target="_blank" class="telegram-btn">Watch in 4k</a>
             </p>
         </div>
+
         <!-- Ad Space -->
         <div class="ad-container">
             <p class="ad-text">
@@ -546,44 +560,72 @@
         </footer>
     </div>
 
-    <!-- JWPlayer Script -->
-    <script src="https://content.jwplatform.com/libraries/SAHhwvZq.js"></script>
     <script>
-        jwplayer.key = 'XSuP4qMl+9tK17QNb+4+th2Pm9AWgMO/cYH8CI0HGGr7bdjo';
+        document.addEventListener("DOMContentLoaded", async () => {
 
-        // Patch XHR to inject token into segments
+            shaka.polyfill.installAll();
 
-        jwplayer("player").setup({
-            playlist: [{
-                file: "https://otte-qw.live.pv-cdn.net/fra-nitro/live/clients/dash/enc/65ldy4ejuu/out/v1/69bc6b64f1c14e36bb21e0075a71d8ca/cenc.mpd",
+            if (!shaka.Player.isBrowserSupported()) {
+                console.log("Browser not supported");
+                return;
+            }
+
+            const video = document.getElementById("video");
+
+            const player = new shaka.Player(video);
+
+            const ui = new shaka.ui.Overlay(
+                player,
+                document.querySelector(".player-container"),
+                video
+            );
+
+            ui.configure({
+                addBigPlayButton: true,
+                controlPanelElements: [
+                    "play_pause",
+                    "mute",
+                    "volume",
+                    "time_and_duration",
+                    "spacer",
+                    "quality",
+                    "picture_in_picture",
+                    "fullscreen"
+                ]
+            });
+
+            const streamUrl = "https://otte.live.fly.ww.aiv-cdn.net/iad-nitro/live/clients/dash/enc/vfumc0t3cc/out/v1/f14dd22c77cb4138b316baf3c970304e/cenc.mpd";
+
+            player.configure({
                 drm: {
-                    clearkey: {
-                        keyId: "570c19f1be3410e4e409be4dc7923f2b",
-                        key: "9a4dea8af2a2a703dffa8a477e9edc50",
-                        robustness: {
-                            video: "SW_SECURE_DECODE",
-                            audio: "SW_SECURE_DECODE"
-                        }
+                    clearKeys: {
+                        "7e43190efc077a8e34d29efe88667f0d" : "bdc614e076190e536c7aca7f66ae3f88"
                     }
                 }
-            }],
-            width: "100%",
-            height: "100%",
-            autostart: true,
-            mute: false,
-            primary: "html5",
-            hlshtml: true,
-            aspectratio: "16:9",
-            stretching: "exactfit",
-            playbackRateControls: true,
-            controls: true,
-            skin: { name: "default", active: "red", inactive: "white", background: "black" },
-        }).on("error", e => {
-            console.error("Player error:", e);
-            const msg = document.createElement('div');
-            msg.id = "message";
-            msg.innerText = "Player error: " + (e.message || "Unknown error");
-            document.body.appendChild(msg);
+            });
+
+            player.getNetworkingEngine().registerRequestFilter(
+                (type, request) => {
+                    if (
+                        (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
+                    ) {
+                    }
+                }
+            );
+
+            try {
+
+                await player.load(streamUrl);
+
+                await video.play();
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
         });
     </script>
     <script>
@@ -595,8 +637,8 @@
             toggle.classList.toggle("active"); // THIS animates icon
         };
     </script>
-    <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
-        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
+    <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
 </body>
 
 </html>
