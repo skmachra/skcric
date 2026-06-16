@@ -135,7 +135,7 @@
             width: 100%;
             padding-bottom: 56.25%;
             overflow: hidden;
-            border-radius: 12px;
+            border-radius: 0;
             background: #000;
         }
 
@@ -299,6 +299,63 @@
                 font-size: 2rem;
             }
         }
+
+        .channels-grid {
+            display: flex !important;
+            gap: 10px;
+            overflow-x: auto;
+            padding: 10px 0;
+            scrollbar-width: none;
+        }
+
+        .channels-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        .channel-card {
+            min-width: 140px !important;
+            display: flex !important;
+            align-items: center;
+            gap: 10px;
+            padding: 8px;
+            flex-shrink: 0;
+        }
+
+        .channel-card img {
+            width: 60px !important;
+            height: 60px !important;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .channel-name {
+            padding: 0 !important;
+            text-align: left !important;
+            font-size: .85rem;
+        }
+
+        @media (max-width:768px) {
+            .hero {
+                display: none;
+            }
+
+            .container {
+                padding: 0;
+            }
+
+            .player-section {
+                border-radius: 0;
+                padding: 0;
+            }
+
+            .player-header {
+                padding: 12px;
+            }
+
+            .share {
+                padding: 10px;
+            }
+        }
     </style>
 </head>
 <script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -351,6 +408,9 @@
                     allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
+            <h2 class="section-title" style="margin:10px 15px;">Available Broadcasters</h2>
+            <div class="channels-grid" id="channelsGrid"></div>
+
             <div class="share">
                 <a class="whatsapp" target="_blank" href="https://wa.me/?text=https://powerplaylive.pages.dev/fifa">
                     WhatsApp
@@ -374,9 +434,7 @@
             </p>
         </div>
 
-        <h2 class="section-title">Available Broadcasters</h2>
 
-        <div class="channels-grid" id="channelsGrid"></div>
 
         <div class="content">
             <div class="card">
