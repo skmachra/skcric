@@ -1,295 +1,35 @@
-<!DOCTYPE html>
+<!doctype html>
+
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>PowerPlayLive</title>
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
-  <title>PowerPlayLive - Live Streaming & More</title>
+
   <style>
-    /* Modern CSS with Flexbox */
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+      font-family: "Segoe UI", sans-serif;
     }
 
     body {
       background: linear-gradient(135deg, #1e0033, #3a0068);
       color: white;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      padding: 20px;
     }
 
-    .container {
-      max-width: 1200px;
-      width: 100%;
-    }
-
-    header {
-      margin-bottom: 30px;
-    }
-
-    h1 {
-      font-size: 2.5rem;
-      margin-bottom: 10px;
-      background: linear-gradient(90deg, #ff6b00, #ff00a0);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-    }
-
-
-    .tagline {
-      font-size: 1.2rem;
-      margin-bottom: 20px;
-      color: #ccc;
-    }
-
-    /* Navigation */
-    nav {
-      padding: 8px;
-    }
-
-    .nav-links {
-      display: flex;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 15px;
-    }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      padding: 10px 20px;
-      border-radius: 50px;
-      font-weight: bold;
-      background: linear-gradient(90deg, #ff6b00, #ff00a0);
-      transition: all 0.3s ease;
-    }
-
-    .nav-links a:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(255, 0, 160, 0.5);
-    }
-
-    .nav-links a.active {
-      background: linear-gradient(90deg, #ff00a0, #ff6b00);
-      box-shadow: 0 5px 15px rgba(255, 0, 160, 0.7);
-      transform: translateY(-3px);
-      border: 2px solid white;
-    }
-
-    /* Video Section */
-    .video-container {
-      margin: 30px 0;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 12px;
-      border-radius: 10px;
-    }
-
-    .player-container {
-      position: relative;
-      width: 100%;
-      height: 0;
-      padding-bottom: 56.25%;
-      /* 16:9 aspect ratio */
-      background: #000;
-    }
-
-    #player {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-    }
-
-    /* Content Sections */
-    .content-section {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-      margin: 30px 0;
-      gap: 20px;
-    }
-
-    .card {
-      flex: 1 1 300px;
-      background: rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      border-radius: 10px;
-      text-align: left;
-    }
-
-    .card h3 {
-      color: #ff6b00;
-      margin-bottom: 15px;
-      font-size: 1.3rem;
-    }
-
-    .card p {
-      line-height: 1.6;
-      margin-bottom: 15px;
-    }
-
-    /* Ad Sections */
-    .ad-container {
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      margin: 20px 0;
-      min-height: 100px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .ad-text {
-      color: #ccc;
-      font-style: italic;
-    }
-
-    /* Telegram Button */
-    .telegram-btn {
-      display: inline-block;
-      background: #0088cc;
-      color: white;
-      text-decoration: none;
-      padding: 15px 30px;
-      border-radius: 50px;
-      font-weight: bold;
-      font-size: 1.2rem;
-      margin: 20px 0;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
-    }
-
-    .telegram-btn:hover {
-      background: #0077b5;
-      transform: translateY(-3px);
-      box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
-    }
-
-    .telegram-btn i {
-      margin-right: 10px;
-    }
-
-    /* Footer */
-    footer {
-      margin-top: 40px;
-      padding: 20px;
-      border-top: 1px solid rgba(255, 255, 255, 0.1);
-      width: 100%;
-    }
-
-    .social-share-container {
-      background: rgba(0, 0, 0, 0.2);
-      padding: 20px;
-      border-radius: 10px;
-      margin: 20px 0;
-      text-align: center;
-      max-width: 500px;
-      width: 100%;
-    }
-
-    .social-share-container h3 {
-      color: #fff;
-      margin-bottom: 15px;
-      font-size: 1.2rem;
-    }
-
-    .share-buttons {
-      display: flex;
-      gap: 10px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .share-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 20px;
-      border-radius: 50px;
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
-      transition: all 0.3s ease;
-    }
-
-    .share-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-    }
-
-    .whatsapp {
-      background: #25D366;
-    }
-
-    .telegram {
-      background: #0088cc;
-    }
-
-    .facebook {
-      background: #3b5998;
-    }
-
-    @media (max-width: 600px) {
-      .share-buttons {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .share-btn {
-        width: 100%;
-        justify-content: center;
-      }
-    }
-
-    /* Responsive Design */
-    @media (max-width: 768px) {
-      h1 {
-        font-size: 2rem;
-      }
-
-      .tagline {
-        font-size: 1rem;
-      }
-
-      .nav-links a {
-        width: 100%;
-        text-align: center;
-      }
-    }
-
-    /* NAVBAR */
     .navbar {
-      width: 100%;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
       background: #1a002b;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-    }
-
-    .nav-container {
-      max-width: 1200px;
-      margin: auto;
-      padding: 4px 8px;
+      padding: 15px 25px;
       display: flex;
-      align-items: center;
       justify-content: space-between;
-      border-radius: 10px;
+      align-items: center;
     }
 
-    /* LEFT SIDE */
-    .nav-left {
+    .logo-area {
       display: flex;
       align-items: center;
       gap: 12px;
@@ -302,377 +42,177 @@
 
     .brand {
       font-size: 1.5rem;
-      font-weight: 600;
-      display: flex;
-      align-items: center;
+      font-weight: 700;
     }
 
-    /* LINKS */
     .nav-links {
       display: flex;
-      gap: 25px;
+      gap: 20px;
     }
 
     .nav-links a {
       color: white;
       text-decoration: none;
-      font-weight: 500;
-      position: relative;
+      font-weight: 600;
     }
 
-    /* underline hover effect */
-    .nav-links a::after {
-      content: "";
-      position: absolute;
-      width: 0%;
-      height: 2px;
-      bottom: -5px;
-      left: 0;
+    .hero {
+      text-align: center;
+      padding: 80px 20px;
+      max-width: 1000px;
+      margin: auto;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      margin-bottom: 20px;
       background: linear-gradient(90deg, #ff6b00, #ff00a0);
-      transition: 0.3s;
+      background-clip: text;
+      -webkit-background-clip: text;
+      color: transparent;
     }
 
-    .nav-links a:hover::after {
-      width: 100%;
+    .hero p {
+      font-size: 1.1rem;
+      color: #ddd;
+      max-width: 700px;
+      margin: auto;
+      line-height: 1.7;
     }
 
-    /* MOBILE */
+    .btn {
+      display: inline-block;
+      margin-top: 30px;
+      padding: 14px 30px;
+      background: linear-gradient(90deg, #ff6b00, #ff00a0);
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    .features {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 20px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.08);
+      padding: 25px;
+      border-radius: 12px;
+    }
+
+    .card h3 {
+      margin-bottom: 10px;
+      color: #ff6b00;
+    }
+
+    .about {
+      max-width: 1000px;
+      margin: 50px auto;
+      padding: 0 20px;
+      text-align: center;
+    }
+
+    .about h2 {
+      margin-bottom: 15px;
+    }
+
+    .about p {
+      color: #ddd;
+      line-height: 1.8;
+    }
+
+    footer {
+      margin-top: 60px;
+      padding: 25px;
+      text-align: center;
+      background: #1a002b;
+      color: #bbb;
+    }
+
     @media (max-width: 768px) {
-
-      .menu-toggle {
-        display: block;
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
       }
 
       .nav-links {
-        position: absolute;
-        top: 65px;
-        left: 0;
-        width: 100%;
-        background: #1a002b;
-        flex-direction: column;
-        align-items: center;
-        gap: 20px;
-        padding: 20px 0;
-        display: none;
+        flex-wrap: wrap;
+        justify-content: center;
       }
 
-      .nav-links.show {
-        display: flex;
-      }
-    }
-
-    .menu-toggle {
-      width: 28px;
-      height: 28px;
-      /* perfect square */
-      display: none;
-      position: relative;
-      cursor: pointer;
-    }
-
-    /* All lines positioned absolutely for perfect symmetry */
-    .menu-toggle span {
-      position: absolute;
-      left: 0;
-      width: 100%;
-      height: 3px;
-      background: white;
-      border-radius: 2px;
-      transition: 0.3s ease;
-    }
-
-    /* exact positions */
-    .menu-toggle span:nth-child(1) {
-      top: 6px;
-    }
-
-    .menu-toggle span:nth-child(2) {
-      top: 12.5px;
-      /* exact center */
-    }
-
-    .menu-toggle span:nth-child(3) {
-      top: 19px;
-    }
-
-    /* animation to X */
-    .menu-toggle.active span:nth-child(1) {
-      top: 12.5px;
-      transform: rotate(45deg);
-    }
-
-    .menu-toggle.active span:nth-child(2) {
-      opacity: 0;
-    }
-
-    .menu-toggle.active span:nth-child(3) {
-      top: 12.5px;
-      transform: rotate(-45deg);
-    }
-
-    /* mobile only */
-    @media (max-width: 768px) {
-      .menu-toggle {
-        display: block;
+      .hero h1 {
+        font-size: 2rem;
       }
     }
   </style>
-  <!-- Font Awesome for icons -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<meta name="clckd" content="bb5a58eaf9cc6faa6ecb9ae63c256e89" />
-<script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-<script>(function (s) { s.dataset.zone = '9204347', s.src = 'https://n6wxm.com/vignette.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 
 <body>
-
-  <body>
-    <div class="container">
-      <header class="navbar">
-        <div class="nav-container">
-          <!-- Logo -->
-          <div class="nav-left">
-            <img src="logo.png" class="logo" />
-            <span class="brand">PowerPlayLive</span>
-          </div>
-
-          <!-- Hamburger -->
-          <div class="menu-toggle" id="menu-toggle">
-            <span></span>
-            <span></span>
-            <span></span>
-          </div>
-
-          <!-- Links -->
-          <nav class="nav-links" id="nav-links">
-            <a href="Hindi" class="active">Hindi</a>
-            <a href="#">English</a>
-            <a href="/">Live Sports</a>
-            <a href="https://telegram.me/SK_Movies1">Movies</a>
-            <a href="https://telegram.me/PowerPlayLive">Telegram</a>
-          </nav>
-        </div>
-      </header>
-
-      <!-- Ad Space -->
-      <div class="ad-container">
-        <p class="ad-text">
-          <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">Join Our Telegram for
-            Updates</a>
-        </p>
-      </div>
-
-      <!-- Main Video Content -->
-      <div class="video-container">
-        <h2>Live Streaming Now</h2>
-        <div class="player-container">
-          <div id="player"></div>
-        </div>
-      </div>
-
-      <!-- Ad Space -->
-      <div class="ad-container">
-        <p class="ad-text">
-        <div class="social-share-container">
-          <h3>Share with friends:</h3>
-          <div class="share-buttons">
-            <a href="https://wa.me/?text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content%20-%20https://powerplaylive.pages.dev/"
-              class="share-btn whatsapp" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
-
-            <a href="https://t.me/share/url?url=https://powerplaylive.pages.dev/&text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content"
-              class="share-btn telegram" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-telegram"></i> Telegram
-            </a>
-
-            <a href="https://www.facebook.com/sharer/sharer.php?u=https://powerplaylive.pages.dev/"
-              class="share-btn facebook" target="_blank" rel="noopener noreferrer">
-              <i class="fab fa-facebook"></i> Facebook
-            </a>
-          </div>
-        </div>
-
-        </p>
-      </div>
-
-      <!-- Content Sections -->
-      <div class="content-section">
-        <div class="card">
-          <h3>Premium Content</h3>
-          <p>
-            Access exclusive premium content including live sports, movies, and
-            TV shows from around the world in multiple languages.
-          </p>
-          <p>
-            Our library is updated daily with the latest content to keep you
-            entertained.
-          </p>
-        </div>
-
-        <div class="card">
-          <h3>Multi-Language Support</h3>
-          <p>
-            Enjoy content in Hindi, English, and several regional languages. We
-            provide subtitles and dubbing options for many programs.
-          </p>
-          <p>Switch between languages with our easy-to-use interface.</p>
-        </div>
-
-        <div class="card">
-          <h3>24/7 Live TV</h3>
-          <p>
-            Never miss your favorite shows with our 24/7 live TV channels from
-            around the globe.
-          </p>
-          <p>
-            We offer news, entertainment, sports, and specialty channels for all
-            interests.
-          </p>
-        </div>
-      </div>
-
-      <!-- Call to Action -->
-      <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">
-        <i class="fab fa-telegram"></i> Join Our Telegram for Updates
-      </a>
-
-      <!-- Footer -->
-      <footer>
-        <p>&copy; 2023 PowerPlayLive. All rights reserved.</p>
-        <p>Contact us: support@powerplaylive.com</p>
-      </footer>
+  <header class="navbar">
+    <div class="logo-area">
+      <img src="logo.png" class="logo" />
+      <div class="brand">PowerPlayLive</div>
     </div>
 
-    <!-- JWPlayer Script -->
-    <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
-    <script>
-      let playerInstance;
-      fetch('https://powerplaylive.pages.dev/config.json') // adjust path
-        .then(res => res.json())
-        .then(data => {
-          playerInstance = jwplayer("player").setup({
-            controls: true,
-            displaytitle: true,
-            autoplay: true,
-            displaydescription: true,
-            abouttext: "",
-            aboutlink: "https://telegram.me/PowerPlayLive",
+    <nav class="nav-links">
+      <a href="/">Home</a>
+      <a href="/fifa">FIFA Live</a>
+      <a href="/schedule">Schedules</a>
+      <a href="/contact">Contact</a>
+    </nav>
+  </header>
 
-            skin: {
-              name: "netflix",
-            },
+  <section class="hero">
+    <h1>Welcome to PowerPlayLive</h1>
 
-            logo: {
-              file: "",
-              link: "https://telegram.me/PowerPlayLive",
-            },
+    <p>
+      Follow football coverage, match schedules, broadcaster information,
+      tournament updates and community discussions from around the world.
+    </p>
 
-            captions: {
-              color: "#FFF",
-              fontSize: 14,
-              backgroundOpacity: 0,
-              edgeStyle: "raised",
-            },
+    <a href="/fifa" class="btn">View FIFA Coverage</a>
+  </section>
 
-            playlist: [
-              {
-                image: "",
-                sources: [
-                  {
-                    file: data.indexurl,
-                    label: "1080p",
-                    default: true,
-                  },
-                ],
-              },
-            ],
-            advertising: {
-              client: "vast",
-              schedule: [
-                {
-                  offset: "pre",
-                  tag: "",
-                },
-              ],
-            },
-          });
-        });
-      playerInstance.on("ready", function () {
-        const playerContainer = playerInstance.getContainer();
-        const buttonContainer = playerContainer.querySelector(
-          ".jw-button-container"
-        );
+  <section class="features">
+    <div class="card">
+      <h3>Match Schedules</h3>
+      <p>
+        Stay updated with upcoming fixtures, kickoff times and tournament
+        schedules.
+      </p>
+    </div>
 
-        // Rewind button functionality
-        const rewindContainer = playerContainer.querySelector(
-          ".jw-display-icon-rewind"
-        );
-        const rewindButton = rewindContainer.cloneNode(true);
-        const rewindIcon = rewindButton.querySelector(".jw-icon-rewind");
-        rewindIcon.style.transform = "scaleX(1)";
-        rewindIcon.ariaLabel = "Rewind 10 Seconds";
+    <div class="card">
+      <h3>Broadcaster Information</h3>
+      <p>
+        Find official broadcaster details and coverage information for major
+        football events.
+      </p>
+    </div>
 
-        const nextContainer = playerContainer.querySelector(
-          ".jw-display-icon-next"
-        );
-        nextContainer.parentNode.insertBefore(rewindButton, nextContainer);
+    <div class="card">
+      <h3>Football Updates</h3>
+      <p>Get the latest news, match highlights and tournament updates.</p>
+    </div>
+  </section>
 
-        // Rewind functionality for the control bar
-        const rewindControlBarButton =
-          buttonContainer.querySelector(".jw-icon-rewind");
-        const rewindControlBarClone = rewindControlBarButton.cloneNode(true);
-        rewindControlBarClone.style.transform = "scaleX(1)";
-        rewindControlBarClone.ariaLabel = "Rewind 10 Seconds";
-        buttonContainer.insertBefore(
-          rewindControlBarClone,
-          buttonContainer.firstChild
-        );
+  <section class="about">
+    <h2>About PowerPlayLive</h2>
 
-        // On click of rewind button, seek backward by 10 seconds
-        [rewindButton, rewindControlBarClone].forEach((button) => {
-          button.onclick = () => {
-            const currentPosition = playerInstance.getPosition();
-            const newPosition = Math.max(currentPosition - 10, 0);
-            playerInstance.seek(newPosition);
-          };
-        });
+    <p>
+      PowerPlayLive is a football information portal providing match
+      schedules, tournament updates, broadcaster information and community
+      resources for football fans worldwide.
+    </p>
+  </section>
 
-        // Detect adblock
-        playerInstance.on("adBlock", () => {
-          const modal = document.querySelector("div.modal");
-          if (modal) {
-            modal.style.display = "flex";
-            document
-              .getElementById("close")
-              .addEventListener("click", () => location.reload());
-          }
-        });
-      });
-
-      // Confirmation message for joining Telegram channel
-      window.onload = function () {
-        var a = confirm("Join Our Telegram Channel For More Links!!");
-        if (a == true) {
-          window.location.href = "https://telegram.me/PowerPlayLive";
-        }
-      };
-
-      function welcome() {
-        window.open("https://telegram.me/PowerPlayLive", "_blank");
-      }
-    </script>
-    <script>
-      const toggle = document.getElementById("menu-toggle");
-      const links = document.getElementById("nav-links");
-
-      toggle.onclick = () => {
-        links.classList.toggle("show");
-        toggle.classList.toggle("active"); // THIS animates icon
-      };
-    </script>
-    <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
-      disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script>
-  </body>
+  <footer>© 2026 PowerPlayLive. All Rights Reserved.</footer>
+</body>
 
 </html>
