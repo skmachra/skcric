@@ -286,29 +286,9 @@
   <!-- Font Awesome for icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
 </head>
-<script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-<script>(function (s) { s.dataset.zone = '9204347', s.src = 'https://n6wxm.com/vignette.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
 <body>
   <div class="container">
     <header>
-      <img src="logo.png" alt="Logo" class="logo" />
-      <h1>PowerPlayLive</h1>
-      <p class="tagline">
-        Your ultimate destination for live streaming and entertainment
-      </p>
-    </header>
-
-    <!-- Navigation Links -->
-    <nav>
-      <div class="nav-links">
-        <a href="/Hindi">Hindi</a>
-        <a href="/English">English</a>
-        <a href="/">Live Sports</a>
-        <a href="https://telegram.me/SK_Movies1">Movies</a>
-        <a href="https://telegram.me/PowerPlayLive">Telegram Channels</a>
-      </div>
-    </nav>
-
     <!-- Ad Space -->
     <div class="ad-container">
       <p class="ad-text">
@@ -317,13 +297,6 @@
       </p>
     </div>
 
-    <!-- Main Video Content -->
-    <div class="video-container">
-      <h2>Live Streaming Now</h2>
-      <div class="player-container">
-        <div id="player"></div>
-      </div>
-    </div>
 
     <!-- Ad Space -->
     <div class="ad-container">
@@ -398,124 +371,5 @@
       <p>Contact us: support@powerplaylive.com</p>
     </footer>
   </div>
-
-  <!-- JWPlayer Script -->
-  <script src="https://content.jwplatform.com/libraries/KB5zFt7A.js"></script>
-  <script>
-    let playerInstance;
-    fetch('https://powerplaylive.pages.dev/config.json') // adjust path
-    .then(res => res.json())
-    .then(data => {
-    playerInstance = jwplayer("player").setup({
-      controls: true,
-      displaytitle: true,
-      autoplay: true,
-      displaydescription: true,
-      abouttext: "",
-      aboutlink: "https://telegram.me/PowerPlayLive",
-
-      skin: {
-        name: "netflix",
-      },
-
-      logo: {
-        file: "",
-        link: "https://telegram.me/PowerPlayLive",
-      },
-
-      captions: {
-        color: "#FFF",
-        fontSize: 14,
-        backgroundOpacity: 0,
-        edgeStyle: "raised",
-      },
-
-      playlist: [
-        {
-          image: "",
-          sources: [
-            {
-              file: data.fancode,
-              label: "1080p",
-              default: true,
-            },
-          ],
-        },
-      ],
-      advertising: {
-        client: "vast",
-        schedule: [
-          {
-            offset: "pre",
-            tag: "",
-          },
-        ],
-      },
-    });
-  })
-    playerInstance.on("ready", function () {
-      const playerContainer = playerInstance.getContainer();
-      const buttonContainer = playerContainer.querySelector(
-        ".jw-button-container"
-      );
-
-      // Rewind button functionality
-      const rewindContainer = playerContainer.querySelector(
-        ".jw-display-icon-rewind"
-      );
-      const rewindButton = rewindContainer.cloneNode(true);
-      const rewindIcon = rewindButton.querySelector(".jw-icon-rewind");
-      rewindIcon.style.transform = "scaleX(1)";
-      rewindIcon.ariaLabel = "Rewind 10 Seconds";
-
-      const nextContainer = playerContainer.querySelector(
-        ".jw-display-icon-next"
-      );
-      nextContainer.parentNode.insertBefore(rewindButton, nextContainer);
-
-      // Rewind functionality for the control bar
-      const rewindControlBarButton =
-        buttonContainer.querySelector(".jw-icon-rewind");
-      const rewindControlBarClone = rewindControlBarButton.cloneNode(true);
-      rewindControlBarClone.style.transform = "scaleX(1)";
-      rewindControlBarClone.ariaLabel = "Rewind 10 Seconds";
-      buttonContainer.insertBefore(
-        rewindControlBarClone,
-        buttonContainer.firstChild
-      );
-
-      // On click of rewind button, seek backward by 10 seconds
-      [rewindButton, rewindControlBarClone].forEach((button) => {
-        button.onclick = () => {
-          const currentPosition = playerInstance.getPosition();
-          const newPosition = Math.max(currentPosition - 10, 0);
-          playerInstance.seek(newPosition);
-        };
-      });
-
-      // Detect adblock
-      playerInstance.on("adBlock", () => {
-        const modal = document.querySelector("div.modal");
-        if (modal) {
-          modal.style.display = "flex";
-          document
-            .getElementById("close")
-            .addEventListener("click", () => location.reload());
-        }
-      });
-    });
-
-    // Confirmation message for joining Telegram channel
-    window.onload = function () {
-      var a = confirm("Join Our Telegram Channel For More Links!!");
-      if (a == true) {
-        window.location.href = "https://telegram.me/PowerPlayLive";
-      }
-    };
-
-    function welcome() {
-      window.open("https://telegram.me/PowerPlayLive", "_blank");
-    }
-  </script>
 </body>
 </html>
