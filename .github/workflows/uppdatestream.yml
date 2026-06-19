@@ -71,7 +71,7 @@ jobs:
           FILE_NAME: ${{ github.event.inputs.file }}
           STREAM_URL: ${{ env.STREAM_URL }}
           CLEARKEY: ${{ env.CLEARKEY }}
-        run: node update.js
+        run: node update-stream.js
 
       - name: Commit Changes
         run: |
