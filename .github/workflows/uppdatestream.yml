@@ -1,0 +1,84 @@
+name: Update Stream by Id
+
+on:
+workflow_dispatch:
+inputs:
+id:
+description: "Stream ID"
+required: true
+file:
+description: "HTML file path"
+required: true
+
+jobs:
+update:
+runs-on: ubuntu-latest
+
+```
+steps:
+  - name: Checkout
+    uses: actions/checkout@v4
+
+  - name: Setup Node
+    uses: actions/setup-node@v4
+    with:
+      node-version: 20
+
+  - name: Fetch Stream Data
+    id: fetch
+    run: |
+      cat > fetch.js <<'EOF'
+      const id = process.env.STREAM_ID;
+
+      async function main() {
+        const res = await fetch(
+          `https://newwwwapiiiiii.vercel.app/main?id=${id}`,
+          {
+            headers: {
+              Referer: "https://cricboost.pages.dev/",
+              Origin: "https://cricboost.pages.dev/",
+              "User-Agent": "Mozilla/5.0"
+            }
+          }
+        );
+
+        const data = await res.json();
+
+        if (!data.url || !data.k1 || !data.k2) {
+          console.error(data);
+          process.exit(1);
+        }
+
+        const fs = require("fs");
+
+        fs.appendFileSync(
+          process.env.GITHUB_ENV,
+          `STREAM_URL=${data.url}\nCLEARKEY=${data.k1}:${data.k2}\n`
+        );
+
+        console.log(data);
+      }
+
+      main();
+      EOF
+
+      node fetch.js
+    env:
+      STREAM_ID: ${{ github.event.inputs.id }}
+
+  - name: Update HTML
+    run: |
+      node update.js
+    env:
+      FILE_NAME: ${{ github.event.inputs.file }}
+      STREAM_URL: ${{ env.STREAM_URL }}
+      CLEARKEY: ${{ env.CLEARKEY }}
+
+  - name: Commit Changes
+    run: |
+      git config user.name "github-actions"
+      git config user.email "github-actions@github.com"
+
+      git add .
+      git commit -m "Update stream ${{ github.event.inputs.id }}" || exit 0
+      git push
