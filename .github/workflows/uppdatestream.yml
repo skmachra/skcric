@@ -52,19 +52,29 @@ jobs:
             console.log(data);
 
             if (!data.url || !data.k1 || !data.k2) {
-              throw new Error("Invalid API response");
+              throw new Error(`Invalid API response: ${JSON.stringify(data)}`);
             }
 
             fs.appendFileSync(
               process.env.GITHUB_ENV,
-              `STREAM_URL=${data.url}\nCLEARKEY=${data.k1}:${data.k2}\n`
+              `STREAM_URL=${data.url}\n`
+            );
+
+            fs.appendFileSync(
+              process.env.GITHUB_ENV,
+              `CLEARKEY=${data.k1}:${data.k2}\n`
             );
           }
 
           main();
           EOF
 
-          node fetch.js
+          node fetchid.js
+
+      - name: Verify Variables
+        run: |
+          echo "STREAM_URL=$STREAM_URL"
+          echo "CLEARKEY=$CLEARKEY"
 
       - name: Update HTML File
         env:
