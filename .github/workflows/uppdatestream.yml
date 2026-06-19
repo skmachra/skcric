@@ -83,3 +83,4 @@ jobs:
           if ! git diff --cached --quiet; then
             git commit -m "Update ${{ github.event.inputs.id }}"
             git push
+          fi
