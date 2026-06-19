@@ -30,7 +30,7 @@ jobs:
         env:
           STREAM_ID: ${{ github.event.inputs.id }}
         run: |
-          cat > fetch.js <<'EOF'
+          cat > fetchid.js <<'EOF'
           const fs = require("fs");
 
           async function main() {
