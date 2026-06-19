@@ -1,11 +1,11 @@
 {
   "baseUrl": "https://jiotvpllive.cdn.jio.com",
   "hdneaToken": "__hdnea__=st=1776079289~exp=1776100889~acl=/*~hmac=e9cf21c353f4284156ec5915b6599cb7b4c048df520dfd9434686d29560b2ae0",
-  "star1": "__hdnea__=st=1781804855~exp=1781826455~acl=/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/*~hmac=977ff7b653b4538905a4d2adaeef2615f3c75d9aed7a6c02da8d2c26c5b7184b",
-  "star1eng": "__hdnea__=st=1781804855~exp=1781826455~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=db8b53209bdb56e7156ebf3d03843be42bf8cc780d38a09b05da25df06cde54b",
-  "star2": "__hdnea__=st=1781804855~exp=1781826455~acl=/bpk-tv/StarSportsHD2Hin_BTS/WDVLive/*~hmac=78419f7dcfb9dcfbcf2e7f3bc95e20a334e2b4be7e6646cb03fd19a904c269dd",
-  "star2eng": "__hdnea__=st=1781804855~exp=1781826455~acl=/bpk-tv/Star_Sports_HD2_BTS/WDVLive/*~hmac=4a1e37906439810e37b85efa02cb4c9e3c9e747ca03a162fe207b3cbe4827dec",
-  "s1": "__hdnea__=st=1781804855~exp=1781826455~acl=/bpk-tv/Ten_HD_BTS/WDVLive/*~hmac=5f074843d4914c85332bdf8f21eb2056c817236448bcafdffde83a3e3f92d932",
-  "s2": "__hdnea__=st=1781804855~exp=1781826455~acl=/bpk-tv/Ten2_HD_BTS/WDVLive/*~hmac=0d6f63c9ab3d6b2878684d05bd290bdcf7a9f7b884ede1dcfd09dc335a568a04",
-  "s3": "__hdnea__=st=1781804856~exp=1781826456~acl=/bpk-tv/Ten3_HD_BTS/WDVLive/*~hmac=f534467fd02faa6b51f9c89dbb31e48c3071d4158377d32f4dbc4c93db29ceb4"
+  "star1": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/Star_Sports_HD1_Hindi_BTS/WDVLive/*~hmac=2d9f667a4fa61473310d2d46c78f202a79c4a42bf0253ef69a86925071834137",
+  "star1eng": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/Star_Sports_HD1_BTS/WDVLive/*~hmac=d46b9b41a7e44bc341a9e2752e5427fa27423a97a4736773fd46e75fd6557fbd",
+  "star2": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/StarSportsHD2Hin_BTS/WDVLive/*~hmac=811e741014499bd4b420a1d6169a1de46344954545742be790665d75173c0f10",
+  "star2eng": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/Star_Sports_HD2_BTS/WDVLive/*~hmac=9521289135fdba5be43bb7ff20aa598774ef8ec291be15757ed14341abbd87a4",
+  "s1": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/Ten_HD_BTS/WDVLive/*~hmac=1b39b827c9262d3f5d5cec79a1dfcdfde4eef212d5d178984672916357e39e0f",
+  "s2": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/Ten2_HD_BTS/WDVLive/*~hmac=28528df5b26d771621c2dbd88e3d262f2358273e4ccd968f20c698b16a8c6845",
+  "s3": "__hdnea__=st=1781828053~exp=1781849653~acl=/bpk-tv/Ten3_HD_BTS/WDVLive/*~hmac=0b1f8473e2cfaec5c462e569b9070ad9f794c6262fe791bf87fc95a8a01f2bd6"
 }
