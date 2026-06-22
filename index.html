@@ -1,153 +1,285 @@
 <!doctype html>
-
 <html lang="en">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>PowerPlayLive</title>
+  <title>PowerPlayLive - Live Channels</title>
   <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
-
   <style>
     * {
+      box-sizing: border-box;
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: "Segoe UI", sans-serif;
     }
 
     body {
+      min-height: 100vh;
       background: linear-gradient(135deg, #1e0033, #3a0068);
-      color: white;
+      color: #fff;
+      font-family: "Segoe UI", Arial, sans-serif;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .shell {
+      width: min(1180px, calc(100% - 32px));
+      margin: 0 auto;
     }
 
     .navbar {
-      background: #1a002b;
-      padding: 15px 25px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      background: rgba(26, 0, 43, 0.92);
+      backdrop-filter: blur(16px);
+    }
+
+    .nav-inner {
+      min-height: 72px;
       display: flex;
+      align-items: center;
       justify-content: space-between;
-      align-items: center;
-    }
-
-    .logo-area {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .logo {
-      width: 42px;
-      height: 42px;
-    }
-
-    .brand {
-      font-size: 1.5rem;
-      font-weight: 700;
-    }
-
-    .nav-links {
-      display: flex;
       gap: 20px;
     }
 
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-weight: 600;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 800;
+      letter-spacing: 0;
+    }
+
+    .brand img {
+      width: 44px;
+      height: 44px;
+      object-fit: contain;
+    }
+
+    .brand span {
+      font-size: 1.25rem;
+    }
+
+    .telegram-link {
+      display: inline-flex;
+      align-items: center;
+      min-height: 42px;
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      border-radius: 8px;
+      padding: 0 16px;
+      background: rgba(255, 255, 255, 0.08);
+      font-weight: 700;
     }
 
     .hero {
-      text-align: center;
-      padding: 80px 20px;
-      max-width: 1000px;
-      margin: auto;
+      padding: 46px 0 28px;
     }
 
     .hero h1 {
-      font-size: 3rem;
-      margin-bottom: 20px;
+      max-width: 780px;
+      font-size: clamp(2rem, 5vw, 4.35rem);
+      line-height: 1.02;
+      letter-spacing: 0;
       background: linear-gradient(90deg, #ff6b00, #ff00a0);
-      background-clip: text;
       -webkit-background-clip: text;
+      background-clip: text;
       color: transparent;
     }
 
     .hero p {
-      font-size: 1.1rem;
-      color: #ddd;
-      max-width: 700px;
-      margin: auto;
-      line-height: 1.7;
+      max-width: 660px;
+      margin-top: 16px;
+      color: #ccc;
+      font-size: 1.05rem;
+      line-height: 1.65;
     }
 
-    .btn {
-      display: inline-block;
-      margin-top: 30px;
-      padding: 14px 30px;
-      background: linear-gradient(90deg, #ff6b00, #ff00a0);
-      color: white;
-      text-decoration: none;
-      border-radius: 8px;
-      font-weight: bold;
-    }
-
-    .features {
-      max-width: 1200px;
-      margin: 40px auto;
-      padding: 0 20px;
+    .tools {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 20px;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 14px;
+      margin: 18px 0 24px;
     }
 
-    .card {
-      background: rgba(255, 255, 255, 0.08);
-      padding: 25px;
-      border-radius: 12px;
+    .search {
+      width: 100%;
+      min-height: 48px;
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      border-radius: 8px;
+      padding: 0 16px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #fff;
+      font: inherit;
+      outline: none;
     }
 
-    .card h3 {
-      margin-bottom: 10px;
-      color: #ff6b00;
+    .search::placeholder {
+      color: #ccc;
     }
 
-    .about {
-      max-width: 1000px;
-      margin: 50px auto;
-      padding: 0 20px;
-      text-align: center;
+    .count {
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+      border-radius: 8px;
+      padding: 0 16px;
+      background: #ff6b00;
+      color: #180020;
+      font-weight: 800;
+      white-space: nowrap;
     }
 
-    .about h2 {
-      margin-bottom: 15px;
+    .filters {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      scrollbar-width: none;
     }
 
-    .about p {
-      color: #ddd;
-      line-height: 1.8;
+    .filters::-webkit-scrollbar {
+      display: none;
+    }
+
+    .filter-btn {
+      min-height: 38px;
+      border: 1px solid rgba(255, 255, 255, 0.16);
+      border-radius: 8px;
+      padding: 0 14px;
+      background: rgba(255, 255, 255, 0.07);
+      color: #fff;
+      font: inherit;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .filter-btn.active {
+      border-color: transparent;
+      background: #ff00a0;
+    }
+
+    .channel-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(178px, 1fr));
+      gap: 16px;
+      padding: 24px 0 56px;
+    }
+
+    .channel-card {
+      min-height: 206px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.07);
+      transition: transform 180ms ease, border-color 180ms ease, background 180ms ease;
+    }
+
+    .channel-card:hover {
+      transform: translateY(-4px);
+      border-color: rgba(255, 107, 0, 0.75);
+      background: rgba(255, 255, 255, 0.11);
+    }
+
+    .logo-wrap {
+      display: grid;
+      place-items: center;
+      min-height: 132px;
+      padding: 22px;
+      background:
+        linear-gradient(135deg, rgba(255, 107, 0, 0.18), rgba(255, 0, 160, 0.16)),
+        rgba(0, 0, 0, 0.22);
+    }
+
+    .logo-wrap img {
+      width: 86px;
+      height: 86px;
+      object-fit: contain;
+      filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.35));
+    }
+
+    .channel-info {
+      padding: 13px;
+    }
+
+    .channel-info h2 {
+      font-size: 1rem;
+      line-height: 1.25;
+      letter-spacing: 0;
+    }
+
+    .channel-info p {
+      margin-top: 6px;
+      color: #ccc;
+      font-size: 0.84rem;
+    }
+
+    .empty {
+      display: none;
+      padding: 34px 0 64px;
+      color: #ccc;
+      font-weight: 700;
     }
 
     footer {
-      margin-top: 60px;
-      padding: 25px;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 24px 0;
+      color: #ccc;
       text-align: center;
-      background: #1a002b;
-      color: #bbb;
     }
 
-    @media (max-width: 768px) {
-      .navbar {
-        flex-direction: column;
-        gap: 15px;
+    @media (max-width: 640px) {
+      .shell {
+        width: min(100% - 20px, 1180px);
       }
 
-      .nav-links {
-        flex-wrap: wrap;
+      .nav-inner {
+        min-height: 64px;
+      }
+
+      .brand span {
+        font-size: 1.05rem;
+      }
+
+      .telegram-link {
+        min-height: 38px;
+        padding: 0 10px;
+        font-size: 0.9rem;
+      }
+
+      .tools {
+        grid-template-columns: 1fr;
+      }
+
+      .count {
         justify-content: center;
       }
 
-      .hero h1 {
-        font-size: 2rem;
+      .channel-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 10px;
+      }
+
+      .channel-card {
+        min-height: 180px;
+      }
+
+      .logo-wrap {
+        min-height: 112px;
+        padding: 16px;
+      }
+
+      .logo-wrap img {
+        width: 72px;
+        height: 72px;
       }
     }
   </style>
@@ -155,57 +287,110 @@
 
 <body>
   <header class="navbar">
-    <div class="logo-area">
-      <img src="logo.png" class="logo" />
-      <div class="brand">PowerPlayLive</div>
+    <div class="shell nav-inner">
+      <a class="brand" href="/">
+        <img src="logo.png" alt="PowerPlayLive logo" />
+        <span>PowerPlayLive</span>
+      </a>
+      <a class="telegram-link" href="https://telegram.me/PowerPlayLive" target="_blank" rel="noopener">Telegram</a>
     </div>
-
-    <nav class="nav-links">
-      <a href="/">Home</a>
-      <a href="/schedule">Schedules</a>
-      <a href="/contact">Contact</a>
-    </nav>
   </header>
 
-  <section class="hero">
-    <h1>Welcome to PowerPlayLive</h1>
+  <main class="shell">
+    <section class="hero">
+      <h1>Live channels in one clean place.</h1>
+      <p>Browse live sports channels, find your favourite coverage, and jump straight into the action.</p>
+    </section>
 
-  </section>
+    <section aria-label="Channel browser">
+      <div class="tools">
+        <input class="search" id="searchInput" type="search" placeholder="Search channel..." autocomplete="off" />
+        <div class="count" id="channelCount">0 channels</div>
+      </div>
+      <div class="filters" id="filters"></div>
+      <div class="channel-grid" id="channelGrid"></div>
+      <p class="empty" id="emptyState">No channels found.</p>
+    </section>
+  </main>
 
-  <section class="features">
-    <div class="card">
-      <h3>Match Schedules</h3>
-      <p>
-        Stay updated with upcoming fixtures, kickoff times and tournament
-        schedules.
-      </p>
-    </div>
+  <footer>
+    <div class="shell">&copy; 2026 PowerPlayLive</div>
+  </footer>
 
-    <div class="card">
-      <h3>Broadcaster Information</h3>
-      <p>
-        Find official broadcaster details and coverage information for major
-        football events.
-      </p>
-    </div>
+  <script>
+    const grid = document.getElementById("channelGrid");
+    const filters = document.getElementById("filters");
+    const searchInput = document.getElementById("searchInput");
+    const channelCount = document.getElementById("channelCount");
+    const emptyState = document.getElementById("emptyState");
 
-    <div class="card">
-      <h3>Football Updates</h3>
-      <p>Get the latest news, match highlights and tournament updates.</p>
-    </div>
-  </section>
+    let channels = [];
+    let activeCategory = "All";
 
-  <section class="about">
-    <h2>About PowerPlayLive</h2>
+    function makeHref(path) {
+      if (/^https?:\/\//i.test(path)) return path;
+      return path.endsWith(".html") ? path : path;
+    }
 
-    <p>
-      PowerPlayLive is a football information portal providing match
-      schedules, tournament updates, broadcaster information and community
-      resources for football fans worldwide.
-    </p>
-  </section>
+    function renderFilters() {
+      const categories = ["All", ...new Set(channels.map((item) => item.category || "Other"))];
+      filters.innerHTML = categories.map((category) => (
+        `<button class="filter-btn${category === activeCategory ? " active" : ""}" type="button" data-category="${category}">${category}</button>`
+      )).join("");
+    }
 
-  <footer>© 2026 PowerPlayLive. All Rights Reserved.</footer>
+    function renderChannels() {
+      const query = searchInput.value.trim().toLowerCase();
+      const visible = channels.filter((item) => {
+        const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+        const matchesSearch = `${item.name} ${item.category}`.toLowerCase().includes(query);
+        return matchesCategory && matchesSearch;
+      });
+
+      grid.innerHTML = visible.map((item) => `
+        <a class="channel-card" href="${makeHref(item.path)}" aria-label="Open ${item.name}">
+          <div class="logo-wrap">
+            <img src="${item.logo || "logo.png"}" alt="${item.name} logo" loading="lazy" onerror="this.src='logo.png'" />
+          </div>
+          <div class="channel-info">
+            <h2>${item.name}</h2>
+            <p>${item.category || "Live Channel"}</p>
+          </div>
+        </a>
+      `).join("");
+
+      channelCount.textContent = `${visible.length} ${visible.length === 1 ? "channel" : "channels"}`;
+      emptyState.style.display = visible.length ? "none" : "block";
+    }
+
+    filters.addEventListener("click", (event) => {
+      const button = event.target.closest("button[data-category]");
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderFilters();
+      renderChannels();
+    });
+
+    searchInput.addEventListener("input", renderChannels);
+
+    fetch("channel.json")
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load channel.json");
+        return response.json();
+      })
+      .then((data) => {
+        channels = data;
+        renderFilters();
+        renderChannels();
+      })
+      .catch((error) => {
+        console.error(error);
+        grid.innerHTML = "";
+        channelCount.textContent = "0 channels";
+        emptyState.textContent = "Could not load channel.json.";
+        emptyState.style.display = "block";
+      });
+  </script>
 </body>
 
 </html>
