@@ -332,10 +332,10 @@
         .channel-name {
             padding: 0 !important;
             text-align: left !important;
-            font-size: .85rem;
+            font-size: 0.85rem;
         }
 
-        @media (max-width:768px) {
+        @media (max-width: 768px) {
             .hero {
                 display: none;
             }
@@ -359,8 +359,27 @@
         }
     </style>
 </head>
-<script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
-<script>(function (s) { s.dataset.zone = '9204347', s.src = 'https://n6wxm.com/vignette.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script>
+    (function (s) {
+        ((s.dataset.zone = "9187662"), (s.src = "https://al5sm.com/tag.min.js"));
+    })(
+        [document.documentElement, document.body]
+            .filter(Boolean)
+            .pop()
+            .appendChild(document.createElement("script")),
+    );
+</script>
+<script>
+    (function (s) {
+        ((s.dataset.zone = "9204347"),
+            (s.src = "https://n6wxm.com/vignette.min.js"));
+    })(
+        [document.documentElement, document.body]
+            .filter(Boolean)
+            .pop()
+            .appendChild(document.createElement("script")),
+    );
+</script>
 
 <body>
     <div class="container">
@@ -409,7 +428,9 @@
                     allow="autoplay; encrypted-media" allowfullscreen></iframe>
             </div>
 
-            <h2 class="section-title" style="margin:10px 15px;">Available Broadcasters</h2>
+            <h2 class="section-title" style="margin: 10px 15px">
+                Available Broadcasters
+            </h2>
             <div class="channels-grid" id="channelsGrid"></div>
 
             <div class="share">
@@ -434,8 +455,6 @@
                 <a href="https://omg10.com/4/9296300" target="_blank" class="telegram-btn">Watch in 4k</a>
             </p>
         </div>
-
-
 
         <div class="content">
             <div class="card">
@@ -483,54 +502,135 @@
             document.getElementById("navLinks").classList.toggle("show");
         };
 
-        fetch("https://fifa-world-cup-live.pages.dev/id.json")
-            .then((res) => res.json())
-            .then((data) => {
-                const grid = document.getElementById("channelsGrid");
-                const player = document.getElementById("player");
-                const title = document.getElementById("channelTitle");
+        const channel = [
+            {
+                name: "6TER",
+                iframe: "https://fifa-world-cup-live.pages.dev/6ter.html",
+                thumbnail: "logo.png",
+            },
+            {
+                name: "FUSSBALL",
+                iframe: "https://fifa-world-cup-live.pages.dev/fussball.html",
+                thumbnail: "logo.png",
+            },
+            {
+                name: "W9",
+                iframe: "https://fifa-world-cup-live.pages.dev/w9.html",
+                thumbnail: "logo.png",
+            },
+            {
+                name: "GULLI",
+                iframe: "https://fifa-world-cup-live.pages.dev/guli.html",
+                thumbnail: "logo.png",
+            },
+            {
+                name: "M6+",
+                iframe: "https://fifa-world-cup-live.pages.dev/m6.html",
+                thumbnail: "logo.png",
+            },
+            {
+                name: "HINDI",
+                iframe: "https://fifa-world-cup-live.pages.dev/hindi.html",
+                thumbnail:
+                    "https://akm-img-a-in.tosshub.com/businesstoday/images/story/202404/661fb99c585c6-zee-entertainment-enterprises-will-continue-to-take-all-the-strategic-steps-that-are-aimed-towards-g-032448673-16x9.jpg?size=948:533",
+            },
+            {
+                name: "ENGLISH",
+                iframe: "https://fifa-world-cup-live.pages.dev/english.html",
+                thumbnail:
+                    "https://akm-img-a-in.tosshub.com/businesstoday/images/story/202404/661fb99c585c6-zee-entertainment-enterprises-will-continue-to-take-all-the-strategic-steps-that-are-aimed-towards-g-032448673-16x9.jpg?size=948:533",
+            },
+            {
+                name: "TSN",
+                iframe: "https://fifa-world-cup-live.pages.dev/tsn.html",
+                thumbnail:
+                    "https://bellmedia-images.imgix.net/lede/wp-content/uploads/2024/09/18581592_10155403529061055_8240563011649656197_n.jpg",
+            },
+            {
+                name: "FOX SPORTS",
+                iframe: "https://fifa-world-cup-live.pages.dev/fox-sports",
+                thumbnail:
+                    "https://static0.srcdn.com/wordpress/wp-content/uploads/2025/05/fox-sports-1-logo-1200x674.jpg?q=70&fit=crop&w=1200&h=628&dpr=1",
+            },
+            {
+                name: "TELEMUNDO",
+                iframe: "https://fifa-world-cup-live.pages.dev/telemundo.html",
+                thumbnail:
+                    "https://media-cldnry.s-nbcnews.com/image/upload/newscms/2020_20/3352176/telemundo-social-default.png",
+            },
+            {
+                name: "CAZE TV",
+                iframe: "https://fifa-world-cup-live.pages.dev/caze-tv.html",
+                thumbnail:
+                    "https://static.wikia.nocookie.net/logopedia/images/a/a3/CazeTV2022_qatar.jpg",
+            },
+            {
+                name: "SPORTV",
+                iframe: "https://fifa-world-cup-live.pages.dev/sportv.html",
+                thumbnail:
+                    "https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/SporTV_logo_2021.svg/512px-SporTV_logo_2021.svg.png",
+            },
+            {
+                name: "DSPORTS",
+                iframe: "https://fifa-world-cup-live.pages.dev/dsports.html",
+                thumbnail:
+                    "https://m.media-amazon.com/images/S/le-target-images-prod/amzn1.dv.gti.e524621f-1786-4d81-bfd1-40a07d8d997f/7/BOXART-16X9/da-DK._UR1920,1080_.jpg",
+            },
+            {
+                name: "BENIN",
+                iframe: "https://fifa-world-cup-live.pages.dev/benin.html",
+                thumbnail:
+                    "https://www.sportspro.com/wp-content/uploads/2023/03/bein-edit-2.png",
+            },
+            {
+                name: "IOS",
+                iframe: "https://fifa-world-cup-live.pages.dev/ios.html",
+                thumbnail:
+                    "https://www.sportspro.com/wp-content/uploads/2023/03/bein-edit-2.png",
+            },
+            {
+                name: "FIFA",
+                iframe: "https://fifa-world-cup-live.pages.dev/fifa1.html",
+                thumbnail:
+                    "https://play-lh.googleusercontent.com/q00cVXVqf0jSYbfG6AKqTPY1gui7cXleyBbjUoOctz_Bk-IfazSorqKRP8ey_aNGoxIVrcnWQTZktrvAAkuH",
+            },
+        ];
 
-                function loadChannel(item, card) {
-                    player.src = item.iframe;
-                    title.textContent = item.name;
+        const grid = document.getElementById("channelsGrid");
+        const player = document.getElementById("player");
+        const title = document.getElementById("channelTitle");
 
-                    document
-                        .querySelectorAll(".channel-card")
-                        .forEach((el) => el.classList.remove("active"));
+        function loadChannel(item, card) {
+            player.src = item.iframe;
+            title.textContent = item.name;
 
-                    if (card) card.classList.add("active");
+            document
+                .querySelectorAll(".channel-card")
+                .forEach((el) => el.classList.remove("active"));
 
-                    if (window.innerWidth < 768) {
-                        document.querySelector(".player-section").scrollIntoView({
-                            behavior: "smooth",
-                        });
-                    }
-                }
+            if (card) card.classList.add("active");
 
-                data.forEach((item, index) => {
-                    const card = document.createElement("div");
-
-                    card.className = "channel-card";
-
-                    card.innerHTML = `
-            <img src="${item.thumbnail}" loading="lazy">
-            <div class="channel-name">${item.name}</div>
-        `;
-
-                    card.onclick = () => loadChannel(item, card);
-
-                    grid.appendChild(card);
-
-                    if (index === 1) {
-                        loadChannel(item, card);
-                    }
+            if (window.innerWidth < 768) {
+                document.querySelector(".player-section").scrollIntoView({
+                    behavior: "smooth",
                 });
-            })
-            .catch((err) => {
-                document.getElementById("channelTitle").textContent =
-                    "Failed to load channels";
-                console.error(err);
-            });
+            }
+        }
+
+        channel.forEach((item, index) => {
+            const card = document.createElement("div");
+
+            card.className = "channel-card";
+            card.innerHTML = `
+                <img src="${item.thumbnail}" loading="lazy">
+                <div class="channel-name">${item.name}</div>
+            `;
+
+            card.onclick = () => loadChannel(item, card);
+            grid.appendChild(card);
+
+            if (index === 1) loadChannel(item, card);
+        });
     </script>
 </body>
 
