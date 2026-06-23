@@ -135,9 +135,8 @@
             position: relative;
             width: 100%;
             padding-bottom: 56.25%;
-            overflow: hidden;
-            border-radius: 0;
             background: #000;
+            overflow: hidden;
         }
 
         .player-wrapper iframe {
@@ -145,7 +144,39 @@
             inset: 0;
             width: 100%;
             height: 100%;
-            border: none;
+            border: 0;
+            z-index: 1;
+        }
+
+        .player-loader {
+            position: absolute;
+            inset: 0;
+            background: #000;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .player-loader.hidden {
+            display: none;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, .2);
+            border-top: 4px solid #fff;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 12px;
+        }
+
+        @keyframes spin {
+            100% {
+                transform: rotate(360deg);
+            }
         }
 
         /* ADS */
@@ -424,8 +455,14 @@
             </div>
 
             <div class="player-wrapper">
+                <div id="playerLoader" class="player-loader">
+                    <div class="spinner"></div>
+                    <p>Loading Stream...</p>
+                </div>
+
                 <iframe id="player" sandbox="allow-scripts allow-same-origin allow-presentation"
-                    allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                    allow="autoplay; encrypted-media" allowfullscreen>
+                </iframe>
             </div>
 
             <h2 class="section-title" style="margin: 10px 15px">
@@ -599,9 +636,14 @@
         const grid = document.getElementById("channelsGrid");
         const player = document.getElementById("player");
         const title = document.getElementById("channelTitle");
+        const loader = document.getElementById("playerLoader");
 
         function loadChannel(item, card) {
-            player.src = item.iframe;
+
+            player.src = "";
+
+            loader.classList.remove("hidden");
+
             title.textContent = item.name;
 
             document
@@ -610,12 +652,20 @@
 
             if (card) card.classList.add("active");
 
+            setTimeout(() => {
+                player.src = item.iframe;
+            }, 100);
+
             if (window.innerWidth < 768) {
                 document.querySelector(".player-section").scrollIntoView({
                     behavior: "smooth",
                 });
             }
         }
+
+        player.addEventListener("load", () => {
+            loader.classList.add("hidden");
+        });
 
         channel.forEach((item, index) => {
             const card = document.createElement("div");
