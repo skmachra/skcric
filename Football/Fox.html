@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="referrer" content="no-referrer">
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <title>PowerPlayLive - Live Streaming & More</title>
+    <style>
+        /* Modern CSS with Flexbox */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        /* Video Section */
+        .player-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16/9;
+            background: #000;
+            overflow: hidden;
+        }
+
+        #player {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
+</head>
+
+<body>
+    <div class="player-container">
+        <video id="video" autoplay playsinline preload="metadata"></video>
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", async () => {
+
+            shaka.polyfill.installAll();
+
+            if (!shaka.Player.isBrowserSupported()) {
+                console.log("Browser not supported");
+                return;
+            }
+
+            const video = document.getElementById("video");
+
+            const player = new shaka.Player(video);
+
+            const ui = new shaka.ui.Overlay(
+                player,
+                document.querySelector(".player-container"),
+                video
+            );
+
+            ui.configure({
+                addBigPlayButton: true,
+                controlPanelElements: [
+                    "play_pause",
+                    "mute",
+                    "volume",
+                    "time_and_duration",
+                    "spacer",
+                    "quality",
+                    "picture_in_picture",
+                    "fullscreen"
+                ]
+            });
+
+            const streamUrl = "https://inproviszon.st/fox-1.m3u8";
+
+            player.getNetworkingEngine().registerRequestFilter(
+                (type, request) => {
+                    if (
+                        (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
+                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
+                    ) {
+                    }
+                }
+            );
+
+            try {
+
+                await player.load(streamUrl);
+
+                await video.play();
+
+            } catch (err) {
+
+                console.error(err);
+
+            }
+
+        });
+    </script>
+    <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
+</body>
+
+</html>
