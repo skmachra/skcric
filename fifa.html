@@ -334,18 +334,33 @@
 
         .channels-grid {
             display: flex !important;
+            flex-direction: column;
             gap: 10px;
-            overflow-x: auto;
-            padding: 10px 0;
-            scrollbar-width: none;
+            max-height: 290px;
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px 12px 10px 0;
+            scrollbar-width: thin;
+            scrollbar-color: #ff00a0 rgba(255, 255, 255, 0.12);
         }
 
         .channels-grid::-webkit-scrollbar {
-            display: none;
+            width: 7px;
+        }
+
+        .channels-grid::-webkit-scrollbar-track {
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 999px;
+        }
+
+        .channels-grid::-webkit-scrollbar-thumb {
+            background: linear-gradient(#ff6b00, #ff00a0);
+            border-radius: 999px;
         }
 
         .channel-card {
-            min-width: 140px !important;
+            width: 100%;
+            min-width: 0 !important;
             display: flex !important;
             align-items: center;
             gap: 10px;
@@ -679,7 +694,7 @@
             card.onclick = () => loadChannel(item, card);
             grid.appendChild(card);
 
-            if (index === 1) loadChannel(item, card);
+            if (index === 10) loadChannel(item, card);
         });
     </script>
 </body>
