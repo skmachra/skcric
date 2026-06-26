@@ -474,7 +474,7 @@
 
         <!-- Main Video Content -->
         <div class="video-container">
-            <h2>Sony LIV Sports 3</h2>
+            <h2>Sony LIV</h2>
             <div class="player-container">
                 <video id="video" autoplay playsinline preload="metadata"></video>
             </div>
@@ -594,13 +594,13 @@
             const tokenData = await fetch("/hdnea.json").then(r => r.json());
 
             const token = tokenData.hdneaToken;
-            const streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten3_HD_MOB/WDVLive/index.mpd?" + token;
+            const streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten_HD_MOB/WDVLive/index.mpd?" + token;
 
             player.configure({
                 drm: {
                     clearKeys: {
-                        "111e6908b965566e97139efddf7ef459":
-                            "c87903abbc052e1f21e51ebd928d9cb1"
+                        "3525c924e54154b39533d86b1c7a428a":
+                            "8548b566fc6608a7d3bd601ee5f3d889"
                     }
                 }
             });
