@@ -601,6 +601,22 @@
                 video
             );
 
+            player.configure({
+                streaming: {
+                    lowLatencyMode: true,
+                    bufferingGoal: 15,
+                    rebufferingGoal: 2,
+                    bufferBehind: 15,
+                    retryParameters: {
+                        timeout: 10000,
+                        maxAttempts: 5,
+                        baseDelay: 300,
+                        backoffFactor: 1.2
+                    },
+                    useNativeHlsOnSafari: true
+                }
+            });
+
             ui.configure({
                 addBigPlayButton: true,
                 controlPanelElements: [
