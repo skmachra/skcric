@@ -1,84 +1,627 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="referrer" content="no-referrer">
-    <link rel="shortcut icon" href="../logo.png" type="image/x-icon" />
-    <title>PowerPlayLive - Iframe Player</title>
+    <link rel="shortcut icon" href="logo.png" type="image/x-icon" />
+    <title>PowerPlayLive - Live Streaming & More</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; }
+        /* Modern CSS with Flexbox */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        }
+
         body {
-            min-height: 100vh;
             background: linear-gradient(135deg, #1e0033, #3a0068);
-            color: #fff;
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            width: 100%;
+        }
+
+        header {
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #ff6b00, #ff00a0);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+
+        .tagline {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            color: #ccc;
+        }
+
+        /* Navigation */
+        nav {
+            padding: 8px;
+        }
+
+        .nav-links {
             display: flex;
             justify-content: center;
-            padding: 16px;
+            flex-wrap: wrap;
+            gap: 15px;
         }
-        .wrap { width: 100%; max-width: 1200px; }
-        h1 { font-size: 1.5rem; margin: 8px 0 14px; color: #ffb347; }
-        .player {
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: bold;
+            background: linear-gradient(90deg, #ff6b00, #ff00a0);
+            transition: all 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(255, 0, 160, 0.5);
+        }
+
+        .nav-links a.active {
+            background: linear-gradient(90deg, #ff00a0, #ff6b00);
+            box-shadow: 0 5px 15px rgba(255, 0, 160, 0.7);
+            transform: translateY(-3px);
+            border: 2px solid white;
+        }
+
+        /* Video Section */
+        .video-container {
+            margin: 30px 0;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 12px;
+            border-radius: 10px;
+        }
+
+        .player-container {
             position: relative;
             width: 100%;
-            aspect-ratio: 16 / 9;
+            aspect-ratio: 16/9;
             background: #000;
             overflow: hidden;
-            border-radius: 12px;
         }
-        iframe {
+
+        #player {
             position: absolute;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #video {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        #video-frame {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             border: 0;
+            background: #000;
         }
-        .note { margin-top: 12px; color: #ddd; font-size: 0.95rem; word-break: break-all; }
-    </style>
-</head>
-<body>
-    <div class="wrap">
-        <h1 id="title">Loading...</h1>
-        <div class="player">
-            <iframe id="video-frame" src="" sandbox="allow-scripts allow-same-origin allow-presentation" allow="autoplay; encrypted-media" allowfullscreen></iframe>
-        </div>
-        <div class="note" id="note"></div>
-    </div>
-    <script>
-        const params = new URLSearchParams(window.location.search);
-        const pathParts = window.location.pathname.split("/").filter(Boolean);
-        const rawId = params.get("id") || pathParts[pathParts.length - 1] || "";
-        const title = params.get("n") || "Live Stream";
-        const iframe = document.getElementById("video-frame");
-        document.getElementById("title").textContent = title;
 
-        if (!rawId) {
-            document.getElementById("title").textContent = "Invalid Stream";
-            document.getElementById("note").textContent = "Missing id parameter.";
-        } else {
-            let src = rawId;
+
+        /* Content Sections */
+        .content-section {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin: 30px 0;
+            gap: 20px;
+        }
+
+        .card {
+            flex: 1 1 300px;
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: left;
+        }
+
+        .card h3 {
+            color: #ff6b00;
+            margin-bottom: 15px;
+            font-size: 1.3rem;
+        }
+
+        .card p {
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+
+        /* Ad Sections */
+        .ad-container {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            margin: 20px 0;
+            min-height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .ad-text {
+            color: #ccc;
+            font-style: italic;
+        }
+
+        /* Telegram Button */
+        .telegram-btn {
+            display: inline-block;
+            background: #0088cc;
+            color: white;
+            text-decoration: none;
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 136, 204, 0.4);
+        }
+
+        .telegram-btn:hover {
+            background: #0077b5;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 136, 204, 0.6);
+        }
+
+        .telegram-btn i {
+            margin-right: 10px;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: 40px;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            width: 100%;
+        }
+
+        .social-share-container {
+            background: rgba(0, 0, 0, 0.2);
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            text-align: center;
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .social-share-container h3 {
+            color: #fff;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+
+        .share-buttons {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .share-btn {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            color: white;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .share-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        .whatsapp {
+            background: #25D366;
+        }
+
+        .telegram {
+            background: #0088cc;
+        }
+
+        .facebook {
+            background: #3b5998;
+        }
+
+        @media (max-width: 600px) {
+            .share-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .share-btn {
+                width: 100%;
+                justify-content: center;
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1rem;
+            }
+
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        /* NAVBAR */
+        .navbar {
+            width: 100%;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            background: #1a002b;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: auto;
+            padding: 4px 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-radius: 10px;
+        }
+
+        /* LEFT SIDE */
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo {
+            width: 42px;
+            height: 42px;
+        }
+
+        .brand {
+            font-size: 1.5rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+        }
+
+        /* LINKS */
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            position: relative;
+        }
+
+        /* underline hover effect */
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            width: 0%;
+            height: 2px;
+            bottom: -5px;
+            left: 0;
+            background: linear-gradient(90deg, #ff6b00, #ff00a0);
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* MOBILE */
+        @media (max-width: 768px) {
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .nav-links {
+                position: absolute;
+                top: 65px;
+                left: 0;
+                width: 100%;
+                background: #1a002b;
+                flex-direction: column;
+                align-items: center;
+                gap: 20px;
+                padding: 20px 0;
+                display: none;
+            }
+
+            .nav-links.show {
+                display: flex;
+            }
+        }
+
+        .menu-toggle {
+            width: 28px;
+            height: 28px;
+            /* perfect square */
+            display: none;
+            position: relative;
+            cursor: pointer;
+        }
+
+        /* All lines positioned absolutely for perfect symmetry */
+        .menu-toggle span {
+            position: absolute;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: 0.3s ease;
+        }
+
+        /* exact positions */
+        .menu-toggle span:nth-child(1) {
+            top: 6px;
+        }
+
+        .menu-toggle span:nth-child(2) {
+            top: 12.5px;
+            /* exact center */
+        }
+
+        .menu-toggle span:nth-child(3) {
+            top: 19px;
+        }
+
+        /* animation to X */
+        .menu-toggle.active span:nth-child(1) {
+            top: 12.5px;
+            transform: rotate(45deg);
+        }
+
+        .menu-toggle.active span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .menu-toggle.active span:nth-child(3) {
+            top: 12.5px;
+            transform: rotate(-45deg);
+        }
+
+        /* mobile only */
+        @media (max-width: 768px) {
+            .menu-toggle {
+                display: block;
+            }
+        }
+    </style>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
+</head>
+
+<script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+<script>(function (s) { s.dataset.zone = '9204347', s.src = 'https://n6wxm.com/vignette.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+
+<body>
+    <div class="container">
+        <header class="navbar">
+            <div class="nav-container">
+                <!-- Logo -->
+                <div class="nav-left">
+                    <img src="logo.png" class="logo" />
+                    <span class="brand">PowerPlayLive</span>
+                </div>
+
+                <!-- Hamburger -->
+                <div class="menu-toggle" id="menu-toggle">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </div>
+
+                <!-- Links -->
+                <nav class="nav-links" id="nav-links">
+                    <a href="Hindi" class="active">Hindi</a>
+                    <a href="#">English</a>
+                    <a href="/">Live Sports</a>
+                    <a href="https://telegram.me/SK_Movies1">Movies</a>
+                    <a href="https://telegram.me/PowerPlayLive">Telegram</a>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Ad Space -->
+        <div class="ad-container">
+            <p class="ad-text">
+                <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">Join Our Telegram for
+                    Updates</a>
+            </p>
+        </div>
+
+        <!-- Main Video Content -->
+        <div class="video-container">
+            <h2></h2>
+            <div class="player-container">
+                <iframe
+                    id="video-frame"
+                    src=""
+                    sandbox="allow-scripts allow-same-origin allow-presentation"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
+            </div>
+        </div>
+
+        <div class="ad-container">
+            <p class="ad-text">
+                <a href="https://omg10.com/4/9296300" target="_blank" class="telegram-btn">Watch in 4k</a>
+            </p>
+        </div>
+
+        <!-- Ad Space -->
+        <div class="ad-container">
+            <p class="ad-text">
+            <div class="social-share-container">
+                <h3>Share with friends:</h3>
+                <div class="share-buttons">
+                    <a href="https://wa.me/?text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content%20-%20https://powerplaylive.pages.dev/"
+                        class="share-btn whatsapp" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-whatsapp"></i> WhatsApp
+                    </a>
+
+                    <a href="https://t.me/share/url?url=https://powerplaylive.pages.dev/&text=Check%20out%20PowerPlayLive%20for%20awesome%20streaming%20content"
+                        class="share-btn telegram" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-telegram"></i> Telegram
+                    </a>
+
+                    <a href="https://www.facebook.com/sharer/sharer.php?u=https://powerplaylive.pages.dev/"
+                        class="share-btn facebook" target="_blank" rel="noopener noreferrer">
+                        <i class="fab fa-facebook"></i> Facebook
+                    </a>
+                </div>
+            </div>
+
+            </p>
+        </div>
+
+        <!-- Content Sections -->
+        <div class="content-section">
+            <div class="card">
+                <h3>Premium Content</h3>
+                <p>
+                    Access exclusive premium content including live sports, movies, and
+                    TV shows from around the world in multiple languages.
+                </p>
+                <p>
+                    Our library is updated daily with the latest content to keep you
+                    entertained.
+                </p>
+            </div>
+
+            <div class="card">
+                <h3>Multi-Language Support</h3>
+                <p>
+                    Enjoy content in Hindi, English, and several regional languages. We
+                    provide subtitles and dubbing options for many programs.
+                </p>
+                <p>Switch between languages with our easy-to-use interface.</p>
+            </div>
+
+            <div class="card">
+                <h3>24/7 Live TV</h3>
+                <p>
+                    Never miss your favorite shows with our 24/7 live TV channels from
+                    around the globe.
+                </p>
+                <p>
+                    We offer news, entertainment, sports, and specialty channels for all
+                    interests.
+                </p>
+            </div>
+        </div>
+
+        <!-- Call to Action -->
+        <a href="https://telegram.me/PowerPlayLive" target="_blank" class="telegram-btn">
+            <i class="fab fa-telegram"></i> Join Our Telegram for Updates
+        </a>
+
+        <!-- Footer -->
+        <footer>
+            <p>&copy; 2023 PowerPlayLive. All rights reserved.</p>
+            <p>Contact us: support@powerplaylive.com</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const params = new URLSearchParams(window.location.search);
+            const channelName = decodeURIComponent(params.get("n") || "Live Stream");
+            document.querySelector(".video-container h2").textContent = channelName;
+
+            const iframe = document.getElementById("video-frame");
+            const pathParts = window.location.pathname.split("/").filter(Boolean);
+            const rawId = params.get("id") || pathParts[pathParts.length - 1] || "";
+
+            if (!rawId) {
+                document.querySelector("h2").textContent = "Invalid Stream";
+                return;
+            }
+
+            let iframeSrc = rawId;
             try {
                 if (rawId.startsWith("http://") || rawId.startsWith("https://")) {
-                    src = rawId;
+                    iframeSrc = rawId;
                 } else {
-                    src = atob(rawId);
+                    iframeSrc = atob(rawId);
                 }
             } catch (e) {
                 try {
-                    src = decodeURIComponent(rawId);
-                } catch (err) {
-                    document.getElementById("title").textContent = "Invalid Stream";
-                    document.getElementById("note").textContent = "Could not decode the stream id.";
-                    console.error(err);
-                    src = "";
+                    iframeSrc = decodeURIComponent(rawId);
+                } catch (decodeError) {
+                    document.querySelector("h2").textContent = "Invalid Stream";
+                    console.error(decodeError);
+                    return;
                 }
             }
 
-            if (src) {
-                iframe.src = src;
-                document.getElementById("note").textContent = src;
-            }
-        }
+            iframe.src = iframeSrc;
+        });
     </script>
+    <script>
+        const toggle = document.getElementById("menu-toggle");
+        const links = document.getElementById("nav-links");
+
+        toggle.onclick = () => {
+            links.classList.toggle("show");
+            toggle.classList.toggle("active"); // THIS animates icon
+        };
+    </script>
+    <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
+        disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
 </body>
+
 </html>
