@@ -49,9 +49,16 @@
 
 <body>
     <div class="player-container">
-        <video id="video" autoplay playsinline preload="metadata"></video>
+        <!-- <video id="video" autoplay playsinline preload="metadata"></video> -->
+         <iframe 
+  id="video"
+  src="https://customer-0a9dy4lca44vp867.cloudflarestream.com/eyJhbGciOiJSUzI1NiIsImtpZCI6IjRkZmM4MDZmN2U5NWQ4MWIwMGQ4NzJjNGQ2Zjg2ZGM3In0.eyJzdWIiOiI4NGYxNjYyYmFmZDI3NmNkMzAxNmJmMTgyOTQ1ODUyNiIsImtpZCI6IjRkZmM4MDZmN2U5NWQ4MWIwMGQ4NzJjNGQ2Zjg2ZGM3IiwiZXhwIjoxNzg0NDgzNjQ5LCJuYmYiOjE3ODQ0ODAwNDl9.Ok24B-lhenO2sfa0bwOxjcUpzorL80Ri-fVXkSqMqGCzZsGTpcEsGMYgsFk3uePqSGwLCCCo03a0i1ZfRnFeVnjO5Yi9_ZnCEwck2x2JCgSCfy1NWwnCiKM88Exh6T4d10a1xndcq-EF_u5lutG5ecw5kaKsj4xlBX5h0zBxts5paKs-eXxjVPNyv70Rgp9vuk3pgUPJ-2SdtPbusrrIWfb9gGwXtFncZxsloNU7vr6FisvWxE_tNU_n3hPEz1Pkw8uJKwsSE-Ou5gnIhwxBDeVil1nGEBy1N8qR7i8blnGK5tWvXhHMI8FTaHUGZxeUEDCdv50bRzS_eGS1sPLN6Q/iframe"
+  sandbox="allow-scripts allow-same-origin allow-presentation"
+  allow="autoplay; encrypted-media"
+  allowfullscreen>
+</iframe>
     </div>
-    <script>
+    <!-- <script>
         document.addEventListener("DOMContentLoaded", async () => {
 
             shaka.polyfill.installAll();
@@ -85,12 +92,12 @@
                 ]
             });
 
-            const streamUrl = "https://otte.cache.aiv-cdn.net/iad-nitro/live/clients/enc/hu4jfgaeme/out/v1/fc40f22f10374517a2784e1d97cb23f4/cenc.mpd";
+            const streamUrl = "https://otte.cache.aiv-cdn.net/iad-nitro/live/clients/enc/jxxg0apgi1/out/v1/9e895e2c1c894a75ac6d21a4deddd5d3/cenc.mpd";
 
             player.configure({
                 drm: {
                     clearKeys: {
-                        "1f68713028d439ec03be07f56c1d6213": "20093db6455160fffed4c394def3193d"
+                        "f6564ec2aee819046328a0e153be574d" : "ff46a8a1031eb27ef22576a077c98ab7"
                     }
                 }
             });
@@ -117,7 +124,7 @@
             }
 
         });
-    </script>
+    </script> -->
     <!-- <script disable-devtool-auto="true" src="https://cdn.jsdelivr.net/npm/disable-devtool" clear-log="true"
         disable-select="true" disable-copy="true" disable-cut="true" disable-paste="true"></script> -->
 </body>
