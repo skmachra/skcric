@@ -594,15 +594,15 @@
                 ]
             });
 
-            const streamUrl = "https://a204aivottepl-a.akamaihd.net/sin-nitro/live/clients/dash/enc/h35gev6jft/out/v1/c64004e114c245a4ab84bb570275a4a9/cenc.mpd";
-
-            player.configure({
-                drm: {
-                    clearKeys: {
-                        "065051b99bf5cf8d9a3bde5cbde6aaf9" : "214bd176832872339ce184338320f9a2"
-                    }
-                }
-            });
+            // const streamUrl = "https://a204aivottepl-a.akamaihd.net/sin-nitro/live/clients/dash/enc/h35gev6jft/out/v1/c64004e114c245a4ab84bb570275a4a9/cenc.mpd";
+            const streamUrl = "https://vsd270.okcdn.ru/cmaf/16975412333141/sig/kF-zHmYRlD8/expires/1785059829045/srcIp/66.78.59.15/urls/95.163.35.74/clientType/36/srcAg/CHROME/mid/15267412330325/get/hls_15267412330325.YQNfrjzxRZI.m3u8"
+            // player.configure({
+            //     drm: {
+            //         clearKeys: {
+            //             "065051b99bf5cf8d9a3bde5cbde6aaf9" : "214bd176832872339ce184338320f9a2"
+            //         }
+            //     }
+            // });
 
             player.getNetworkingEngine().registerRequestFilter(
                 (type, request) => {
