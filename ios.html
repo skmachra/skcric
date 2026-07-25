@@ -247,6 +247,33 @@
             fill: currentColor;
         }
 
+        @media (max-width: 768px) {
+            .plyr__controls {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .plyr__controls .plyr__volume {
+                min-width: 92px;
+                width: 92px;
+            }
+
+            .plyr__controls .plyr__volume input[type=range] {
+                width: 64px;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .plyr__controls .plyr__volume:hover input[type=range],
+            .plyr__controls .plyr__volume:focus-within input[type=range] {
+                width: 72px;
+            }
+
+            .plyr__controls .plyr__volume .plyr__control {
+                flex: 0 0 auto;
+            }
+        }
+
         .teleprompt {
             position: absolute;
             inset: 0;
