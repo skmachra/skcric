@@ -7,3 +7,7 @@ shaka.html
 fetch1.js
 fetch2.js
 .gitignore
+.wrangler/
+functions/api/stream copy.js
+zeeH copy.html
+hls.html
