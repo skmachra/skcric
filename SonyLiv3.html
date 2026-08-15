@@ -593,14 +593,23 @@
 
             const tokenData = await fetch("/hdnea.json").then(r => r.json());
 
-            const token = tokenData.s3;
-            const streamUrl = tokenData.baseUrl + "/bpk-tv/Ten3_HD_BTS/WDVLive/index.mpd?" + token;
-
+            // const token = tokenData.s3;
+            const token = "__hdnea__=st=1786766405~exp=1786788005~acl=/*~hmac=a5a72793171923f7c26d1554d3ef8dbff208058bb005f5bfcd02b940bb1a0aba";
+            // const streamUrl = tokenData.baseUrl + "/bpk-tv/Ten3_HD_BTS/WDVLive/index.mpd?" + token;
+            const streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten3_HD_MOB/WDVLive/index.mpd?__hdnea__=st=1786766405~exp=1786788005~acl=/*~hmac=a5a72793171923f7c26d1554d3ef8dbff208058bb005f5bfcd02b940bb1a0aba";
+            // player.configure({
+            //     drm: {
+            //         clearKeys: {
+            //             "71719eea0bbb5319a4e854ac52ea7871":
+            //                 "752ed8f45c43ed858af4c1716c05241a"
+            //         }
+            //     }
+            // });
             player.configure({
                 drm: {
                     clearKeys: {
-                        "71719eea0bbb5319a4e854ac52ea7871":
-                            "752ed8f45c43ed858af4c1716c05241a"
+                        "68318f7c97c55ba6ab8d0398a88fed3e":
+                            "d312fb3325b4eb9462b4a0d2b6794adf"
                     }
                 }
             });
