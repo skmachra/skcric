@@ -568,21 +568,22 @@
             }
 
             const video = document.getElementById("video");
+            const container = document.querySelector(".player-container");
 
-            const player = new shaka.Player(video);
+            const player = new shaka.Player();
+            await player.attach(video);
 
             const ui = new shaka.ui.Overlay(
                 player,
-                document.querySelector(".player-container"),
+                container,
                 video
             );
 
             ui.configure({
                 addBigPlayButton: true,
                 controlPanelElements: [
-                    "play_pause",
                     "mute",
-                    "volume",
+                    "play_pause",
                     "time_and_duration",
                     "spacer",
                     "quality",
@@ -591,66 +592,65 @@
                 ]
             });
 
-            // const tokenData = await fetch("/hdnea.json").then(r => r.json());
-            const tokenData = await fetch("https://raw.githubusercontent.com/dilzyking/allrounder2.0/refs/heads/main/api/Sony-3.json").then(r => r.json());
-            const token = tokenData.cookie;
-            // const token = "__hdnea__=st=1786768349~exp=1786789949~acl=/*~hmac=c96a46f8ee880d52da9d97ad71c69239db5bf632ee5eb870f50db6c341d9959e";
-            // const streamUrl = tokenData.baseUrl + "/bpk-tv/Ten3_HD_BTS/WDVLive/index.mpd?" + token;
-            const streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten3_HD_MOB/WDVLive/index.mpd?" + token;
-            // player.configure({
-            //     drm: {
-            //         clearKeys: {
-            //             "71719eea0bbb5319a4e854ac52ea7871":
-            //                 "752ed8f45c43ed858af4c1716c05241a"
-            //         }
-            //     }
-            // });
+            const CONFIG = {
+                streamUrl: "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten_3_MOB/WDVLive/index.mpd",
+                keyId: "68318f7c97c55ba6ab8d0398a88fed3e",
+                key: "d312fb3325b4eb9462b4a0d2b6794adf",
+                cookieUrl: "https://allrounder2-0.pages.dev/api/Sony-3.json"
+            };
+
             player.configure({
-                drm: {
-                    clearKeys: {
-                        "68318f7c97c55ba6ab8d0398a88fed3e":
-                            "d312fb3325b4eb9462b4a0d2b6794adf"
-                    }
+                drm: { clearKeys: { [CONFIG.keyId]: CONFIG.key } },
+                manifest: { defaultPresentationDelay: 5 },
+                streaming: {
+                    lowLatencyMode: true,
+                    bufferingGoal: 10,
+                    rebufferingGoal: 2,
+                    safeSeekOffset: 5
                 }
             });
 
-            player.getNetworkingEngine().registerRequestFilter(
-                (type, request) => {
+            let cookieValue = "";
 
-                    request.headers["Referer"] =
-                        "https://www.jiotv.com/";
+            try {
+                const response = await fetch(CONFIG.cookieUrl, { cache: "no-store" });
+                const data = await response.json();
+                cookieValue = data.cookie || "";
+            } catch (e) {
+                console.warn("Cookie fetch failed, continuing without cookie");
+            }
 
-                    request.headers["User-Agent"] =
-                        "plaYtv/7.1.5 (Linux;Android 13)";
+            if (cookieValue) {
+                player.getNetworkingEngine().registerRequestFilter((type, request) => {
+                    request.headers["Referer"] = "https://www.jiotv.com/";
+                    request.headers["User-Agent"] = "plaYtv/7.1.5 (Linux;Android 13) ExoPlayerLib/2.11.6";
+                    request.headers["Cookie"] = cookieValue;
 
-                    request.headers["Cookie"] = token;
+                    const urlCookie = cookieValue.startsWith("__hdnea__=")
+                        ? cookieValue.substring(10)
+                        : cookieValue;
 
                     if (
                         (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
-                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
+                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT) &&
+                        !request.uris[0].includes("__hdnea__")
                     ) {
-
-                        if (!request.uris[0].includes("__hdnea__")) {
-
-                            request.uris[0] +=
-                                (request.uris[0].includes("?") ? "&" : "?")
-                                + token;
-                        }
+                        const sep = request.uris[0].includes("?") ? "&" : "?";
+                        request.uris[0] += sep + "__hdnea__=" + urlCookie;
                     }
-                }
-            );
+                });
+            }
 
             try {
-
-                await player.load(streamUrl);
-
-                await video.play();
-
+                await player.load(CONFIG.streamUrl);
+                video.play().catch(() => {});
             } catch (err) {
-
                 console.error(err);
-
             }
+
+            video.addEventListener("play", () => {
+                video.muted = false;
+            });
 
         });
     </script>
