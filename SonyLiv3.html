@@ -591,12 +591,12 @@
                 ]
             });
 
-            const tokenData = await fetch("/hdnea.json").then(r => r.json());
-
-            // const token = tokenData.s3;
-            const token = "__hdnea__=st=1786768349~exp=1786789949~acl=/*~hmac=c96a46f8ee880d52da9d97ad71c69239db5bf632ee5eb870f50db6c341d9959e";
+            // const tokenData = await fetch("/hdnea.json").then(r => r.json());
+            const tokenData = await fetch("https://raw.githubusercontent.com/dilzyking/allrounder2.0/refs/heads/main/api/Sony-3.json").then(r => r.json());
+            const token = tokenData.cookie;
+            // const token = "__hdnea__=st=1786768349~exp=1786789949~acl=/*~hmac=c96a46f8ee880d52da9d97ad71c69239db5bf632ee5eb870f50db6c341d9959e";
             // const streamUrl = tokenData.baseUrl + "/bpk-tv/Ten3_HD_BTS/WDVLive/index.mpd?" + token;
-            const streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten3_HD_MOB/WDVLive/index.mpd?__hdnea__=st=1786768349~exp=1786789949~acl=/*~hmac=c96a46f8ee880d52da9d97ad71c69239db5bf632ee5eb870f50db6c341d9959e";
+            const streamUrl = "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten3_HD_MOB/WDVLive/index.mpd?" + token;
             // player.configure({
             //     drm: {
             //         clearKeys: {
