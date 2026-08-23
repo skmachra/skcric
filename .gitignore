@@ -9,5 +9,6 @@ fetch2.js
 .gitignore
 .wrangler/
 functions/api/stream copy.js
+functions/api/corss.js
 zeeH copy.html
 hls.html
