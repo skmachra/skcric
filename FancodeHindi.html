@@ -428,9 +428,10 @@
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/controls.css" />
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/shaka-player@4.16.2/dist/shaka-player.ui.min.js"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js"></script>
 </head>
 
 <script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -561,63 +562,80 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
+        document.addEventListener("DOMContentLoaded", () => {
+            const video = document.getElementById("video");
+            const streamUrl = 'https://ingest4-9869.boxcast.com/satisfying-year/dhii6vrqpq5jdgsbz3cy/1080p-byteranges-ext.m3u8?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbmdlc3Q0LTk4NjkuYm94Y2FzdC5jb20vc2F0aXNmeWluZy15ZWFyL2RoaWk2dnJxcHE1amRnc2J6M2N5LzEwODBwLWJ5dGVyYW5nZXMtZXh0Lm0zdTgiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODk0MTYwNTd9fX1dfQ&Signature=qXFLEwc8QLm6LZD6Ezj1yPuxKTRMX6CO0JHLSmB9N3XMon~FhV4gnEm2es741WirywgDzZ-W2OL6mdosWi1gkGEUDaN9DPmik6VrNGf31gcMirQPtq5fDOJ-~-Oq0PxEezc97NvdE4myKkULsb7Ic3OKZxLXUq1tpcp8CUMeANssqSyeYbAiVNKI8qtSGlFAd24Upj88w-wTnLy~~EaTCD7g2DCgKQjuUGVhkfBOeiThuRPWT1I0jL3qTTEdxNwkuPlLlKE34FrfV6-JAlcmyi6irz1~NogdLDu6IsVX1O8ypDdB3RWi7Y-~rTv89FgLoJl8eqFpN0DNifWsCQVkzw&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA';
 
-            shaka.polyfill.installAll();
+            let hlsInstance = null;
 
-            if (!shaka.Player.isBrowserSupported()) {
-                console.log("Browser not supported");
-                return;
+            if (Hls.isSupported()) {
+                hlsInstance = new Hls({
+                    enableWorker: true,
+                    lowLatencyMode: true
+                });
+
+                hlsInstance.loadSource(streamUrl);
+                hlsInstance.attachMedia(video);
+
+                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play().catch(e => console.warn("Autoplay prevented:", e));
+                });
+
+                hlsInstance.on(Hls.Events.ERROR, (event, data) => {
+                    if (data.fatal) {
+                        if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
+                            hlsInstance.startLoad();
+                        } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
+                            hlsInstance.recoverMediaError();
+                        }
+                    }
+                });
+
+                window.hlsInstance = hlsInstance;
+            } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
+                video.src = streamUrl;
+                video.addEventListener("loadedmetadata", () => {
+                    video.play().catch(e => console.warn("Autoplay blocked:", e));
+                });
             }
 
-            const video = document.getElementById("video");
-
-            const player = new shaka.Player(video);
-
-            const ui = new shaka.ui.Overlay(
-                player,
-                document.querySelector(".player-container"),
-                video
-            );
-
-            ui.configure({
-                addBigPlayButton: true,
-                controlPanelElements: [
-                    "play_pause",
+            const player = new Plyr(video, {
+                controls: [
+                    "play-large",
+                    "play",
+                    "progress",
+                    "current-time",
+                    "duration",
                     "mute",
                     "volume",
-                    "time_and_duration",
-                    "spacer",
-                    "quality",
-                    "picture_in_picture",
+                    "settings",
                     "fullscreen"
-                ]
+                ],
+                quality: {
+                    default: 0,
+                    options: [720, 540, 480, 360, 240],
+                    forced: false,
+                    onChange: (quality) => {
+                        if (!hlsInstance) return;
+                        const level = hlsInstance.levels.findIndex(
+                            l => l.height === quality
+                        );
+                        if (level >= 0) hlsInstance.currentLevel = level;
+                    }
+                },
+                logo: false,
+                tooltips: false,
+                keyboard: true,
+                autoplay: true,
+                blankVideo: "",
+                hideControls: false,
+                resetOnEnd: false,
+                ratio: "16:9",
+                fullscreen: { enabled: true, fallback: true },
+                storage: { enabled: false }
             });
 
-            const streamUrl = "https://livecf.fancode.com/143353_hindi_hls_43373ac75166824_1ta-di_h264/index.m3u8";
-
-            player.getNetworkingEngine().registerRequestFilter(
-                (type, request) => {
-                    if (
-                        (type === shaka.net.NetworkingEngine.RequestType.MANIFEST ||
-                            type === shaka.net.NetworkingEngine.RequestType.SEGMENT)
-                    ) {
-                    }
-                }
-            );
-
-            try {
-
-                await player.load(streamUrl);
-
-                await video.play();
-
-            } catch (err) {
-
-                console.error(err);
-
-            }
-
+            window.player = player;
         });
     </script>
     <script>
