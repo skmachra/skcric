@@ -102,20 +102,201 @@
             overflow: hidden;
         }
 
-        #player {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
+        #player,
         #video {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
+            background: #000;
+        }
+
+        .player-shell {
+            position: fixed;
+            inset: 0;
+            background: #000;
+        }
+
+        .player-shell,
+        .player-container {
+            --plyr-color-main: #ef6b0d;
+        }
+
+        .plyr {
+            width: 100%;
+            height: 100%;
+        }
+
+        .plyr__video-wrapper {
+            height: 100%;
+            background: #000;
+        }
+
+        .plyr--full-ui input[type=range] {
+            color: #ef6b0d;
+        }
+
+        .plyr__control,
+        .plyr__control:hover,
+        .plyr__control:focus,
+        .plyr__control[aria-expanded=true],
+        .plyr__control[aria-pressed=true],
+        .plyr__menu__container .plyr__control--pressed {
+            --plyr-color-main: #ef6b0d;
+            z-index: 1000;
+        }
+
+        .plyr__control--overlaid {
+            background: #ef6b0d;
+        }
+
+        .plyr--video .plyr__control:hover,
+        .plyr--video .plyr__control:focus,
+        .plyr--video .plyr__control[aria-expanded=true] {
+            background: #ef6b0d;
+        }
+
+        .plyr__controls {
+            background: linear-gradient(180deg, transparent, rgba(15, 0, 18, 0.9));
+        }
+
+        .plyr__controls .plyr__control,
+        .plyr__controls .plyr__control svg,
+        .plyr__control svg {
+            color: #fff;
+            fill: currentColor;
+        }
+
+        .plyr__controls .plyr__control:hover,
+        .plyr__controls .plyr__control:focus,
+        .plyr__controls .plyr__control[aria-expanded=true],
+        .plyr__controls .plyr__control[aria-pressed=true] {
+            color: #ef6b0d;
+        }
+
+        .plyr__progress__buffer {
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .plyr__tooltip {
+            background: #ef6b0d;
+            color: #fff;
+        }
+
+        .plyr__menu__container {
+            background: #fff;
+            color: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.35);
+        }
+
+        .plyr__menu__container .plyr__control,
+        .plyr__menu__container .plyr__control span,
+        .plyr__menu__container .plyr__menu__value {
+            color: #000;
+        }
+
+        .plyr__menu__container button.plyr__control {
+            color: #000 !important;
+            opacity: 1 !important;
+        }
+
+        .plyr__menu__container .plyr__control:hover,
+        .plyr__menu__container .plyr__control:focus {
+            background: #ef6b0d !important;
+            color: #fff !important;
+        }
+
+        .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true],
+        .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true] span,
+        .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true] .plyr__badge {
+            color: #ef6b0d !important;
+            opacity: 1 !important;
+            background: transparent !important;
+        }
+
+        .plyr__menu__container .plyr__control[role=menuitemradio][aria-checked=true]::before {
+            background: #ef6b0d;
+        }
+
+        .plyr__menu__container .plyr__menu__value {
+            color: #ef6b0d;
+            font-weight: 400;
+        }
+
+        .plyr__control[aria-selected=true],
+        .plyr__control[aria-checked=true],
+        .plyr__control--pressed,
+        .plyr__menu__container button.plyr__control--pressed {
+            color: #ef6b0d !important;
+            opacity: 1 !important;
+            background: transparent !important;
+        }
+
+        .plyr__menu__container button.plyr__control--pressed span,
+        .plyr__menu__container button.plyr__control--pressed .plyr__badge {
+            color: #ef6b0d !important;
+        }
+
+        .plyr--video .plyr__control {
+            color: #fff;
+        }
+
+        .plyr--video .plyr__control svg {
+            fill: currentColor;
+        }
+
+        @media (max-width: 768px) {
+            .plyr__controls {
+                padding-left: 8px;
+                padding-right: 8px;
+            }
+
+            .plyr__controls .plyr__volume {
+                min-width: 92px;
+                width: 92px;
+            }
+
+            .plyr__controls .plyr__volume input[type=range] {
+                width: 64px;
+                opacity: 1;
+                visibility: visible;
+            }
+
+            .plyr__controls .plyr__volume:hover input[type=range],
+            .plyr__controls .plyr__volume:focus-within input[type=range] {
+                width: 72px;
+            }
+
+            .plyr__controls .plyr__volume .plyr__control {
+                flex: 0 0 auto;
+            }
+        }
+
+        .teleprompt {
+            position: absolute;
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            z-index: 20;
+            background: rgba(0, 0, 0, 0.45);
+            color: #fff;
+            text-align: center;
+            padding: 24px;
+        }
+
+        .teleprompt button {
+            border: 0;
+            border-radius: 999px;
+            padding: 14px 22px;
+            font: inherit;
+            font-weight: 700;
+            cursor: pointer;
+            background: #ef6b0d;
+            color: #fff;
         }
 
 
@@ -428,10 +609,7 @@
     </style>
     <!-- Font Awesome for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-
-    <script src="https://cdn.plyr.io/3.7.8/plyr.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js"></script>
+    <link href="https://cdn.plyr.io/3.7.8/plyr.css" rel="stylesheet">
 </head>
 
 <script>(function (s) { s.dataset.zone = '9187662', s.src = 'https://al5sm.com/tag.min.js'; })([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
@@ -475,9 +653,12 @@
 
         <!-- Main Video Content -->
         <div class="video-container">
-            <h2>Fancode Hindi</h2>
+            <h2></h2>
             <div class="player-container">
-                <video id="video" autoplay playsinline preload="metadata"></video>
+                <video id="player" autoplay muted playsinline preload="metadata" controls></video>
+                <div class="teleprompt" id="teleprompt">
+                    <button id="playBtn">Tap to play</button>
+                </div>
             </div>
         </div>
 
@@ -561,82 +742,144 @@
         </footer>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const video = document.getElementById("video");
-            const streamUrl = 'https://ingest4-9869.boxcast.com/satisfying-year/dhii6vrqpq5jdgsbz3cy/1080p-byteranges-ext.m3u8?Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9pbmdlc3Q0LTk4NjkuYm94Y2FzdC5jb20vc2F0aXNmeWluZy15ZWFyL2RoaWk2dnJxcHE1amRnc2J6M2N5LzEwODBwLWJ5dGVyYW5nZXMtZXh0Lm0zdTgiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3ODk0MTYwNTd9fX1dfQ&Signature=qXFLEwc8QLm6LZD6Ezj1yPuxKTRMX6CO0JHLSmB9N3XMon~FhV4gnEm2es741WirywgDzZ-W2OL6mdosWi1gkGEUDaN9DPmik6VrNGf31gcMirQPtq5fDOJ-~-Oq0PxEezc97NvdE4myKkULsb7Ic3OKZxLXUq1tpcp8CUMeANssqSyeYbAiVNKI8qtSGlFAd24Upj88w-wTnLy~~EaTCD7g2DCgKQjuUGVhkfBOeiThuRPWT1I0jL3qTTEdxNwkuPlLlKE34FrfV6-JAlcmyi6irz1~NogdLDu6IsVX1O8ypDdB3RWi7Y-~rTv89FgLoJl8eqFpN0DNifWsCQVkzw&Key-Pair-Id=APKAJ7GUCBQUK6NTWZCA';
+        const video = document.getElementById('player');
+        const teleprompt = document.getElementById('teleprompt');
+        const playBtn = document.getElementById('playBtn');
+        const params = new URLSearchParams(window.location.search);
 
-            let hlsInstance = null;
+        const channelName = 'FanCode Hindi';
+        document.querySelector('.video-container h2').textContent = channelName;
 
-            if (Hls.isSupported()) {
-                hlsInstance = new Hls({
-                    enableWorker: true,
-                    lowLatencyMode: true
-                });
+        let streamUrl = 'https://in-mc-flive.fancode.com/out/v1/ap-south-1/4248492_hindi_109112/ad-h264/index__1080p.m3u8?hdntl=Expires=1789738118~_GO=Generated~acl=/out/v1/ap-south-1/4248492_hindi_109112/ad-h264/*~Signature=AVl424PTnCHKQVLqIu_BmdWfNJxgF3e3b03BLT9NCj6os4GDZbgTOtqFf7trjd2ll0XSzACkVk-ok64REfo9GQsCG8gL';
 
-                hlsInstance.loadSource(streamUrl);
-                hlsInstance.attachMedia(video);
 
-                hlsInstance.on(Hls.Events.MANIFEST_PARSED, () => {
-                    video.play().catch(e => console.warn("Autoplay prevented:", e));
-                });
+        let player = null;
 
-                hlsInstance.on(Hls.Events.ERROR, (event, data) => {
-                    if (data.fatal) {
-                        if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
-                            hlsInstance.startLoad();
-                        } else if (data.type === Hls.ErrorTypes.MEDIA_ERROR) {
-                            hlsInstance.recoverMediaError();
+        function createPlayer(qualityOptions = null, defaultQuality = null, hlsInstance = null) {
+            if (player) return player;
+            const plyrOptions = {
+                storage: {
+                    enabled: false
+                },
+                controls: [
+                    'play-large',
+                    'play',
+                    'progress',
+                    'current-time',
+                    'mute',
+                    'volume',
+                    'settings',
+                    'pip',
+                    'airplay',
+                    'fullscreen'
+                ],
+                speed: {
+                    selected: 1,
+                    options: [0.5, 0.75, 1, 1.25, 1.5, 2]
+                },
+                listeners: {
+                    ready: () => {
+                        video.playbackRate = 1;
+                    }
+                }
+            };
+
+            if (qualityOptions && qualityOptions.length > 1) {
+                plyrOptions.settings = ['speed', 'quality'];
+                plyrOptions.quality = {
+                    default: defaultQuality,
+                    options: qualityOptions,
+                    forced: true,
+                    onChange: newQuality => {
+                        if (!hlsInstance) return;
+                        if (newQuality === 'Auto') {
+                            hlsInstance.currentLevel = -1;
+                            return;
+                        }
+                        const nextLevel = hlsInstance.levels.findIndex(level => level.height === newQuality);
+                        if (nextLevel !== -1) {
+                            hlsInstance.currentLevel = nextLevel;
                         }
                     }
-                });
-
-                window.hlsInstance = hlsInstance;
-            } else if (video.canPlayType("application/vnd.apple.mpegurl")) {
-                video.src = streamUrl;
-                video.addEventListener("loadedmetadata", () => {
-                    video.play().catch(e => console.warn("Autoplay blocked:", e));
-                });
+                };
+            } else {
+                plyrOptions.settings = ['speed'];
             }
 
-            const player = new Plyr(video, {
-                controls: [
-                    "play-large",
-                    "play",
-                    "progress",
-                    "current-time",
-                    "duration",
-                    "mute",
-                    "volume",
-                    "settings",
-                    "fullscreen"
-                ],
-                quality: {
-                    default: 0,
-                    options: [720, 540, 480, 360, 240],
-                    forced: false,
-                    onChange: (quality) => {
-                        if (!hlsInstance) return;
-                        const level = hlsInstance.levels.findIndex(
-                            l => l.height === quality
-                        );
-                        if (level >= 0) hlsInstance.currentLevel = level;
-                    }
-                },
-                logo: false,
-                tooltips: false,
-                keyboard: true,
-                autoplay: true,
-                blankVideo: "",
-                hideControls: false,
-                resetOnEnd: false,
-                ratio: "16:9",
-                fullscreen: { enabled: true, fallback: true },
-                storage: { enabled: false }
-            });
+            player = new Plyr(video, plyrOptions);
+        }
 
-            window.player = player;
+        async function startPlayback() {
+            if (!streamUrl) {
+                teleprompt.style.display = 'flex';
+                return;
+            }
+
+            try {
+                if (Hls.isSupported()) {
+                    const hls = new Hls({
+                        enableWorker: true,
+                        lowLatencyMode: true
+                    });
+
+                    hls.loadSource(streamUrl);
+                    hls.attachMedia(video);
+
+                    hls.on(Hls.Events.MANIFEST_PARSED, async function () {
+                        const qualities = hls.levels.map(level => level.height).filter(Boolean);
+                        const uniqueQualities = [...new Set(qualities)].sort((a, b) => b - a);
+                        const qualityMenu = uniqueQualities.length > 1 ? ['Auto', ...uniqueQualities] : null;
+
+                        const currentQuality = hls.currentLevel >= 0 && hls.levels[hls.currentLevel]
+                            ? hls.levels[hls.currentLevel].height
+                            : uniqueQualities[0];
+
+                        createPlayer(qualityMenu, qualityMenu ? 'Auto' : currentQuality, hls);
+
+                        try {
+                            await video.play();
+                            teleprompt.style.display = 'none';
+                        } catch (err) {
+                            teleprompt.style.display = 'flex';
+                        }
+                    });
+
+                    window.hls = hls;
+                } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                    video.src = streamUrl;
+                    createPlayer();
+                    video.addEventListener('loadedmetadata', async function () {
+                        try {
+                            await video.play();
+                            teleprompt.style.display = 'none';
+                        } catch (err) {
+                            teleprompt.style.display = 'flex';
+                        }
+                    }, { once: true });
+                } else {
+                    teleprompt.style.display = 'flex';
+                }
+            } catch (error) {
+                console.error('Player error:', error);
+                teleprompt.style.display = 'flex';
+            }
+        }
+
+        playBtn.addEventListener('click', async () => {
+            try {
+                await video.play();
+                teleprompt.style.display = 'none';
+            } catch (e) {
+                video.muted = true;
+                await video.play();
+                teleprompt.style.display = 'none';
+            }
         });
+
+        document.addEventListener('DOMContentLoaded', startPlayback);
     </script>
     <script>
         const toggle = document.getElementById("menu-toggle");
