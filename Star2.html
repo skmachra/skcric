@@ -658,7 +658,7 @@
 
             const tokenData = await fetch("/hdnea.json").then(r => r.json());
 
-            const token = tokenData.star2;
+            const token = await fetch("https://raw.githubusercontent.com/dilzyking/allrounder2.0/refs/heads/main/api/Hindi.json").then(r => r.json()).then(data => data.cookie);
             const streamUrl = tokenData.baseUrl + "/bpk-tv/StarSportsHD2Hin_BTS/WDVLive/index.mpd?" + token;
 
             player.configure({
