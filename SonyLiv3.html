@@ -593,14 +593,23 @@
             });
 
             const CONFIG = {
-                streamUrl: "https://jiotvmblive.cdn.jio.com/bpk-tv/Ten_3_MOB/WDVLive/index.mpd",
-                keyId: "68318f7c97c55ba6ab8d0398a88fed3e",
-                key: "d312fb3325b4eb9462b4a0d2b6794adf",
-                cookieUrl: "https://allrounder2-0.pages.dev/api/Sony-3.json"
+                streamUrl: "https://jiotvpllive.cdn.jio.com/bpk-tv/SonySportsTen3HinHDSTB_BTS/WDVLive/index.mpd",
+                drmKeys: [
+                    "c20ba4e9d0635bab9f17b177f0d91039:fcb4a266539ac7b03ef02c5600c5598d",
+                    "c592c427c0d35e9a8ad88cdcb76a16c1:8ecb737e4015c22451d6c14fe37e9e15",
+                    "10f4930166fa5b6ab5d71a4a978bdfac:9dfa22aa4d6a3d820101f59013de0236",
+                    "140edf90fa0b5c99864f2442df4df535:991b51ed2e690c96163a31ae4a6f6452",
+                    "e392571e46bd5461854986ae9e58083d:1167c024aa8bbad2c1beaf218cfeec11"
+                ],
+                cookieUrl: "https://allrounder2-0.pages.dev/api/hindi.json"
             };
 
+            const clearKeys = Object.fromEntries(
+                CONFIG.drmKeys.map((entry) => entry.split(":"))
+            );
+
             player.configure({
-                drm: { clearKeys: { [CONFIG.keyId]: CONFIG.key } },
+                drm: { clearKeys },
                 manifest: { defaultPresentationDelay: 5 },
                 streaming: {
                     lowLatencyMode: true,
